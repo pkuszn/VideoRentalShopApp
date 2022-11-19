@@ -4,7 +4,8 @@
     {
         public enum Config
         {
-            RentVideoLimit = 3
+            RentVideoLimit = 3,
+            RentMaxDays = 30
         }
     }
 }

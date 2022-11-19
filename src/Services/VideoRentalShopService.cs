@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -17,13 +19,15 @@ namespace VideoRentalShopApp.Services
         private readonly IMongoCollection<User> UserCollection;
         private readonly IMongoCollection<Video> VideoCollection;
         private readonly IMongoCollection<VideoRental> VideoRentalCollection;
+        private readonly ILogger<VideoRentalShopService> Logger;
 
-        public VideoRentalShopService(IMongoClient mongoClient, IOptions<VideoRentalShopConfiguration> videoRentalShopConfiguration)
+        public VideoRentalShopService(IMongoClient mongoClient, IOptions<VideoRentalShopConfiguration> videoRentalShopConfiguration, ILogger<VideoRentalShopService> logger)
         {
             IMongoDatabase database = mongoClient.GetDatabase(videoRentalShopConfiguration.Value.DatabaseName) ?? throw new NullReferenceException();
             UserCollection = database.GetCollection<User>(videoRentalShopConfiguration.Value.UserCollectionName) ?? throw new NullReferenceException();
             VideoCollection = database.GetCollection<Video>(videoRentalShopConfiguration.Value.VideoCollectionName) ?? throw new NullReferenceException();
             VideoRentalCollection = database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
@@ -67,16 +71,19 @@ namespace VideoRentalShopApp.Services
             User user = await UserCollection.Find(f => f.Id.Equals(userId)).FirstOrDefaultAsync();
             if(user == null)
             {
+                Logger.LogError($"User is null");
                 return false;
             }
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
             if(video == null)
             {
+                Logger.LogError($"Video is null");
                 return false;
             }
             VideoRental videoRental = await VideoRentalCollection.Find(f => f.UserId == userId).FirstOrDefaultAsync();
             if(videoRental == null)
             {
+                Logger.LogError($"VideoRental is null");
                 return false;
             }
             if(videoRental.Videos == null)
@@ -85,10 +92,20 @@ namespace VideoRentalShopApp.Services
             }
             if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
             {
+                Logger.LogInformation($"The limit of user with id {userId} has been exceeded");
                 return false;
             }
+            DateTime rentMaxDaysLimit = DateTime.UtcNow.AddDays((int)Config.RentMaxDays);
+            videoRental.Videos.Add(new VideoRent
+            {
+                Title = videoTitle,
+                StartRentalDate = DateTime.UtcNow,
+                EndRentalDate = rentMaxDaysLimit,
+                RealEndOfRentalDate = null
+            });
 
-
+            await VideoRentalCollection.FindOneAndReplaceAsync(f => f.UserId.Equals(userId), videoRental);
+            Logger.LogInformation($"Added new film to the collection of user: {userId}");
             return true;
         }
 
