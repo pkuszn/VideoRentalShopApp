@@ -1,0 +1,23 @@
+[
+  {
+    "FirstName": "Marek",
+    "LastName": "Nowak",
+    "Address": "Warszawa",
+    "Contanct": "854123555",
+    "RegistrationDate": "Date()"
+  },
+  {
+    "FirstName": "Andrzej",
+    "LastName": "Mostowiak",
+    "Address": "Grabina",
+    "Contanct": "991221235",
+    "RegistrationDate": "Date()"
+  },
+  {
+    "FirstName": "Maria",
+    "LastName": "Konopnicka",
+    "Address": "Dziergowice",
+    "Contanct": "772334229",
+    "RegistrationDate": Date()
+  }
+]

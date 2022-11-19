@@ -1,0 +1,44 @@
+[
+  {
+    "Title": "Na zachodzie bez zmian",
+    "Genre": "Wojenny",
+    "Director": "Edward Berger",
+    "Runtime": 147,
+    "Score": 7.4,
+    "Descrition": "Przera¿aj¹ce prze¿ycia m³odego niemieckiego ¿o³nierza na froncie zachodnim podczas I wojny œwiatowej.",
+    "Actors": [
+      "Felix Kammerer",
+      "Daniel Brühl",
+      "Albrecht Schuch"
+    ],
+    "CreatedDate": Date()
+  },
+  {
+    "Title": "Osobliwoœæ",
+    "Genre": "Thriller",
+    "Director": "Sebastián Lelio",
+    "Runtime": 109,
+    "Score": 6.3,
+    "Descrition": "Rok 1862. Drêczona przesz³oœci¹ pielêgniarka wyje¿d¿a z Anglii do odleg³ej irlandzkiej wioski, aby zbadaæ sprawê pewnej dziewczynki i jej rzekomo cudownego postu.",
+    "Actors": [
+      "Florence Pugh",
+      "Tom Burke",
+      "Kíla Lord Cassidy"
+    ],
+    "CreatedDate": Date()
+  },
+  {
+    "Title": "Dobry opiekun",
+    "Genre": "Dramat",
+    "Director": "Tobias Lindholm",
+    "Runtime": 121,
+    "Score": 6.4,
+    "Descrition": "Pielêgniarka podejrzewa, ¿e za seri¹ tajemniczych zgonów pacjentów stoi jej kolega po fachu, i nara¿a w³asne ¿ycie, aby odkryæ prawdê.",
+    "Actors": [
+      "Jessica Chastain",
+      "Eddie Redmayne",
+      "Nnamdi Asomugha"
+    ],
+    "CreatedDate": Date()
+  }
+]
