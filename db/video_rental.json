@@ -1,0 +1,15 @@
+[
+  {
+    "User": {
+      "FirstName": "Maria",
+      "LastName": "Konopnicka",
+      "Address": "Dziergowice",
+      "Contact": "772334229",
+      "RegistrationDate": ISODate()
+    },
+    "Title": "Na zachodzie bez zmian",
+    "StartRentalDate": ISODate(),
+    "EndRentalDate": ISODate(),
+    "RealEndOfRentalDate":  null
+  }
+]

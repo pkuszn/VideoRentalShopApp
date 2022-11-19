@@ -11,7 +11,7 @@ namespace VideoRentalShopApp.Extensions
     {
         public static IServiceCollection AddConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.Configure<VideoRentalShopConfiguration>(configuration.GetSection("VideoRentalShopDb"));   
+            return services.Configure<VideoRentalShopConfiguration>(configuration.GetSection("VideoRentalShop"));   
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
@@ -22,7 +22,7 @@ namespace VideoRentalShopApp.Extensions
 
         private static IServiceCollection AddSingletonServices(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddSingleton<IMongoClient>(s => new MongoClient(configuration.GetConnectionString("VideoRentalShopDb")));
+            return services.AddSingleton<IMongoClient>(s => new MongoClient(configuration.GetSection("VideoRentalShop:ConnectionString").Value));
         }
 
         private static IServiceCollection AddScopedServices(this IServiceCollection services)

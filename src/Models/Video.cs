@@ -8,15 +8,17 @@ namespace VideoRentalShopApp.Models
     public class Video
     {
         [BsonId]
+        [BsonIgnoreIfDefault]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public string Title { get; set; }
         public string Genre { get; set; }
         public string Director { get; set; }
-        public DateTime Runtime { get; set; }
-        public int Score { get; set; }
+        public int Runtime { get; set; }
+        public double Score { get; set; }
         public string Description { get; set; }
         public List<string> Actors { get; set; }
+        //ISODate
         public DateTime CreatedDate { get; set; }
     }
 }

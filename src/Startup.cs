@@ -18,14 +18,13 @@ namespace VideoRentalShopApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VideoRentalShopApp", Version = "v1" });
             });
-            services.AddServices(Configuration);
             services.AddConfig(Configuration);
+            services.AddServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
