@@ -4,12 +4,12 @@
       "FirstName": "Maria",
       "LastName": "Konopnicka",
       "Address": "Dziergowice",
-      "Contanct": "772334229",
-      "RegistrationDate": "Date()"
+      "Contact": "772334229",
+      "RegistrationDate": ISODate()
     },
     "Title": "Na zachodzie bez zmian",
-    "StartRentalDate": "Date()",
-    "EndRentalDate": null,
+    "StartRentalDate": ISODate(),
+    "EndRentalDate": ISODate(),
     "RealEndOfRentalDate":  null
   }
 ]

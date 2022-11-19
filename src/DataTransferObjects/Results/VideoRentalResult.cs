@@ -1,13 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
+using VideoRentalShopApp.Models;
 
-namespace VideoRentalShopApp.Models
+namespace VideoRentalShopApp.DataTransferObjects.Results
 {
-    public class VideoRental
+    public class VideoRentalResult
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public User User { get; set; }
         public string Title { get; set; }

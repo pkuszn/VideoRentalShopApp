@@ -22,7 +22,7 @@ namespace VideoRentalShopApp.Extensions
 
         private static IServiceCollection AddSingletonServices(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddSingleton<IMongoClient>(s => new MongoClient(configuration.GetConnectionString("VideoRentalShop")));
+            return services.AddSingleton<IMongoClient>(s => new MongoClient(configuration.GetSection("VideoRentalShop:ConnectionString").Value));
         }
 
         private static IServiceCollection AddScopedServices(this IServiceCollection services)

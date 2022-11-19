@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
+using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 
 namespace VideoRentalShopApp.Controllers
@@ -22,44 +24,44 @@ namespace VideoRentalShopApp.Controllers
 
         [HttpGet]
         [Route("GetUsers")]
-        public async Task<IActionResult> GetUsersAsync()
+        public async Task<List<UserResult>> GetUsersAsync()
         {
-            return await VideoRentalShopService.GetUsersAsync() as IActionResult;
+            return await VideoRentalShopService.GetUsersAsync();
         }        
         
         [HttpGet]
         [Route("GetVideos")]
-        public async Task<IActionResult> GetVideosAsync()
+        public async Task<List<VideoResult>> GetVideosAsync()
         {
-            return await VideoRentalShopService.GetVideosAsync() as IActionResult;
+            return await VideoRentalShopService.GetVideosAsync();
         }
 
         [HttpGet]
         [Route("GetVideoRentals")]
-        public async Task<IActionResult> GetVideoRentalsAsync()
+        public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
         {
-            return await VideoRentalShopService.GetVideoRentalsAsync() as IActionResult;
+            return await VideoRentalShopService.GetVideoRentalsAsync();
         }
 
         [HttpGet]
         [Route("GetUser/{id}")]
-        public async Task<IActionResult> GetUserAsync(string id)
+        public async Task<UserResult> GetUserAsync(string id)
         {
-            return await VideoRentalShopService.GetUserAsync(id) as IActionResult;
+            return await VideoRentalShopService.GetUserAsync(id);
         }
 
         [HttpGet]
         [Route("GetVideo/{id}")]
-        public async Task<IActionResult> GetVideoAsync(string id)
+        public async Task<VideoResult> GetVideoAsync(string id)
         {
-            return await VideoRentalShopService.GetVideoAsync(id) as IActionResult;
+            return await VideoRentalShopService.GetVideoAsync(id);
         }
 
         [HttpGet]
         [Route("GetVideoRental/{id}")]
-        public async Task<IActionResult> GetVideoRentalAsync(string id)
+        public async Task<VideoRentalResult> GetVideoRentalAsync(string id)
         {
-            return await VideoRentalShopService.GetVideoRentalAsync(id) as IActionResult;
+            return await VideoRentalShopService.GetVideoRentalAsync(id);
         }
 
         [HttpPost]
