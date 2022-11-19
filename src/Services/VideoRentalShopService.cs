@@ -75,7 +75,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task UpdateUserAsync(string id, UserCriteria criteria)
         {
-            await UserCollection.ReplaceOneAsync(x => x.Id == id, new User
+            await UserCollection.FindOneAndReplaceAsync(x => x.Id == id, new User
             {
                 FirstName = criteria.FirstName,
                 LastName = criteria.LastName,
@@ -143,7 +143,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task UpdateVideoAsync(string id, VideoCriteria criteria)
         {
-            await VideoCollection.ReplaceOneAsync(x => x.Id == id, new Video
+            await VideoCollection.FindOneAndReplaceAsync(x => x.Id == id, new Video
             {
                 Title = criteria.Title,
                 Genre = criteria.Genre,
@@ -205,7 +205,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria)
         {
-            await VideoRentalCollection.ReplaceOneAsync(x => x.Id == id, new VideoRental
+            await VideoRentalCollection.FindOneAndReplaceAsync(x => x.Id == id, new VideoRental
             {
                 User = criteria.User,
                 Title = criteria.Title,

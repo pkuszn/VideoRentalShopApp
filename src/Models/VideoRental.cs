@@ -7,6 +7,7 @@ namespace VideoRentalShopApp.Models
     public class VideoRental
     {
         [BsonId]
+        [BsonIgnoreIfDefault]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public User User { get; set; }
