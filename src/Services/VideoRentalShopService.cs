@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using VideoRentalShopApp.Configuration;
 using VideoRentalShopApp.DataTransferObjects;
-using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 using VideoRentalShopApp.Models;
+using static VideoRentalShopApp.Constants.Enums;
 
 namespace VideoRentalShopApp.Services
 {
@@ -32,7 +32,6 @@ namespace VideoRentalShopApp.Services
             {
                 return false;
             }
-
             if (!string.IsNullOrEmpty(userId))
             {
                 return await RentVideoBasedOnUserId(videoTitle, userId);
@@ -54,6 +53,13 @@ namespace VideoRentalShopApp.Services
             {
                 return false;
             }
+            Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
+            if (video == null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private async Task<bool> RentVideoBasedOnUserId(string videoTitle, string userId)
@@ -63,12 +69,26 @@ namespace VideoRentalShopApp.Services
             {
                 return false;
             }
-
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
             if(video == null)
             {
                 return false;
             }
+            VideoRental videoRental = await VideoRentalCollection.Find(f => f.UserId == userId).FirstOrDefaultAsync();
+            if(videoRental == null)
+            {
+                return false;
+            }
+            if(videoRental.Videos == null)
+            {
+                videoRental.Videos = new();
+            }
+            if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
+            {
+                return false;
+            }
+
+
             return true;
         }
 
