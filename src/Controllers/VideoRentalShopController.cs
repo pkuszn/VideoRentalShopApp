@@ -20,6 +20,13 @@ namespace VideoRentalShopApp.Controllers
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
         }
 
+        [HttpGet]
+        [Route("GetAvailableVideos")]
+        public async Task<List<VideoResult>> GetAvailableVideosAsync()
+        {
+            return await VideoRentalShopService.GetListOfAllAvailableVideosAsync();
+        }
+
         [HttpPost]
         [Route("RentFilm")]
         public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)

@@ -30,6 +30,26 @@ namespace VideoRentalShopApp.Services
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        public async Task<List<VideoResult>> GetListOfAllAvailableVideosAsync()
+        {
+            List<Video> videos = await VideoCollection.Find(_ => true).ToListAsync();
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            List<string> videoTitles = videoRentals.SelectMany(m => m.Videos.Select(s => s.Title)).ToList();
+            List<Video> availableVideos = videos.Where(w => !videoTitles.Contains(w.Title)).ToList();
+            return availableVideos.Select(s => new VideoResult
+            {
+                Id = s.Id,
+                Title = s.Title,
+                Score = s.Score,
+                Runtime = s.Runtime,
+                Genre = s.Genre,
+                Director = s.Director,
+                Description = s.Description,
+                Actors = s.Actors,
+                CreatedDate = s.CreatedDate
+            }).ToList();
+        }
+
         public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
         {
             if (string.IsNullOrEmpty(videoTitle))
