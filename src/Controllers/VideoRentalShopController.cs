@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
-using VideoRentalShopApp.DataTransferObjects.Results;
+using VideoRentalShopApp.DataTransferObjects.Criteria;
 using VideoRentalShopApp.Interfaces;
 
 namespace VideoRentalShopApp.Controllers
@@ -13,13 +13,18 @@ namespace VideoRentalShopApp.Controllers
     [Route("[controller]")]
     public class VideoRentalShopController : ControllerBase
     {
-        private readonly ILogger<VideoRentalShopController> Logger;
         private readonly IVideoRentalShopService VideoRentalShopService;
 
         public VideoRentalShopController(ILogger<VideoRentalShopController> logger, IVideoRentalShopService videoRentalShopService)
         {
-            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+        }
+
+        [HttpPost]
+        [Route("RentFilm")]
+        public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)
+        {
+            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId);
         }
 
         [HttpGet]

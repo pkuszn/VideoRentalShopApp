@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
-using VideoRentalShopApp.DataTransferObjects.Results;
 
 namespace VideoRentalShopApp.Interfaces
 {
     public interface IVideoRentalShopService
     {
+        Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null);
         Task<List<UserResult>> GetUsersAsync();
         Task<UserResult> GetUserAsync(string id);
         Task<string> CreateUserAsync(UserCriteria criteria);

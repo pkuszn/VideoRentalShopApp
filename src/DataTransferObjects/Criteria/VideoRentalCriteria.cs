@@ -1,14 +1,13 @@
-﻿using System;
-using VideoRentalShopApp.Models;
+﻿using System.Collections.Generic;
+using VideoRentalShopApp.DataTransferObjects.Criteria;
 
 namespace VideoRentalShopApp.DataTransferObjects
 {
     public class VideoRentalCriteria
     {
-        public User User { get; set; }
-        public string Title { get; set; }
-        public DateTime StartRentalDate { get; set; }
-        public DateTime EndRentalDate { get; set; }
-        public DateTime? RealEndOfRentalDate { get; set; }
+        public string? UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public List<VideoRentCriteria> Videos { get; set; }
     }
 }

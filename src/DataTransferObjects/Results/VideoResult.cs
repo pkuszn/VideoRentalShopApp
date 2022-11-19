@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VideoRentalShopApp.DataTransferObjects.Results
+namespace VideoRentalShopApp.DataTransferObjects
 {
     public class VideoResult
     {
