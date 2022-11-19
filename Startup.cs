@@ -4,17 +4,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using VideoRentalShopApp.Extensions;
 
 namespace VideoRentalShopApp
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -24,6 +24,8 @@ namespace VideoRentalShopApp
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VideoRentalShopApp", Version = "v1" });
             });
+            services.AddServices(Configuration);
+            services.AddConfig(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
