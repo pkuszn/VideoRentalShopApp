@@ -15,7 +15,7 @@ namespace VideoRentalShopApp.Controllers
     {
         private readonly IVideoRentalShopService VideoRentalShopService;
 
-        public VideoRentalShopController(ILogger<VideoRentalShopController> logger, IVideoRentalShopService videoRentalShopService)
+        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService)
         {
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
         }
@@ -24,7 +24,7 @@ namespace VideoRentalShopApp.Controllers
         [Route("RentFilm")]
         public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)
         {
-            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId);
+            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId, criteria.FirstName, criteria.LastName);
         }
 
         [HttpGet]
