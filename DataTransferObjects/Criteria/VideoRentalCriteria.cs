@@ -1,14 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
+using VideoRentalShopApp.Models;
 
-namespace VideoRentalShopApp.Models
+namespace VideoRentalShopApp.DataTransferObjects
 {
-    public class VideoRental
+    public class VideoRentalCriteria
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
         public User User { get; set; }
         public string Title { get; set; }
         public DateTime StartRentalDate { get; set; }
