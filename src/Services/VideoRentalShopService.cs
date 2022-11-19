@@ -30,6 +30,26 @@ namespace VideoRentalShopApp.Services
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        public async Task<List<VideoResult>> GetListOfAllAvailableVideosAsync()
+        {
+            List<Video> videos = await VideoCollection.Find(_ => true).ToListAsync();
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            List<string> videoTitles = videoRentals.SelectMany(m => m.Videos.Select(s => s.Title)).ToList();
+            List<Video> availableVideos = videos.Where(w => !videoTitles.Contains(w.Title)).ToList();
+            return availableVideos.Select(s => new VideoResult
+            {
+                Id = s.Id,
+                Title = s.Title,
+                Score = s.Score,
+                Runtime = s.Runtime,
+                Genre = s.Genre,
+                Director = s.Director,
+                Description = s.Description,
+                Actors = s.Actors,
+                CreatedDate = s.CreatedDate
+            }).ToList();
+        }
+
         public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
         {
             if (string.IsNullOrEmpty(videoTitle))
@@ -63,30 +83,66 @@ namespace VideoRentalShopApp.Services
                 return false;
             }
 
-            return true;
+            return await UpdateUserVideosCollection(videoTitle, firstName, lastName);
         }
 
         private async Task<bool> RentVideoBasedOnUserId(string videoTitle, string userId)
         {
             User user = await UserCollection.Find(f => f.Id.Equals(userId)).FirstOrDefaultAsync();
-            if(user == null)
+            if (user == null)
             {
                 Logger.LogError($"User is null");
                 return false;
             }
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
-            if(video == null)
+            if (video == null)
             {
                 Logger.LogError($"Video is null");
                 return false;
             }
-            VideoRental videoRental = await VideoRentalCollection.Find(f => f.UserId == userId).FirstOrDefaultAsync();
-            if(videoRental == null)
+            return await UpdateUserVideosCollection(videoTitle, userId);
+        }
+
+        private async Task<bool> UpdateUserVideosCollection(string videoTitle, string firstName, string lastName)
+        {
+            VideoRental videoRental = await VideoRentalCollection.Find(f => f.FirstName.Equals(firstName) && f.LastName.Equals(lastName)).FirstOrDefaultAsync();
+            if (videoRental == null)
             {
                 Logger.LogError($"VideoRental is null");
                 return false;
             }
-            if(videoRental.Videos == null)
+            if (videoRental.Videos == null)
+            {
+                videoRental.Videos = new();
+            }
+            if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
+            {
+                Logger.LogInformation($"The limit of user {firstName} {lastName} has been exceeded");
+                return false;
+            }
+            DateTime rentMaxDaysLimit = DateTime.UtcNow.AddDays((int)Config.RentMaxDays);
+            videoRental.Videos.Add(new VideoRent
+            {
+                Title = videoTitle,
+                StartRentalDate = DateTime.UtcNow,
+                EndRentalDate = rentMaxDaysLimit,
+                RealEndOfRentalDate = null
+            });
+
+            await VideoRentalCollection.FindOneAndReplaceAsync(f => f.FirstName.Equals(firstName) && f.LastName.Equals(lastName), videoRental);
+            Logger.LogInformation($"Added new film to the collection of user: {firstName} {lastName}");
+            return true;
+        }
+
+        private async Task<bool> UpdateUserVideosCollection(string videoTitle, string userId)
+        {
+            VideoRental videoRental = await VideoRentalCollection.Find(f => f.UserId == userId).FirstOrDefaultAsync();
+            if (videoRental == null)
+            {
+                Logger.LogError($"VideoRental is null");
+                return false;
+            }
+            if (videoRental.Videos == null)
             {
                 videoRental.Videos = new();
             }

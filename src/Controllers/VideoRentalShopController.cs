@@ -15,16 +15,23 @@ namespace VideoRentalShopApp.Controllers
     {
         private readonly IVideoRentalShopService VideoRentalShopService;
 
-        public VideoRentalShopController(ILogger<VideoRentalShopController> logger, IVideoRentalShopService videoRentalShopService)
+        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService)
         {
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+        }
+
+        [HttpGet]
+        [Route("GetAvailableVideos")]
+        public async Task<List<VideoResult>> GetAvailableVideosAsync()
+        {
+            return await VideoRentalShopService.GetListOfAllAvailableVideosAsync();
         }
 
         [HttpPost]
         [Route("RentFilm")]
         public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)
         {
-            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId);
+            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId, criteria.FirstName, criteria.LastName);
         }
 
         [HttpGet]
