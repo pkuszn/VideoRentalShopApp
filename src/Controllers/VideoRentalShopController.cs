@@ -41,22 +41,22 @@ namespace VideoRentalShopApp.Controllers
             return await VideoRentalShopService.GetVideoRentalsAsync() as IActionResult;
         }
 
-        [HttpGet("{id}", Name="Get")]
-        [Route("GetUsers")]
+        [HttpGet]
+        [Route("GetUser/{id}")]
         public async Task<IActionResult> GetUserAsync(string id)
         {
             return await VideoRentalShopService.GetUserAsync(id) as IActionResult;
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        [Route("GetVideos")]
+        [HttpGet]
+        [Route("GetVideo/{id}")]
         public async Task<IActionResult> GetVideoAsync(string id)
         {
             return await VideoRentalShopService.GetVideoAsync(id) as IActionResult;
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        [Route("GetVideoRentals")]
+        [HttpGet]
+        [Route("GetVideoRental/{id}")]
         public async Task<IActionResult> GetVideoRentalAsync(string id)
         {
             return await VideoRentalShopService.GetVideoRentalAsync(id) as IActionResult;
@@ -83,43 +83,43 @@ namespace VideoRentalShopApp.Controllers
             await VideoRentalShopService.CreateVideoRentalAsync(criteria);
         }
 
-        [HttpPut("{id}", Name = "Put")]
-        [Route("UpdateUser")]
+        [HttpPut]
+        [Route("UpdateUser/{id}")]
         public async Task UpdateUserAsync(string id, UserCriteria criteria)
         {
             await VideoRentalShopService.UpdateUserAsync(id, criteria);
         }
 
-        [HttpPut("{id}", Name = "Put")]
-        [Route("UpdateVideo")]
+        [HttpPut]
+        [Route("UpdateVideo/{id}")]
         public async Task UpdateVideoAsync(string id, VideoCriteria criteria)
         {
             await VideoRentalShopService.UpdateVideoAsync(id, criteria);
         }
 
-        [HttpPut("{id}", Name = "Put")]
-        [Route("UpdateVideoRental")]
+        [HttpPut]
+        [Route("UpdateVideoRental/{id}")]
         public async Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria)
         {
             await VideoRentalShopService.UpdateVideoRentalAsync(id, criteria);
         }
 
-        [HttpDelete("{id}", Name = "Delete")]
-        [Route("DeleteUser")]
+        [HttpDelete]
+        [Route("DeleteUser/{id}")]
         public async Task DeleteUserAsync(string id)
         {
             await VideoRentalShopService.DeleteUserAsync(id);
         }
 
-        [HttpDelete("{id}", Name = "Delete")]
-        [Route("DeleteVideo")]
+        [HttpDelete]
+        [Route("DeleteVideo/{id}")]
         public async Task DeleteVideoAsync(string id)
         {
             await VideoRentalShopService.DeleteVideoAsync(id);
         }
 
-        [HttpDelete("{id}", Name = "Delete")]
-        [Route("DeleteVideoRental")]
+        [HttpDelete]
+        [Route("DeleteVideoRental/{id}")]
         public async Task DeleteVideoRentalAsync(string id)
         {
             await VideoRentalShopService.DeleteVideoRentalAsync(id);
