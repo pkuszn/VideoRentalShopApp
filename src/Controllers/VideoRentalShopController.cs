@@ -23,6 +23,13 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpGet]
+        [Route("RentFilm")]
+        public async Task<bool> RentVideoAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
         [Route("GetUsers")]
         public async Task<List<UserResult>> GetUsersAsync()
         {

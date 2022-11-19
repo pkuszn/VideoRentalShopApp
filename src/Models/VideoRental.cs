@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
+using System.Collections.Generic;
 
 namespace VideoRentalShopApp.Models
 {
@@ -10,13 +10,9 @@ namespace VideoRentalShopApp.Models
         [BsonIgnoreIfDefault]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public User User { get; set; }
-        public string Title { get; set; }
-        //ISODate
-        public DateTime StartRentalDate { get; set; }
-        //ISODate
-        public DateTime EndRentalDate { get; set; }
-        //ISODate
-        public DateTime? RealEndOfRentalDate { get; set; }
+        public string? UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public List<VideoRent> Videos { get; set; }
     }
 }

@@ -26,6 +26,48 @@ namespace VideoRentalShopApp.Services
             VideoRentalCollection = database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
         }
 
+        public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
+        {
+            if (string.IsNullOrEmpty(videoTitle))
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                return await RentVideoBasedOnUserId(videoTitle, userId);
+            }
+            else if(!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+            {
+                return await RentVideoBasedOnUserData(videoTitle, firstName, lastName);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> RentVideoBasedOnUserData(string videoTitle, string firstName, string lastName)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<bool> RentVideoBasedOnUserId(string videoTitle, string userId)
+        {
+            User user = await UserCollection.Find(f => f.Id.Equals(userId)).FirstOrDefaultAsync();
+            if(user == null)
+            {
+                return false;
+            }
+
+            Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
+            if(video == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public async Task<List<UserResult>> GetUsersAsync()
         {
             List<User> users = await UserCollection.Find(_ => true).ToListAsync();
@@ -47,7 +89,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task<UserResult> GetUserAsync(string id)
         {
-            User user = await UserCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            User user = await UserCollection.Find(x => x.Id.Equals(id)).FirstOrDefaultAsync();
             return new UserResult
             {
                 Id = user.Id,
@@ -75,7 +117,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task UpdateUserAsync(string id, UserCriteria criteria)
         {
-            await UserCollection.FindOneAndReplaceAsync(x => x.Id == id, new User
+            await UserCollection.FindOneAndReplaceAsync(x => x.Id.Equals(id), new User
             {
                 FirstName = criteria.FirstName,
                 LastName = criteria.LastName,
@@ -87,7 +129,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task DeleteUserAsync(string id)
         {
-            await UserCollection.DeleteOneAsync(x => x.Id == id);
+            await UserCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
 
         public async Task<List<VideoResult>> GetVideosAsync()
@@ -109,7 +151,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task<VideoResult> GetVideoAsync(string id)
         {
-            Video video = await VideoCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            Video video = await VideoCollection.Find(x => x.Id.Equals(id)).FirstOrDefaultAsync();
             return new VideoResult
             {
                 Id = video.Id,
@@ -143,7 +185,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task UpdateVideoAsync(string id, VideoCriteria criteria)
         {
-            await VideoCollection.FindOneAndReplaceAsync(x => x.Id == id, new Video
+            await VideoCollection.FindOneAndReplaceAsync(x => x.Id.Equals(id), new Video
             {
                 Title = criteria.Title,
                 Genre = criteria.Genre,
@@ -158,7 +200,7 @@ namespace VideoRentalShopApp.Services
 
         public async Task DeleteVideoAsync(string id)
         {
-            await VideoCollection.DeleteOneAsync(x => x.Id == id);
+            await VideoCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
 
         public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
@@ -167,25 +209,35 @@ namespace VideoRentalShopApp.Services
             return videoRentals.Select(s => new VideoRentalResult
             {
                 Id = s.Id,
-                Title = s.Title,
-                User = s.User,
-                StartRentalDate = s.StartRentalDate,
-                EndRentalDate = s.EndRentalDate,
-                RealEndOfRentalDate = s.RealEndOfRentalDate
+                UserId = s.UserId,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Videos = s.Videos.Select(s => new VideoRentResult
+                {
+                    Title = s.Title,
+                    StartRentalDate = s.StartRentalDate,
+                    EndRentalDate = s.EndRentalDate,
+                    RealEndOfRentalDate = s.RealEndOfRentalDate
+                }).ToList()
             }).ToList();
         }
 
         public async Task<VideoRentalResult> GetVideoRentalAsync(string id)
         {
-            VideoRental videoRental = await VideoRentalCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            VideoRental videoRental = await VideoRentalCollection.Find(x => x.Id.Equals(id)).FirstOrDefaultAsync();
             return new VideoRentalResult
             {
                 Id = videoRental.Id,
-                User = videoRental.User,
-                Title = videoRental.Title,
-                StartRentalDate = videoRental.StartRentalDate,
-                EndRentalDate = videoRental.EndRentalDate,
-                RealEndOfRentalDate = videoRental.RealEndOfRentalDate
+                UserId = videoRental.UserId,
+                FirstName = videoRental.FirstName,
+                LastName = videoRental.LastName,
+                Videos = videoRental.Videos.Select(s => new VideoRentResult
+                {
+                    Title = s.Title,
+                    StartRentalDate = s.StartRentalDate,
+                    EndRentalDate = s.EndRentalDate,
+                    RealEndOfRentalDate = s.RealEndOfRentalDate
+                }).ToList()
             };
         }
 
@@ -193,11 +245,16 @@ namespace VideoRentalShopApp.Services
         {
             VideoRental videoRental = new()
             {
-                User = criteria.User,
-                Title = criteria.Title,
-                StartRentalDate = criteria.StartRentalDate,
-                EndRentalDate = criteria.EndRentalDate,
-                RealEndOfRentalDate = null
+                UserId = criteria.UserId,
+                FirstName = criteria.FirstName,
+                LastName = criteria.LastName,
+                Videos = criteria.Videos.Select(s => new VideoRent
+                {
+                    Title = s.Title,
+                    StartRentalDate = s.StartRentalDate,
+                    EndRentalDate = s.EndRentalDate,
+                    RealEndOfRentalDate = null
+                }).ToList()
             };
             await VideoRentalCollection.InsertOneAsync(videoRental);
             return videoRental.Id;
@@ -205,19 +262,24 @@ namespace VideoRentalShopApp.Services
 
         public async Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria)
         {
-            await VideoRentalCollection.FindOneAndReplaceAsync(x => x.Id == id, new VideoRental
+            await VideoRentalCollection.FindOneAndReplaceAsync(x => x.Id.Equals(id), new VideoRental
             {
-                User = criteria.User,
-                Title = criteria.Title,
-                StartRentalDate = criteria.StartRentalDate,
-                EndRentalDate = criteria.EndRentalDate,
-                RealEndOfRentalDate = null
+                UserId = criteria.UserId,
+                FirstName = criteria.FirstName,
+                LastName = criteria.LastName,
+                Videos = criteria.Videos.Select(s => new VideoRent
+                {
+                    Title = s.Title,
+                    StartRentalDate = s.StartRentalDate,
+                    EndRentalDate = s.EndRentalDate,
+                    RealEndOfRentalDate = s.RealEndOfRentalDate
+                }).ToList()
             });
         }
 
         public async Task DeleteVideoRentalAsync(string id)
         {
-            await VideoRentalCollection.DeleteOneAsync(x => x.Id == id);
+            await VideoRentalCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
     }
 }
