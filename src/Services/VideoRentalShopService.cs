@@ -49,7 +49,11 @@ namespace VideoRentalShopApp.Services
 
         private async Task<bool> RentVideoBasedOnUserData(string videoTitle, string firstName, string lastName)
         {
-            throw new NotImplementedException();
+            User user = await UserCollection.Find(f => f.FirstName.Equals(firstName) && f.LastName.Equals(lastName)).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
         }
 
         private async Task<bool> RentVideoBasedOnUserId(string videoTitle, string userId)
