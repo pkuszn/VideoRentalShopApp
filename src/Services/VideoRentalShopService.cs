@@ -51,14 +51,19 @@ namespace VideoRentalShopApp.Services
             }
         }
 
+        public async Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre)
+        {
+            return await GetListOfAvailableShortVideosAsync(sortByTitle, sortByGenre);
+        }
+
         public async Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
-            return await GetListOfAvailableVideosAsync(sortByTitle, sortByGenre) ?? new();
+            return await GetListOfAvailableVideosAsync(sortByTitle, sortByGenre);
         }
 
         private async Task<List<VideoResult>> GetListOfAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
-        {
-            SortDefinition<Video> sort = sortByTitle 
+        { 
+            SortDefinition<Video> sort = sortByTitle
                 ? Builders<Video>.Sort.Ascending("Title")
                 : sortByGenre ? Builders<Video>.Sort.Ascending("Title")
                 : null;
@@ -81,6 +86,30 @@ namespace VideoRentalShopApp.Services
                 Description = s.Description,
                 Actors = s.Actors,
                 CreatedDate = s.CreatedDate
+            }).ToList();
+        }
+
+        private async Task<List<VideoShortResult>> GetListOfAvailableShortVideosAsync(bool sortByTitle, bool sortByGenre)
+        {
+            SortDefinition<Video> sort = sortByTitle
+                ? Builders<Video>.Sort.Ascending("Title")
+                : sortByGenre ? Builders<Video>.Sort.Ascending("Title")
+                : null;
+
+            List<Video> videos = sort == null
+                ? await VideoCollection.Find(_ => true).ToListAsync()
+                : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
+
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            VideoCollection videoCollection = new(videos, videoRentals);
+            Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
+            return videoCollection.AvailableVideoList.Select(s => new VideoShortResult
+            {
+                Id = s.Id,
+                Title = s.Title,
+                Runtime = s.Runtime,
+                Genre = s.Genre,
+                Director = s.Director
             }).ToList();
         }
 

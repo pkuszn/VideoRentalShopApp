@@ -26,6 +26,13 @@ namespace VideoRentalShopApp.Controllers
             return await VideoRentalShopService.GetAvailableVideosAsync(sortByTitle, sortByGenre);
         }
 
+        [HttpGet]
+        [Route("GetAvailableVideoShort")]
+        public async Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre)
+        {
+            return await VideoRentalShopService.GetAvailableVideosShortAsync(sortByTitle, sortByGenre);
+        }
+
         [HttpPost]
         [Route("RentFilm")]
         public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)
