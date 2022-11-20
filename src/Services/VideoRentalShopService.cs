@@ -299,6 +299,7 @@ namespace VideoRentalShopApp.Services
             await VideoRentalCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
 
+        //TODO: Dodać pole status do filmu i pozmieniać kody. Ostatnia rzecz do zrobienia.
         private async Task<List<VideoResult>> GetListOfAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
             SortDefinition<Video> sort = sortByTitle
@@ -310,7 +311,10 @@ namespace VideoRentalShopApp.Services
                 ? await VideoCollection.Find(_ => true).ToListAsync()
                 : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
 
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
+
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
             VideoCollection videoCollection = new(videos, videoRentals);
             Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
             return videoCollection.AvailableVideoList.Select(s => new VideoResult
@@ -338,7 +342,11 @@ namespace VideoRentalShopApp.Services
                 ? await VideoCollection.Find(_ => true).ToListAsync()
                 : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
 
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+
+            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
+
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
             VideoCollection videoCollection = new(videos, videoRentals);
             Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
             return videoCollection.AvailableVideoList.Select(s => new VideoShortResult
