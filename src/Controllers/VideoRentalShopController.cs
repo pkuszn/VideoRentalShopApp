@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,9 +21,9 @@ namespace VideoRentalShopApp.Controllers
 
         [HttpGet]
         [Route("GetAvailableVideos")]
-        public async Task<List<VideoResult>> GetAvailableVideosAsync()
+        public async Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
-            return await VideoRentalShopService.GetListOfAllAvailableVideosAsync();
+            return await VideoRentalShopService.GetAvailableVideosAsync(sortByTitle, sortByGenre);
         }
 
         [HttpPost]

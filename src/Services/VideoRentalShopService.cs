@@ -10,11 +10,12 @@ using VideoRentalShopApp.Configuration;
 using VideoRentalShopApp.DataTransferObjects;
 using VideoRentalShopApp.Interfaces;
 using VideoRentalShopApp.Models;
+using VideoRentalShopApp.Utils;
 using static VideoRentalShopApp.Constants.Enums;
 
 namespace VideoRentalShopApp.Services
 {
-    public class VideoRentalShopService: IVideoRentalShopService
+    public class VideoRentalShopService : IVideoRentalShopService
     {
         private readonly IMongoCollection<User> UserCollection;
         private readonly IMongoCollection<Video> VideoCollection;
@@ -30,13 +31,46 @@ namespace VideoRentalShopApp.Services
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<List<VideoResult>> GetListOfAllAvailableVideosAsync()
+        public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
         {
-            List<Video> videos = await VideoCollection.Find(_ => true).ToListAsync();
+            if (string.IsNullOrEmpty(videoTitle))
+            {
+                return false;
+            }
+            if (!string.IsNullOrEmpty(userId))
+            {
+                return await RentVideoAsyncBasedOn(videoTitle, userId);
+            }
+            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+            {
+                return await RentVideoAsyncBasedOn(videoTitle, firstName, lastName);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
+        {
+            return await GetListOfAvailableVideosAsync(sortByTitle, sortByGenre) ?? new();
+        }
+
+        private async Task<List<VideoResult>> GetListOfAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
+        {
+            SortDefinition<Video> sort = sortByTitle 
+                ? Builders<Video>.Sort.Ascending("Title")
+                : sortByGenre ? Builders<Video>.Sort.Ascending("Title")
+                : null;
+
+            List<Video> videos = sort == null 
+                ? await VideoCollection.Find(_ => true).ToListAsync() 
+                : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
+
             List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
-            List<string> videoTitles = videoRentals.SelectMany(m => m.Videos.Select(s => s.Title)).ToList();
-            List<Video> availableVideos = videos.Where(w => !videoTitles.Contains(w.Title)).ToList();
-            return availableVideos.Select(s => new VideoResult
+            VideoCollection videoCollection = new(videos, videoRentals);
+            Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
+            return videoCollection.AvailableVideoList.Select(s => new VideoResult
             {
                 Id = s.Id,
                 Title = s.Title,
@@ -50,27 +84,7 @@ namespace VideoRentalShopApp.Services
             }).ToList();
         }
 
-        public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
-        {
-            if (string.IsNullOrEmpty(videoTitle))
-            {
-                return false;
-            }
-            if (!string.IsNullOrEmpty(userId))
-            {
-                return await RentVideoBasedOnUserId(videoTitle, userId);
-            }
-            else if(!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-            {
-                return await RentVideoBasedOnUserData(videoTitle, firstName, lastName);
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private async Task<bool> RentVideoBasedOnUserData(string videoTitle, string firstName, string lastName)
+        private async Task<bool> RentVideoAsyncBasedOn(string videoTitle, string firstName, string lastName)
         {
             User user = await UserCollection.Find(f => f.FirstName.Equals(firstName) && f.LastName.Equals(lastName)).FirstOrDefaultAsync();
             if (user == null)
@@ -86,7 +100,7 @@ namespace VideoRentalShopApp.Services
             return await UpdateUserVideosCollection(videoTitle, firstName, lastName);
         }
 
-        private async Task<bool> RentVideoBasedOnUserId(string videoTitle, string userId)
+        private async Task<bool> RentVideoAsyncBasedOn(string videoTitle, string userId)
         {
             User user = await UserCollection.Find(f => f.Id.Equals(userId)).FirstOrDefaultAsync();
             if (user == null)
@@ -117,15 +131,15 @@ namespace VideoRentalShopApp.Services
             }
             if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
             {
-                Logger.LogInformation($"The limit of user {firstName} {lastName} has been exceeded");
+                Logger.LogInformation($"The limit of user rental {firstName} {lastName} has been exceeded");
                 return false;
             }
-            DateTime rentMaxDaysLimit = DateTime.UtcNow.AddDays((int)Config.RentMaxDays);
+            DateTime rentMaxDaysDate = DateTime.UtcNow.AddDays((int)Config.RentMaxDays);
             videoRental.Videos.Add(new VideoRent
             {
                 Title = videoTitle,
                 StartRentalDate = DateTime.UtcNow,
-                EndRentalDate = rentMaxDaysLimit,
+                EndRentalDate = rentMaxDaysDate,
                 RealEndOfRentalDate = null
             });
 
@@ -148,7 +162,7 @@ namespace VideoRentalShopApp.Services
             }
             if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
             {
-                Logger.LogInformation($"The limit of user with id {userId} has been exceeded");
+                Logger.LogInformation($"The limit of user rental with id {userId} has been exceeded");
                 return false;
             }
             DateTime rentMaxDaysLimit = DateTime.UtcNow.AddDays((int)Config.RentMaxDays);
@@ -168,7 +182,7 @@ namespace VideoRentalShopApp.Services
         public async Task<List<UserResult>> GetUsersAsync()
         {
             List<User> users = await UserCollection.Find(_ => true).ToListAsync();
-            if((users?.Count ?? 0) == 0)
+            if ((users?.Count ?? 0) == 0)
             {
                 return null;
             }
