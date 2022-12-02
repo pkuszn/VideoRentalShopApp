@@ -7,5 +7,6 @@
         public string Genre { get; set; }
         public string Director { get; set; }
         public int Runtime { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }
