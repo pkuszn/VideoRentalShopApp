@@ -1,44 +1,48 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>To-do CRUD</title>
-    <link rel="stylesheet" href="css/site.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Rental Shop</title>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
-    <h1>To-do CRUD</h1>
-    <h3>Add</h3>
-    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-        <input type="text" id="add-name" placeholder="New to-do">
-        <input type="submit" value="Add">
-    </form>
 
-    <div id="editForm">
-        <h3>Edit</h3>
-        <form action="javascript:void(0);" onsubmit="updateItem()">
-            <input type="hidden" id="edit-id">
-            <input type="checkbox" id="edit-isComplete">
-            <input type="text" id="edit-name">
-            <input type="submit" value="Save">
-            <a onclick="closeInput()" aria-label="Close">&#10006;</a>
-        </form>
+<body>
+    <div class="navigation">
+        <h1 style="margin-left:10px;">Video Rental Shop</h1>
+        <div class="login">
+            <input class="login-component" type="text" placeholder="Login"/>
+            <input class="login-component" type="password" placeholder="Password"/>
+            <button class="login-component button-9" type="button">Login</button>
+        </div> 
     </div>
 
-    <p id="counter"></p>
-
-    <table>
-        <tr>
-            <th>Is Complete?</th>
-            <th>Name</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tbody id="todos"></tbody>
-    </table>
-
-    <script src="js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-        getItems();
-    </script>
+    <div id="wrapper">
+        <div id="sidebar">
+            <h2 style="margin-left:10px; text-align: center;">Menu</h2>
+            <button type="button" id="get-videos-button">Get Videos</button>
+            <button type="button" id="rent-video-button">Rent video</button>
+            <button type="button" id="get-list-of-all-video-rentals-button">Get list of all video rentals</button>
+            <button type="button" id="add-new-user-button">Add new user</button>
+            <button type="button" if="remove-user-button">Remove user</button>
+            <button type="button" id="modify-existing-user-button">Modify existing user</button>
+            <button type="button" id="add-new-video-button">Add new video</button>
+            <button type="button" id="remove-video-button">Remove video</button>
+            <button type="button" id="modify-existing-video-button">Modify existing video</button>
+            <!--For user only-->
+            <!-- 
+                <a href="">Get Available Videos</a>
+                <a href="">Get my videos</a>
+                <a href="">Rent video</a>
+            -->
+        </div>
+        <div id="content">
+            <h4 style="text-align:center;">Welcome to video rental shop</h4>
+        </div>
+    </div>
+    <script src="~/js/site.js" type="module"></script>
 </body>
+
 </html>

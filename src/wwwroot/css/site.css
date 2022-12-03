@@ -1,23 +1,109 @@
-﻿input[type='submit'], button, [aria-label] {
+﻿body {
+    font-family: 'Montserrat', sans-serif;
+    max-width: 100%;
+    background: lightblue;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.login {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-component {
+    max-height: 25px;
+    margin: 10px;
+    align-self: center;
+}
+
+input:focus {
+    border-color: dodgerBlue;
+    box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+input {
+    border: 2px solid #aaa;
+    border-radius: 3px;
+    width: 95%;
+    margin-left: 10px;
+    transition: .3s;
+    outline: none;
+}
+
+.button-9 {
     cursor: pointer;
+    outline: 0;
+    color: #fff;
+    width: 150px;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-#editForm {
-    display: none;
+    .button-9:hover {
+        color: #fff;
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+    }
+
+#wrapper {
+    display: flex;
+    height: calc(100vh - 50px);
+    /* height of body less height of navbar */
+    overflow: hidden;
 }
 
-table {
-    font-family: Arial, sans-serif;
-    border: 1px solid;
-    border-collapse: collapse;
+/* SIDEBAR */
+#sidebar {
+    background: lightblue;
+    display: flex;
+    width: 200px;
+    flex-direction: column;
 }
 
-th {
-    background-color: #f8f8f8;
-    padding: 5px;
-}
+    #sidebar button {
+        float: right;
+        color: black;
+        background: lightblue;
+        text-align: center;
+        padding: 20px 5px;
+        border: none;
+        text-decoration: none;
+        border-radius: 3px;
+        font-size: 14px;
+        flex-direction: row;
+    }
 
-td {
-    border: 1px solid;
-    padding: 5px;
+        #sidebar button:hover {
+            background-color: white;
+            color: steelblue;
+        }
+
+        #sidebar button.active {
+            background-color: #04AA6D;
+            color: red
+        }
+
+#content {
+    width: 100%;
+    height: 100%;
+    background-color: #D9F2FE;
+    flex: 1;
+    /* triggers scrollbar */
 }

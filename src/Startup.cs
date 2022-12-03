@@ -39,6 +39,11 @@ namespace VideoRentalShopApp
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            app.UseCors(policy =>
+            {
+                policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
