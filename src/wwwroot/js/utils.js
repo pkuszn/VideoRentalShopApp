@@ -46,6 +46,48 @@ function createTableVideos(videos, container, headers) {
     return container;
 }
 
+//id, userId, firstName, lastnName, Videos
+function createTableVideoRentals(videoRentals, container, headers) {
+    if (videoRentals === null) {
+        return;
+    }
+    console.log(videoRentals);
+    const table = document.createElement('table');
+    const tableAttr = document.createAttribute('class');
+    tableAttr.value = 'fl-table';
+    table.setAttributeNode(tableAttr);
+
+    const tableHead = document.createElement('thead');
+    const trHead = document.createElement('tr');
+    for (let i = 0; i < headers.length; i++) {
+        const header = document.createElement('th');
+        const headerAttr = document.createAttribute('class');
+        headerAttr.value = 'headers';
+        header.setAttributeNode(headerAttr);
+        const headerText = document.createTextNode(headers[i]);
+        header.appendChild(headerText);
+        trHead.appendChild(header);
+    }
+    actionHeader(trHead);
+    tableHead.appendChild(trHead);
+
+    const tableBody = document.createElement('tbody');
+    for (let i = 0; i < videoRentals.length; i++) {
+        const row = document.createElement('tr');
+        row.appendChild(createRow(videoRentals[i].id));
+        row.appendChild(createRow(videoRentals[i].userId));
+        row.appendChild(createRow(videoRentals[i].firstName));
+        row.appendChild(createRow(videoRentals[i].lastName));
+        row.appendChild(createRow(videoRentals[i].videos));
+        row.appendChild(actionRow());
+        tableBody.appendChild(row);
+    }
+    table.appendChild(tableHead);
+    table.appendChild(tableBody);
+    container.appendChild(table);
+    return container;
+}
+
 const objectProperties = function (obj) {
     let arr = [];
     for (var prop in obj) {
@@ -80,7 +122,7 @@ const actionRow = function(){
     buttonDeleteAttr.value = 'delete-row-button';
     buttonDelete.setAttributeNode(buttonDeleteAttr);
     buttonDelete.textContent = 'Delete';
-    
+
     const buttonUpdate = document.createElement('a');
     const buttonUpdateAttr = document.createAttribute("id");
     const buttonUpdateAttrClass = document.createAttribute('class');
@@ -113,5 +155,6 @@ const clearContent = function(element){
 export {
     createTableVideos,
     objectProperties,
-    clearContent
+    clearContent,
+    createTableVideoRentals
 }

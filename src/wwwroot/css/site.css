@@ -1,7 +1,7 @@
 ﻿body {
     font-family: 'Montserrat', sans-serif;
     max-width: 100%;
-    background: lightblue;
+    background: whitesmoke;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -71,7 +71,7 @@ input {
 
 /* SIDEBAR */
 #sidebar {
-    background: lightblue;
+    background: whitesmoke;
     display: flex;
     width: 200px;
     flex-direction: column;
@@ -80,7 +80,7 @@ input {
 #sidebar button {
     float: right;
     color: black;
-    background: lightblue;
+    background: whitesmoke;
     text-align: center;
     padding: 20px 5px;
     border: none;
@@ -88,6 +88,7 @@ input {
     border-radius: 3px;
     font-size: 14px;
     flex-direction: row;
+    
 }
 
 #sidebar button:hover {
