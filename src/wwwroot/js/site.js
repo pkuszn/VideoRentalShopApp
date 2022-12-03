@@ -1,14 +1,13 @@
-﻿import { getVideos } from './VideoRentalShopAppUI/fetch.js'
+﻿import { fetchVideos } from './fetch.js'
 
 var getVideosButton = document.getElementById('get-videos-button');
 
-const fetchVideos = () => {
-    const response = getVideos();
+const getVideos = () => {
+    const response = fetchVideos();
     console.log(response);
 }
 
-
 getVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
-    fetchVideos();
+    getVideos();
 });
