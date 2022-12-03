@@ -1,14 +1,22 @@
 import { api } from './constants.js'
 
-function fetchVideos(){
-    fetch(api.getVideos, {
+async function fetchVideos() {
+    return await fetch(api.getVideos, {
         method: 'GET',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
-        .then(data => data.json())
-        .then(response => console.log(response))
+        .then((result => { return result.json(); }))
+        .then(data => {
+            console.log(data);
+            return data;
+        })
         .catch(error => console.error('Unable to get videos', error));
 }
 
-export{
+export {
     fetchVideos
 }
