@@ -20,5 +20,6 @@ namespace VideoRentalShopApp.Models
         public List<string> Actors { get; set; }
         //ISODate
         public DateTime CreatedDate { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

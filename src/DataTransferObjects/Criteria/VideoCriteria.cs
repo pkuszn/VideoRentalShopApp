@@ -11,5 +11,6 @@ namespace VideoRentalShopApp.DataTransferObjects
         public double Score { get; set; }
         public string Description { get; set; }
         public List<string> Actors { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

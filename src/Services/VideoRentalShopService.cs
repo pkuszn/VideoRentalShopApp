@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -21,13 +20,14 @@ namespace VideoRentalShopApp.Services
         private readonly IMongoCollection<Video> VideoCollection;
         private readonly IMongoCollection<VideoRental> VideoRentalCollection;
         private readonly ILogger<VideoRentalShopService> Logger;
+        private readonly IMongoDatabase Database;
 
         public VideoRentalShopService(IMongoClient mongoClient, IOptions<VideoRentalShopConfiguration> videoRentalShopConfiguration, ILogger<VideoRentalShopService> logger)
         {
-            IMongoDatabase database = mongoClient.GetDatabase(videoRentalShopConfiguration.Value.DatabaseName) ?? throw new NullReferenceException();
-            UserCollection = database.GetCollection<User>(videoRentalShopConfiguration.Value.UserCollectionName) ?? throw new NullReferenceException();
-            VideoCollection = database.GetCollection<Video>(videoRentalShopConfiguration.Value.VideoCollectionName) ?? throw new NullReferenceException();
-            VideoRentalCollection = database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
+            Database = mongoClient.GetDatabase(videoRentalShopConfiguration.Value.DatabaseName) ?? throw new NullReferenceException();
+            UserCollection = Database.GetCollection<User>(videoRentalShopConfiguration.Value.UserCollectionName) ?? throw new NullReferenceException();
+            VideoCollection = Database.GetCollection<Video>(videoRentalShopConfiguration.Value.VideoCollectionName) ?? throw new NullReferenceException();
+            VideoRentalCollection = Database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         public async Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync()
@@ -162,7 +162,8 @@ namespace VideoRentalShopApp.Services
                 Score = s.Score,
                 Description = s.Description,
                 Actors = s.Actors,
-                CreatedDate = s.CreatedDate
+                CreatedDate = s.CreatedDate,
+                IsAvailable = s.IsAvailable
             }).ToList();
         }
 
@@ -179,7 +180,8 @@ namespace VideoRentalShopApp.Services
                 Runtime = video.Runtime,
                 Description = video.Description,
                 Actors = video.Actors,
-                CreatedDate = video.CreatedDate
+                CreatedDate = video.CreatedDate,
+                IsAvailable = video.IsAvailable
             };
         }
 
@@ -194,7 +196,8 @@ namespace VideoRentalShopApp.Services
                 Description = criteria.Description,
                 Actors = criteria.Actors,
                 Score = criteria.Score,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                IsAvailable = true
             };
             await VideoCollection.InsertOneAsync(video);
             return video.Id;
@@ -211,7 +214,8 @@ namespace VideoRentalShopApp.Services
                 Description = criteria.Description,
                 Actors = criteria.Actors,
                 Score = criteria.Score,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                IsAvailable = criteria.IsAvailable
             });
         }
 
@@ -327,7 +331,8 @@ namespace VideoRentalShopApp.Services
                 Director = s.Director,
                 Description = s.Description,
                 Actors = s.Actors,
-                CreatedDate = s.CreatedDate
+                CreatedDate = s.CreatedDate,
+                IsAvailable = s.IsAvailable
             }).ToList();
         }
 
@@ -366,6 +371,7 @@ namespace VideoRentalShopApp.Services
             {
                 return false;
             }
+
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
             if (video == null)
             {
@@ -383,12 +389,14 @@ namespace VideoRentalShopApp.Services
                 Logger.LogError($"User is null");
                 return false;
             }
+
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
             if (video == null)
             {
                 Logger.LogError($"Video is null");
                 return false;
             }
+
             return await UpdateUserVideosCollection(videoTitle, user);
         }
 
@@ -403,15 +411,18 @@ namespace VideoRentalShopApp.Services
                     return false;
                 }
             }
+
             if (videoRental.Videos == null)
             {
                 videoRental.Videos = new();
             }
+
             if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
             {
                 Logger.LogInformation($"The limit of user rental with id {user.Id} has been exceeded");
                 return false;
             }
+
             DateTime rentMaxDaysLimit = DateTime.UtcNow.AddDays((int)Config.RentMaxDays);
             videoRental.Videos.Add(new VideoRent
             {
@@ -422,7 +433,22 @@ namespace VideoRentalShopApp.Services
             });
 
             await VideoRentalCollection.FindOneAndReplaceAsync(f => f.UserId.Equals(user.Id), videoRental);
+            await UpdateVideoAvailabilityAsync(videoTitle);
             Logger.LogInformation($"Added new film to the collection of user: {user.Id}");
+            return true;
+        }
+
+        private async Task<bool> UpdateVideoAvailabilityAsync(string videoTitle)
+        {
+            Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
+            if(video == null)
+            {
+                return false;
+            }
+
+            video.IsAvailable = false;
+            await VideoCollection.FindOneAndReplaceAsync(f => f.Id.Equals(video.Id), video);
+            Logger.LogInformation($"Availability video with title: {nameof(videoTitle)} has been changed to false");
             return true;
         }
 
@@ -473,7 +499,15 @@ namespace VideoRentalShopApp.Services
             DateTime dateNow = DateTime.UtcNow;
             UpdateDefinition<VideoRental> setRealEndOfRentDate = update.Set("Videos.$.RealEndOfRentalDate", dateNow.ToString());
             VideoRental result = await VideoRentalCollection.FindOneAndUpdateAsync(videoRentalIdTitle, setRealEndOfRentDate);
+            await ReturnRentedVideo(video);
             return result != null;
+        }
+
+        private async Task<bool> ReturnRentedVideo(Video video)
+        {
+            video.IsAvailable = true;
+            await VideoCollection.FindOneAndReplaceAsync(f => f.Id.Equals(video.Id), video);
+            return true;
         }
 
         private async Task<bool> ReturnRentedVideoBasedOn(string videoTitle, string firstName, string lastName)
@@ -518,6 +552,7 @@ namespace VideoRentalShopApp.Services
                 Logger.LogInformation($"Video list is null");
                 return null;
             }
+
             string[] userIds = videoRentals.Select(s => s.UserId).ToArray();
             FilterDefinition<User> filter = Builders<User>.Filter.In(i => i.Id, userIds);
             List<User> users = await UserCollection.Find(filter).ToListAsync();
@@ -526,6 +561,7 @@ namespace VideoRentalShopApp.Services
                 Logger.LogInformation($"User list is null");
                 return null;
             }
+
             List<UserRentedVideosResults> userRentedVideosResults = new();
             foreach (VideoRental videoRental in videoRentals)
             {
@@ -534,6 +570,7 @@ namespace VideoRentalShopApp.Services
                 {
                     continue;
                 }
+
                 foreach (VideoRent video in videoRental.Videos)
                 {
                     userRentedVideosResults.Add(new UserRentedVideosResults
