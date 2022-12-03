@@ -1,0 +1,22 @@
+﻿export const api = {
+    getVideos: 'VideoRentalShop/GetVideos',
+    getUsers: 'VideoRentalShop/GetUsers',
+    getVideoRentals: 'VideoRentalShop/GetVideoRentals',
+    getVideo: 'VideoRentalShop/GetVideo/',
+    getUser: 'VideoRentalShop/GetUser',
+    getVideoRental: 'VideoRentalShop/GetVideoRental',
+    getListOfRents: 'VideoRentalShop/GetListOfRents',
+    returnRentedVideo: 'VideoRentalShop/ReturnRentedVideo',
+    getAvailableVideos: 'VideoRentalShop/GetAvailableVideos',
+    getAvaialbleVideosShort: 'VideoRentalShop/GetAvaialbleVideosShort',
+    rentFilm: 'VideoRentalShop/RentFilm',
+    insertUser: 'VideoRentalShop/InsertUser',
+    insertVideo: 'VideoRentalShop/InsertVideo',
+    insertVideoRental: 'VideoRentalShop/InsertVideoRental',
+    updateUser: 'VideoRentalShop/UpdateUser/',
+    updateVideo: 'VideoRentalShop/UpdateVideo/',
+    updateVideoRental: 'VideoRentalShop/UpdateVideoRental/',
+    deleteUser: 'VideoRentalShop/DeleteUser/',
+    deleteVideo: 'VideoRentalShop/DeleteVideo/',
+    deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/'
+}
