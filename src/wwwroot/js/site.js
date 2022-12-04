@@ -21,18 +21,12 @@ const getVideoRentals = async () => {
 
 getVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
-    if(document.getElementsByClassName('fl-table').length > 0){
-        console.log("powinno czyscic");
-        clearContent(document.getElementsByClassName('fl-table'));
-        }
+    clearContent(container);
     getVideos();
 });
 
 getRentalVideos.addEventListener('click', (e) => {
     e.preventDefault();
-    if(document.getElementsByClassName('fl-table').length > 0){
-        console.log("powinno czyscic");
-        clearContent(document.getElementsByClassName('fl-table'));
-        }
+    clearContent(container);
     getVideoRentals();              
 });

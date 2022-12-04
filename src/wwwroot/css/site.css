@@ -114,7 +114,7 @@ input {
     border-radius: 3px;
     font-size: 14px;
     flex-direction: row;
-    
+    font-family: 'Montserrat', sans-serif;
 }
 
 #sidebar button:hover {

@@ -36,7 +36,15 @@ namespace VideoRentalShopApp
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VideoRentalShopApp v1"));
             }
             app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                //TODO: SESJE, czy jak to mamy, to nie mo¿emy zapisywaæ sesji????
+                OnPrepareResponse = context =>
+                {
+                    context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
+                    context.Context.Response.Headers.Add("Expires", "-1");
+                }
+            });
 
             app.UseCors(policy =>
             {

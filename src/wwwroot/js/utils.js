@@ -137,7 +137,6 @@ const actionRow = function(){
     return div;
 }
 
-
 const actionHeader = function(trHead){
     const header = document.createElement('th');
     const headerAttr = document.createAttribute('class');
@@ -149,7 +148,9 @@ const actionHeader = function(trHead){
 }
 
 const clearContent = function(element){
-    element.innerHTML = "";
+    while (element.firstChild) {
+        element.removeChild(element.lastChild);
+      }
 }
 
 export {
