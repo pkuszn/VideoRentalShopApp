@@ -1,4 +1,5 @@
-﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList } from './constants.js'
+﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context} from './constants.js'
+
 // id, title, genre, director, runtime, score, description, actors, createdDate, isAvailable
 function createTableVideos(videos, container, headers) {
     if (videos === null) {
@@ -34,10 +35,10 @@ function createTableVideos(videos, container, headers) {
         row.appendChild(createRow(videos[i].runtime, propertyNameVideo.runtime));
         row.appendChild(createRow(videos[i].score, propertyNameVideo.score));
         row.appendChild(createRow(videos[i].description, propertyNameVideo.description));
-        row.appendChild(createRow(videos[i].actors ,propertyNameVideo.actors));
+        row.appendChild(createRow(videos[i].actors, propertyNameVideo.actors));
         row.appendChild(createRow(videos[i].createdDate, propertyNameVideo.createdDate));
         row.appendChild(createRow(videos[i].isAvailable, propertyNameVideo.isAvailable));
-        row.appendChild(actionRow());
+        row.appendChild(actionRow(context.getVideos));
         tableBody.appendChild(row);
     }
     table.appendChild(tableHead);
@@ -74,12 +75,13 @@ function createTableVideoRentals(videoRentals, container, headers) {
     const tableBody = document.createElement('tbody');
     for (let i = 0; i < videoRentals.length; i++) {
         const row = document.createElement('tr');
+        var videos = videoRentals[i].videos.map(a => a.title);
         row.appendChild(createRow(videoRentals[i].id, propertyNameVideoRental.id));
         row.appendChild(createRow(videoRentals[i].userId, propertyNameVideoRental.userId));
         row.appendChild(createRow(videoRentals[i].firstName, propertyNameVideoRental.firstName));
         row.appendChild(createRow(videoRentals[i].lastName, propertyNameVideoRental.lastName));
-        row.appendChild(createRow(videoRentals[i].videos.join(), propertyNameVideoRental.videos));
-        row.appendChild(actionRow());
+        row.appendChild(createRow(videos, propertyNameVideoRental.videos));
+        row.appendChild(actionRow(context.getVideoRentals));
         tableBody.appendChild(row);
     }
     table.appendChild(tableHead);
@@ -117,7 +119,7 @@ function createTableGetListOfAllRentals(allRents, container, headers) {
     for (let i = 0; i < allRents.length; i++) {
         const row = document.createElement('tr');
         row.appendChild(createRow(allRents[i].id, propertyNameVideoRentalList.id));
-        row.appendChild(createRow(allRents[i].firstName, propertyNameVideoRentalList.firstName ));
+        row.appendChild(createRow(allRents[i].firstName, propertyNameVideoRentalList.firstName));
         row.appendChild(createRow(allRents[i].lastName, propertyNameVideoRentalList.lastName));
         row.appendChild(createRow(allRents[i].address, propertyNameVideoRentalList.address));
         row.appendChild(createRow(allRents[i].contact, propertyNameVideoRentalList.contact));
@@ -126,7 +128,7 @@ function createTableGetListOfAllRentals(allRents, container, headers) {
         row.appendChild(createRow(allRents[i].startRentalDate, propertyNameVideoRentalList.startRentalDate));
         row.appendChild(createRow(allRents[i].endRentalDate, propertyNameVideoRentalList.endRentalDate));
         row.appendChild(createRow(allRents[i].realEndOfRentalDate, propertyNameVideoRentalList.realEndOfRentalDate));
-        row.appendChild(actionRow());
+        row.appendChild(actionRow(context.getListOfAllRentals));
         tableBody.appendChild(row);
     }
     table.appendChild(tableHead);
@@ -158,13 +160,16 @@ const createRow = function (element, prop) {
     return td;
 }
 
-const actionRow = function(){
+const actionRow = function (context) {
     const div = document.createElement('div');
     const divAttr = document.createAttribute('class');
+    const divIdAttr = document.createAttribute('id');
+    divIdAttr.value = context;
     divAttr.value = 'action-row';
+    div.setAttributeNode(divIdAttr);
     div.setAttributeNode(divAttr);
 
-    const buttonDelete = document.createElement('button');
+    const buttonDelete = document.createElement('a');
     const buttonDeleteAttr = document.createAttribute('id');
     const buttonDeleteAttrClass = document.createAttribute('class');
     buttonDeleteAttrClass.value = 'button-row';
@@ -174,7 +179,7 @@ const actionRow = function(){
     buttonDelete.textContent = 'Delete';
     buttonDelete.classList.add('button-delete');
 
-    const buttonUpdate = document.createElement('button');
+    const buttonUpdate = document.createElement('a');
     const buttonUpdateAttr = document.createAttribute("id");
     const buttonUpdateAttrClass = document.createAttribute('class');
     buttonUpdateAttrClass.value = 'button-row';
@@ -189,7 +194,7 @@ const actionRow = function(){
     return div;
 }
 
-const actionHeader = function(trHead){
+const actionHeader = function (trHead) {
     const header = document.createElement('th');
     const headerAttr = document.createAttribute('class');
     headerAttr.value = 'headers';
@@ -199,10 +204,10 @@ const actionHeader = function(trHead){
     trHead.appendChild(header);
 }
 
-const clearContent = function(element){
+const clearContent = function (element) {
     while (element.firstChild) {
         element.removeChild(element.lastChild);
-      }
+    }
 }
 
 export {

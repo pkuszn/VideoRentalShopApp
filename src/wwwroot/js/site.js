@@ -12,7 +12,6 @@ const getVideos = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideos(response, container, headers);
-    console.log(deleteRowButton.length);
 }
 
 const getVideoRentals = async () => {
@@ -20,7 +19,6 @@ const getVideoRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideoRentals(response, container, headers);
-    console.log(deleteRowButton.length);
 }
 
 const getListOfAllRentals = async () => {
@@ -29,7 +27,6 @@ const getListOfAllRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableGetListOfAllRentals(response, container, headers);
-    console.log(deleteRowButton.length);
 }
 
 getVideosButton.addEventListener('click', (e) => {

@@ -54,3 +54,9 @@ export const propertyNameVideoRental = {
     lastName: 'lastName',
     videos: 'videos'
 }
+
+export const context = {
+    getListOfAllRentals: "getListOfAllRentals",
+    getVideos: "getVideos",
+    getVideoRentals: "getVideoRentals"
+}
