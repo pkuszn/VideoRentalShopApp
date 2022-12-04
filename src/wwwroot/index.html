@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Rental Shop</title>
     <link rel="stylesheet" href="css/site.css" />
-    <script
-  src="https://code.jquery.com/jquery-3.6.1.js"
-  integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -21,10 +19,10 @@
             <a class="main-a" href="/index.html">About</a>
         </div>
         <div class="login">
-            <input class="login-component" type="text" placeholder="Login"/>
-            <input class="login-component" type="password" placeholder="Password"/>
+            <input class="login-component" type="text" placeholder="Login" />
+            <input class="login-component" type="password" placeholder="Password" />
             <button class="login-component button-9" type="button">Login</button>
-        </div> 
+        </div>
     </div>
 
     <div id="wrapper">
@@ -55,6 +53,15 @@
         </div>
     </div>
     <script src="js/site.js" type="module"></script>
+    <script>
+        $(document).on('click', '.button-delete', function (event) {
+            alert($(this).parent().parent().value);
+        });
+
+        $(document).on('click', '.button-update', function (event) {
+            alert($(this).parent().parent().value);
+        });
+    </script>
 </body>
 
 </html>

@@ -5,15 +5,14 @@ var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
 var getListOfAllRentalsButton = document.getElementById('get-list-of-all-video-rentals-button');
 var getVideoRentalsButton = document.getElementById('get-list-of-rentals');
-
 var welcomeHeader = document.getElementById('welcome');
-
 
 const getVideos = async () => {
     const response = await fetchVideos();
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideos(response, container, headers);
+    console.log(deleteRowButton.length);
 }
 
 const getVideoRentals = async () => {
@@ -21,6 +20,7 @@ const getVideoRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideoRentals(response, container, headers);
+    console.log(deleteRowButton.length);
 }
 
 const getListOfAllRentals = async () => {
@@ -29,6 +29,7 @@ const getListOfAllRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableGetListOfAllRentals(response, container, headers);
+    console.log(deleteRowButton.length);
 }
 
 getVideosButton.addEventListener('click', (e) => {
@@ -50,4 +51,4 @@ getListOfAllRentalsButton.addEventListener('click', (e) => {
     welcomeHeader.remove();
     clearContent(container);
     getListOfAllRentals();
-})
+});

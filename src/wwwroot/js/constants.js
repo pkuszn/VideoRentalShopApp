@@ -20,3 +20,37 @@
     deleteVideo: 'VideoRentalShop/DeleteVideo/',
     deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/'
 }
+
+export const propertyNameVideoRentalList = {
+    id: 'id',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    address: 'address',
+    contact: 'contact',
+    registrationDate: 'registrationDate',
+    title: 'title',
+    startRentalDate: 'startRentalDate',
+    endRentalDate: 'endRentalDate',
+    realEndOfRentalDate: "realEndOfRentalDate"
+}
+
+export const propertyNameVideo = {
+    id: 'id',
+    title: 'title',
+    genre: 'genre',
+    director: 'director',
+    runtime: 'runtime',
+    score: 'score',
+    description: 'description',
+    actors: 'actors',
+    createdDate: 'createdDate',
+    isAvailable: 'isAvailable'
+}
+
+export const propertyNameVideoRental = {
+    id: 'id',
+    userId: 'userId',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    videos: 'videos'
+}
