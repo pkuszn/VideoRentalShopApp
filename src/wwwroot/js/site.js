@@ -24,9 +24,6 @@ getVideosButton.addEventListener('click', (e) => {
     if(document.getElementsByClassName('fl-table').length > 0){
         console.log("powinno czyscic");
         clearContent(document.getElementsByClassName('fl-table'));
-        setTimeout(() => {
-            document.location.reload();
-          }, 1000);
         }
     getVideos();
 });
@@ -36,9 +33,6 @@ getRentalVideos.addEventListener('click', (e) => {
     if(document.getElementsByClassName('fl-table').length > 0){
         console.log("powinno czyscic");
         clearContent(document.getElementsByClassName('fl-table'));
-        setTimeout(() => {
-            window.location.hash = 'b';
-          }, 1000);    
         }
     getVideoRentals();              
 });
