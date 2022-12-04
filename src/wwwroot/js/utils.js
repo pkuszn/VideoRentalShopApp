@@ -1,5 +1,4 @@
-﻿import { api } from './constants.js'
-// id, title, genre, director, runtime, score, description, actors, createdDate, isAvailable
+﻿// id, title, genre, director, runtime, score, description, actors, createdDate, isAvailable
 function createTableVideos(videos, container, headers) {
     if (videos === null) {
         return;
@@ -88,6 +87,52 @@ function createTableVideoRentals(videoRentals, container, headers) {
     return container;
 }
 
+function createTableGetListOfAllRentals(allRents, container, headers) {
+    if (allRents === null) {
+        return;
+    }
+    console.log(allRents);
+    const table = document.createElement('table');
+    const tableAttr = document.createAttribute('class');
+    tableAttr.value = 'fl-table';
+    table.setAttributeNode(tableAttr);
+
+    const tableHead = document.createElement('thead');
+    const trHead = document.createElement('tr');
+    for (let i = 0; i < headers.length; i++) {
+        const header = document.createElement('th');
+        const headerAttr = document.createAttribute('class');
+        headerAttr.value = 'headers';
+        header.setAttributeNode(headerAttr);
+        const headerText = document.createTextNode(headers[i]);
+        header.appendChild(headerText);
+        trHead.appendChild(header);
+    }
+    actionHeader(trHead);
+    tableHead.appendChild(trHead);
+
+    const tableBody = document.createElement('tbody');
+    for (let i = 0; i < allRents.length; i++) {
+        const row = document.createElement('tr');
+        row.appendChild(createRow(allRents[i].id));
+        row.appendChild(createRow(allRents[i].firstName));
+        row.appendChild(createRow(allRents[i].lastName));
+        row.appendChild(createRow(allRents[i].address));
+        row.appendChild(createRow(allRents[i].contact));
+        row.appendChild(createRow(allRents[i].registrationDate));
+        row.appendChild(createRow(allRents[i].title));
+        row.appendChild(createRow(allRents[i].startRentalDate));
+        row.appendChild(createRow(allRents[i].endRentalDate));
+        row.appendChild(createRow(allRents[i].realEndOfRentalDate));
+        row.appendChild(actionRow());
+        tableBody.appendChild(row);
+    }
+    table.appendChild(tableHead);
+    table.appendChild(tableBody);
+    container.appendChild(table);
+    return container;
+}
+
 const objectProperties = function (obj) {
     let arr = [];
     for (var prop in obj) {
@@ -157,5 +202,6 @@ export {
     createTableVideos,
     objectProperties,
     clearContent,
-    createTableVideoRentals
+    createTableVideoRentals,
+    createTableGetListOfAllRentals
 }
