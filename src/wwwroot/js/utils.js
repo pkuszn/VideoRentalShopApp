@@ -1,5 +1,78 @@
 ﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context} from './constants.js'
 
+function createNewUserInputForm(container){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'new-user-container';
+    div.setAttributeNode(divAttr);
+    //TODO: 4 inputy
+
+    const header = document.createElement('h3');
+    const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'header-new-user';
+    header.setAttributeNode(headerAttr);
+    header.textContent = 'Add new user';
+
+    const firstNameInput = document.createElement('input');
+    const firstNameInputAttr = document.createAttribute('id');
+    firstNameInputAttr.value = 'first-name';
+    firstNameInput.placeholder = "First name";
+    firstNameInput.setAttributeNode(firstNameInputAttr);
+
+    const lastNameInput = document.createElement('input');
+    const lastNameInputAttr = document.createAttribute('id');
+    lastNameInputAttr.value = 'last-name';
+    lastNameInput.placeholder = "Last name";
+    lastNameInput.setAttributeNode(lastNameInputAttr);
+
+    const addressInput = document.createElement('input');
+    const addressInputAttr = document.createAttribute('id');
+    addressInputAttr.value = 'address';
+    addressInput.placeholder = "Address";
+    addressInput.setAttributeNode(addressInputAttr);
+
+    const contactInput = document.createElement('input');
+    const contactInputAttr = document.createAttribute('id');
+    contactInputAttr.value = 'contact';
+    contactInput.placeholder = "Contact";
+    contactInput.setAttributeNode(contactInputAttr);
+
+    const addButton = document.createElement('button');
+    const addButtonAttr = document.createAttribute('class');
+    const addButtonAttrId = document.createAttribute('id');
+    addButtonAttrId.value = 'add-new-user-button-in-container';
+    addButton.setAttributeNode(addButtonAttrId);
+    addButtonAttr.value = 'button-9';
+    addButton.setAttributeNode(addButtonAttr);
+    addButton.textContent = 'Add';
+
+    const resetButton = document.createElement('button');
+    const resetButtonAttr = document.createAttribute('class');
+    const resetButtonAttrId = document.createAttribute('id');
+    resetButtonAttrId.value = 'reset-new-user-button-in-container';
+    resetButton.setAttributeNode(resetButtonAttrId);
+    resetButtonAttr.value = 'button-9';
+    resetButton.setAttributeNode(resetButtonAttr);
+    resetButton.textContent = 'Reset';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-new-user-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(addButton);
+    divButtons.appendChild(resetButton);
+
+    div.append(header);
+    div.appendChild(firstNameInput);
+    div.appendChild(lastNameInput);
+    div.appendChild(addressInput);
+    div.appendChild(contactInput);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
 // id, title, genre, director, runtime, score, description, actors, createdDate, isAvailable
 function createTableVideos(videos, container, headers) {
     if (videos === null) {
@@ -215,5 +288,6 @@ export {
     objectProperties,
     clearContent,
     createTableVideoRentals,
-    createTableGetListOfAllRentals
+    createTableGetListOfAllRentals,
+    createNewUserInputForm
 }
