@@ -1,5 +1,83 @@
 ﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context} from './constants.js'
 
+function createNewVideoInputForm(container){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'new-video-container';
+    div.setAttributeNode(divAttr);
+    //TODO: 4 inputy
+
+    const header = document.createElement('h3');
+    const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'header-new-video';
+    header.setAttributeNode(headerAttr);
+    header.textContent = 'Add new video';
+
+    const titleInput = document.createElement('input');
+    const titleInputAttr = document.createAttribute('id');
+    titleInputAttr.value = 'title';
+    titleInput.placeholder = "Title";
+    titleInput.setAttributeNode(titleInputAttr);
+
+    const genreLabel = document.createElement('label');
+    genreLabel.htmlFor = ''
+
+    const genreSelect = document.createElement('select');
+    const genreSelectAttr = document.createAttribute('id');
+    genreSelectAttr.value = 'genre';
+    genreSelect.setAttributeNode(genreSelectAttr);
+
+
+
+
+    const directorInput = document.createElement('input');
+    const directorInputAttr = document.createAttribute('id');
+    directorInputAttr.value = 'director';
+    directorInput.placeholder = "Dirctor";
+    directorInput.setAttributeNode(directorInputAttr);
+
+    const contactInput = document.createElement('input');
+    const contactInputAttr = document.createAttribute('id');
+    contactInputAttr.value = 'contact';
+    contactInput.placeholder = "Contact";
+    contactInput.setAttributeNode(contactInputAttr);
+
+    const addButton = document.createElement('button');
+    const addButtonAttr = document.createAttribute('class');
+    const addButtonAttrId = document.createAttribute('id');
+    addButtonAttrId.value = 'add-new-video-button-in-container';
+    addButton.setAttributeNode(addButtonAttrId);
+    addButtonAttr.value = 'button-9';
+    addButton.setAttributeNode(addButtonAttr);
+    addButton.textContent = 'Add';
+
+    const resetButton = document.createElement('button');
+    const resetButtonAttr = document.createAttribute('class');
+    const resetButtonAttrId = document.createAttribute('id');
+    resetButtonAttrId.value = 'reset-new-video-button-in-container';
+    resetButton.setAttributeNode(resetButtonAttrId);
+    resetButtonAttr.value = 'button-9';
+    resetButton.setAttributeNode(resetButtonAttr);
+    resetButton.textContent = 'Reset';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-new-video-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(addButton);
+    divButtons.appendChild(resetButton);
+
+    div.append(header);
+    div.appendChild(titleInput);
+    div.appendChild(genreLabel);
+    div.appendChild(directorInput);
+    div.appendChild(contactInput);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
 function createNewUserInputForm(container){
     const div = document.createElement('div');
     const divAttr = document.createAttribute('id');
