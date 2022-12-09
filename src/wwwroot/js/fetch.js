@@ -52,7 +52,7 @@ async function fetchListOfAllRentals(){
 }
 
 async function fetchLoginUsers(){
-    return await fetch(api.getUser, {
+    return await fetch(api.getLoginUsers, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -71,5 +71,6 @@ async function fetchLoginUsers(){
 export {
     fetchVideos,
     fetchVideoRentals,
-    fetchListOfAllRentals 
+    fetchListOfAllRentals,
+    fetchLoginUsers 
 }

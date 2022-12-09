@@ -432,3 +432,10 @@ select {
     text-indent:0px;
     width: 38px;
 }
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+}

@@ -18,7 +18,10 @@
     updateVideoRental: 'VideoRentalShop/UpdateVideoRental/',
     deleteUser: 'VideoRentalShop/DeleteUser/',
     deleteVideo: 'VideoRentalShop/DeleteVideo/',
-    deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/'
+    deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/',
+    getLoginUsers: 'VideoRentalShop/GetLoginUsers',
+    setSession: 'VideoRentalShop/SetSession',
+    logout: 'VideoRentalShop/Logout'
 }
 
 export const propertyNameVideoRentalList = {

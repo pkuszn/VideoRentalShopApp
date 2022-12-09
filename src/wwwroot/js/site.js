@@ -1,5 +1,5 @@
-﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals } from './fetch.js'
-import { createNewUser, createNewVideo } from './send.js'
+﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers} from './fetch.js'
+import { createNewUser, createNewVideo, setSession } from './send.js'
 import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm} from './utils.js'
 import { UserDTO, VideoDTO } from './dtos.js'
 
@@ -32,6 +32,12 @@ const getListOfAllRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableGetListOfAllRentals(response, container, headers);
+}
+
+const getListOfLoginUsers = async () => {
+    const response = await fetchLoginUsers();
+    console.log(response);
+    return response;
 }
 
 getVideosButton.addEventListener('click', (e) => {
@@ -116,6 +122,7 @@ function resetNewVideoListener(event) {
         actors.value = "";
         description.value = "";
         genre.value = "";
+        runtime.value = "";
     }
 }
 
@@ -155,8 +162,29 @@ function resetNewUserListener(event) {
 };
 
 
-loginButton.addEventListener('click', (e) => {
+loginButton.addEventListener('click', async (e) => {
     e.preventDefault();
+    await loginUser();
+});
+
+async function loginUser(){
     const login = document.getElementById('login');
     const password = document.getElementById('password');
-})
+    if(login.value == "" || password.value == ""){
+        alert('Password or Login required!');
+        login.value = "";
+        password.value = "";
+        return;
+    }
+
+    const loginUsers = await getListOfLoginUsers();
+    let user = loginUsers.find(f => f.user == login);
+    if(user == null){
+        alert(`User ${login} doesn't exists`);
+        return;
+    }
+    if(user.password == password){
+        alert(`Logged in`);
+        await setSession(login, password);
+    }
+}
