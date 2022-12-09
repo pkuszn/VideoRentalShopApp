@@ -10,6 +10,7 @@ var getVideoRentalsButton = document.getElementById('get-list-of-rentals');
 var welcomeHeader = document.getElementById('welcome');
 var addNewUserButton = document.getElementById('add-new-user-button');
 var addNewVideoButton = document.getElementById('add-new-video-button');
+var loginButton = document.getElementById('login-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -152,3 +153,10 @@ function resetNewUserListener(event) {
         contact.value = "";
     }
 };
+
+
+loginButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const login = document.getElementById('login');
+    const password = document.getElementById('password');
+})
