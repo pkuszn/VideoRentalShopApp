@@ -1,7 +1,7 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals } from './fetch.js'
 import { createNewUser, createNewVideo } from './send.js'
 import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm} from './utils.js'
-import { UserDTO } from './dtos.js'
+import { UserDTO, VideoDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -70,6 +70,32 @@ addNewVideoButton.addEventListener('click', (e) => {
 
 document.addEventListener('click', addNewUserListener);
 document.addEventListener('click', resetNewUserListener);
+
+document.addEventListener('click', addNewVideoListener);
+document.addEventListener('click', resetNewVideoListener);
+
+async function addNewVideoListener(event){
+    var element = event.target;
+    if(element.id == 'add-new-video-button-in-container'){
+        let datetime = new Date();
+        datetime.toISOString();
+        let genre = document.getElementById('genre').value;
+        var selectedGenre = genre.options[genre.selectedIndex].text;
+
+        const videoDto = new VideoDTO(
+            document.getElementById('title').value,
+            selectedGenre,
+            document.getElementById('director').value,
+            document.getElementById('score').value,
+            document.getElementById('description').value,
+            document.getElementById('actors').value,
+            datetime,
+            true);
+
+        await createNewVideo(videoDto);
+        top.location.href = "/index.html";//redirection
+    }
+}
 
 async function addNewUserListener(event) {
     var element = event.target;
