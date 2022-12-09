@@ -32,6 +32,9 @@ namespace VideoRentalShopApp
                 options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
                 options.HttpsPort = 5001;
             });
+
+            services.AddSession();
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -68,6 +71,8 @@ namespace VideoRentalShopApp
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSession();
         }
     }
 }

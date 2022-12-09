@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +18,15 @@ namespace VideoRentalShopApp.Controllers
         public VideoRentalShopController(IVideoRentalShopService videoRentalShopService)
         {
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+        }
+
+        [HttpPost]
+        [Route("SetSession")]
+        public async Task<string> SetSession(string key, string value)
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.SetString(key, value);
+            return HttpContext.Session.GetString(key);
         }
 
         [HttpGet]
