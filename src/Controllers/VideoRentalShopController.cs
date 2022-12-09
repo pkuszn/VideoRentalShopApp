@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,10 +16,11 @@ namespace VideoRentalShopApp.Controllers
     public class VideoRentalShopController : ControllerBase
     {
         private readonly IVideoRentalShopService VideoRentalShopService;
-
-        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService)
+        private readonly ILogger<VideoRentalShopController> Logger;
+        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService, ILogger<VideoRentalShopController> logger)
         {
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -30,11 +32,20 @@ namespace VideoRentalShopApp.Controllers
 
         [HttpPost]
         [Route("SetSession")]
-        public async Task<string> SetSession(string key, string value)
+        public async Task<string> SetSession(SessionCriteria criteria)
+        {
+            HttpContext.Session.SetString(nameof(criteria.User), criteria.User);
+            HttpContext.Session.SetString(nameof(criteria.Password), criteria.Password);
+            Logger.LogInformation($"Session variables has been set to {HttpContext.Session.GetString(nameof(criteria.User))}");
+            return HttpContext.Session.GetString(nameof(criteria.User));
+        }
+
+        [HttpGet]
+        [Route("Logout")]
+        public async Task<IActionResult> LogoutSession()
         {
             HttpContext.Session.Clear();
-            HttpContext.Session.SetString(key, value);
-            return HttpContext.Session.GetString(key);
+            return Ok();
         }
 
         [HttpGet]
