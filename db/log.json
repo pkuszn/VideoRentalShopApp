@@ -1,0 +1,12 @@
+[
+  {
+    "User": "Admin",
+    "Password": "root",
+    "DateCreated": ISODate(),
+  },
+  {
+    "User": "Patryk",
+    "Password": "patryk98",
+    "DateCreated": ISODate()
+  }
+]

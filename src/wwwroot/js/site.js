@@ -94,7 +94,7 @@ async function addNewVideoListener(event){
 
         console.log(videoDto);
         await createNewVideo(videoDto);
-        // top.location.href = "/index.html";
+        top.location.href = "/index.html";
         //redirection
     }
 }
