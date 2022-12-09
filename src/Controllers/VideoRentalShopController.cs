@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
 using VideoRentalShopApp.DataTransferObjects.Criteria;
+using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 
 namespace VideoRentalShopApp.Controllers
@@ -18,6 +19,13 @@ namespace VideoRentalShopApp.Controllers
         public VideoRentalShopController(IVideoRentalShopService videoRentalShopService)
         {
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+        }
+
+        [HttpGet]
+        [Route("GetLoginUsers")]
+        public async Task<List<LoginResult>> GetLoginResultsAsync()
+        {
+            return await VideoRentalShopService.GetLoginUsers();
         }
 
         [HttpPost]

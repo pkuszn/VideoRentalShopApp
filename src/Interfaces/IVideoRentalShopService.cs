@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
+using VideoRentalShopApp.DataTransferObjects.Results;
 
 namespace VideoRentalShopApp.Interfaces
 {
     public interface IVideoRentalShopService
     {
+        Task<List<LoginResult>> GetLoginUsers();
         Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync();
         Task<bool> ReturnRentedVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null);
         Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre);
