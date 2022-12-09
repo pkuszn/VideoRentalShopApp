@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Net;
 using VideoRentalShopApp.Extensions;
 
 namespace VideoRentalShopApp
@@ -25,6 +26,12 @@ namespace VideoRentalShopApp
             });
             services.AddConfig(Configuration);
             services.AddServices(Configuration);
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
