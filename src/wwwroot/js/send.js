@@ -20,7 +20,7 @@ async function createNewUser(user) {
 }
 
 async function createNewVideo(video) {
-    return await fetch(api.insertUser, {
+    return await fetch(api.insertVideo, {
         method: 'POST',
         dataType: 'JSON',
         headers: {
@@ -28,7 +28,6 @@ async function createNewVideo(video) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: video.id,
             title: video.title,
             genre: video.genre,
             director: video.director,

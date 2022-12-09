@@ -79,21 +79,42 @@ async function addNewVideoListener(event){
     if(element.id == 'add-new-video-button-in-container'){
         let datetime = new Date();
         datetime.toISOString();
-        let genre = document.getElementById('genre').value;
-        var selectedGenre = genre.options[genre.selectedIndex].text;
-
+        let selectedGenre = document.getElementById('genre').value;
+        let actors = document.getElementById('actors').value;
+        let arrayActors = actors.split(',');
         const videoDto = new VideoDTO(
             document.getElementById('title').value,
             selectedGenre,
             document.getElementById('director').value,
             document.getElementById('score').value,
             document.getElementById('description').value,
-            document.getElementById('actors').value,
+            arrayActors,
             datetime,
             true);
 
+        console.log(videoDto);
         await createNewVideo(videoDto);
-        top.location.href = "/index.html";//redirection
+        // top.location.href = "/index.html";
+        //redirection
+    }
+}
+
+function resetNewVideoListener(event) {
+    var element = event.target;
+    if (element.id == 'reset-new-video-button-in-container') {
+        let title = document.getElementById('title');
+        let director = document.getElementById('director');
+        let score = document.getElementById('score');
+        let description = document.getElementById('description');
+        let actors = document.getElementById('actors');
+        let genre = document.getElementById('genre');
+        let runtime = document.getElementById('runtime');
+        title.value = "";
+        director.value = "";
+        score.value = "";
+        actors.value = "";
+        description.value = "";
+        genre.value = "";
     }
 }
 
