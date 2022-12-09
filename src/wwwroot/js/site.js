@@ -1,5 +1,7 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals } from './fetch.js'
-import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm } from './utils.js'
+import { createNewUser, createNewVideo } from './send.js'
+import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm} from './utils.js'
+import { UserDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -8,7 +10,6 @@ var getVideoRentalsButton = document.getElementById('get-list-of-rentals');
 var welcomeHeader = document.getElementById('welcome');
 var addNewUserButton = document.getElementById('add-new-user-button');
 var addNewVideoButton = document.getElementById('add-new-video-button');
-
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -32,15 +33,6 @@ const getListOfAllRentals = async () => {
     container = createTableGetListOfAllRentals(response, container, headers);
 }
 
-const addNewUser = async(firstName, lastName, address, contact) => {
-    try{
-        //TODO: Insert new user
-    }
-    catch(ex){
-        console.error(ex);
-    }
-}
-
 getVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
     welcomeHeader.remove();
@@ -52,7 +44,7 @@ getVideoRentalsButton.addEventListener('click', (e) => {
     e.preventDefault();
     welcomeHeader.remove();
     clearContent(container);
-    getVideoRentals();              
+    getVideoRentals();
 });
 
 getListOfAllRentalsButton.addEventListener('click', (e) => {
@@ -70,32 +62,39 @@ addNewUserButton.addEventListener('click', (e) => {
 });
 
 addNewVideoButton.addEventListener('click', (e) => {
-
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    container = createNewVideoInputForm(container);
 });
 
 document.addEventListener('click', addNewUserListener);
 document.addEventListener('click', resetNewUserListener);
 
-async function addNewUserListener(event){
+async function addNewUserListener(event) {
     var element = event.target;
-    if(element.id == 'add-new-user-button-in-container'){
-        let firstName = document.getElementById('first-name');
-        let lastName = document.getElementById('last-name');
-        let address = document.getElementById('address');
-        let contact = document.getElementById('contact');
-        if(firstName.value == "" && lastName.value == "" && address.value == "" && contact.value == "")
-        {
+    if (element.id == 'add-new-user-button-in-container') {
+        var datetime = new Date();
+        datetime.toISOString();
+        const userDto = new UserDTO(
+            document.getElementById('first-name').value,
+            document.getElementById('last-name').value,
+            document.getElementById('address').value,
+            document.getElementById('contact').value,
+            datetime);
+
+        if (userDto == null || (userDto.firstName == "" && userDto.lastName == "" && userDto.address == "" && userDto.contact == "")) {
             alert("FirstName, LastName, Contact, Address are required!");
             return;
         }
-        await addNewUser(firstName.value, lastName.value, address.value, contact.value);
+        await createNewUser(userDto);
         top.location.href = "/index.html";//redirection
     }
 };
 
-function resetNewUserListener(event){
+function resetNewUserListener(event) {
     var element = event.target;
-    if(element.id == 'reset-new-user-button-in-container'){
+    if (element.id == 'reset-new-user-button-in-container') {
         let firstName = document.getElementById('first-name');
         let lastName = document.getElementById('last-name');
         let address = document.getElementById('address');

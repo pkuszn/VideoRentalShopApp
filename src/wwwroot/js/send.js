@@ -9,7 +9,6 @@ async function createNewUser(user) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             address: user.address,
@@ -44,5 +43,6 @@ async function createNewVideo(video) {
 }
 
 export {
-    deleteVideos
+    createNewUser, 
+    createNewVideo
 }

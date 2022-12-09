@@ -60,3 +60,26 @@ export const context = {
     getVideos: "getVideos",
     getVideoRentals: "getVideoRentals"
 }
+
+export const genres = {
+    comedy: "Comedy",
+    sciFi: "Science-Fiction",
+    horror: "Horror",
+    romance: "Romance",
+    action: "Action",
+    thriller: "Thriller",
+    drama: "Drama",
+    mystery: "Mystery",
+    crime: "Crime",
+    animation: "Animation",
+    adventure: "Adventure",
+    fantasy: "Fantasy",
+    comedyRomance: "Comedy Romance",
+    actionComedy: "Action Comedy",
+    superHero: "Super Hero",
+    documentary: "Documentary",
+    war: "War",
+    musical: "Musical",
+    history: "History",
+    biography: "Biography"
+}

@@ -369,3 +369,66 @@ input {
 #reset-new-user-button-in-container{
     margin: 3px;
 }
+
+/* END */
+
+/* New video input */
+
+#new-video-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    max-height: 20%;
+}
+
+#title{
+    margin:3px;
+}
+#genre{
+    width: 95.5%;
+}
+#director{
+    margin:3px;
+}
+#score{
+    margin:3px;
+}
+#description{
+    margin:3px;
+}
+#runtime{
+    margin:3px;
+}
+#actors{
+    margin:3px;
+}
+#buttons-new-video-container{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    max-height: 20%;
+}
+
+#add-new-video-button-in-container{
+    margin: 3px;
+}
+
+#reset-new-videeo-button-in-container{
+    margin: 3px;
+}
+/* end of New video input */
+
+
+select {
+    margin: 3px;
+    text-indent:0px;
+    width: 38px;
+}

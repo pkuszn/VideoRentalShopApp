@@ -1,11 +1,10 @@
-﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context} from './constants.js'
+﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context, genres} from './constants.js'
 
 function createNewVideoInputForm(container){
     const div = document.createElement('div');
     const divAttr = document.createAttribute('id');
     divAttr.value = 'new-video-container';
     div.setAttributeNode(divAttr);
-    //TODO: 4 inputy
 
     const header = document.createElement('h3');
     const headerAttr = document.createAttribute('id');
@@ -20,27 +19,44 @@ function createNewVideoInputForm(container){
     titleInput.setAttributeNode(titleInputAttr);
 
     const genreLabel = document.createElement('label');
-    genreLabel.htmlFor = ''
+    genreLabel.htmlFor = 'genre'
+    genreLabel.textContent = 'Select a genre: ';
 
-    const genreSelect = document.createElement('select');
+    var genreSelect = document.createElement('select');
     const genreSelectAttr = document.createAttribute('id');
     genreSelectAttr.value = 'genre';
     genreSelect.setAttributeNode(genreSelectAttr);
-
-
-
-
+    genreSelect = createOptions(genreSelect);
+    
     const directorInput = document.createElement('input');
     const directorInputAttr = document.createAttribute('id');
     directorInputAttr.value = 'director';
-    directorInput.placeholder = "Dirctor";
+    directorInput.placeholder = "Director";
     directorInput.setAttributeNode(directorInputAttr);
 
-    const contactInput = document.createElement('input');
-    const contactInputAttr = document.createAttribute('id');
-    contactInputAttr.value = 'contact';
-    contactInput.placeholder = "Contact";
-    contactInput.setAttributeNode(contactInputAttr);
+    const scoreInput = document.createElement('input');
+    const scoreInputAttr = document.createAttribute('id');
+    scoreInputAttr.value = 'score';
+    scoreInput.placeholder = "Score";
+    scoreInput.setAttributeNode(scoreInputAttr);
+
+    const descriptionInput = document.createElement('input');
+    const descriptionInputAttr = document.createAttribute('id');
+    descriptionInputAttr.value = 'description';
+    descriptionInput.placeholder = "Description";
+    descriptionInput.setAttributeNode(descriptionInputAttr);
+
+    const runtimeInput = document.createElement('input');
+    const runtimeInputAttr = document.createAttribute('id');
+    runtimeInputAttr.value = 'runtime';
+    runtimeInput.placeholder = "Runtime";
+    runtimeInput.setAttributeNode(runtimeInputAttr);
+
+    const actorsInput = document.createElement('input');
+    const actorsInputAttr = document.createAttribute('id');
+    actorsInputAttr.value = 'actors';
+    actorsInput.placeholder = "Actors";
+    actorsInput.setAttributeNode(actorsInputAttr);
 
     const addButton = document.createElement('button');
     const addButtonAttr = document.createAttribute('class');
@@ -71,8 +87,12 @@ function createNewVideoInputForm(container){
     div.append(header);
     div.appendChild(titleInput);
     div.appendChild(genreLabel);
+    div.appendChild(genreSelect);
     div.appendChild(directorInput);
-    div.appendChild(contactInput);
+    div.appendChild(runtimeInput);
+    div.appendChild(scoreInput);
+    div.appendChild(descriptionInput);
+    div.appendChild(actorsInput);
     div.appendChild(divButtons);
     container.appendChild(div);
     return container;
@@ -85,8 +105,7 @@ function createNewUserInputForm(container){
     div.setAttributeNode(divAttr);
     //TODO: 4 inputy
 
-    const header = document.createElement('h3');
-    const headerAttr = document.createAttribute('id');
+    const header = document.createElement('h3');const headerAttr = document.createAttribute('id');
     headerAttr.value = 'header-new-user';
     header.setAttributeNode(headerAttr);
     header.textContent = 'Add new user';
@@ -288,7 +307,7 @@ function createTableGetListOfAllRentals(allRents, container, headers) {
     return container;
 }
 
-const objectProperties = function (obj) {
+const objectProperties = (obj) => {
     let arr = [];
     for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
@@ -298,7 +317,7 @@ const objectProperties = function (obj) {
     return arr;
 };
 
-const createRow = function (element, prop) {
+const createRow = (element, prop) => {
     const td = document.createElement('td');
     const tdAttr = document.createAttribute('class');
     const tdId = document.createAttribute('id');
@@ -311,7 +330,7 @@ const createRow = function (element, prop) {
     return td;
 }
 
-const actionRow = function (context) {
+const actionRow = (context) => {
     const div = document.createElement('div');
     const divAttr = document.createAttribute('class');
     const divIdAttr = document.createAttribute('id');
@@ -345,7 +364,7 @@ const actionRow = function (context) {
     return div;
 }
 
-const actionHeader = function (trHead) {
+const actionHeader = (trHead) => {
     const header = document.createElement('th');
     const headerAttr = document.createAttribute('class');
     headerAttr.value = 'headers';
@@ -355,10 +374,133 @@ const actionHeader = function (trHead) {
     trHead.appendChild(header);
 }
 
-const clearContent = function (element) {
+const clearContent = (element) => {
     while (element.firstChild) {
         element.removeChild(element.lastChild);
     }
+}
+
+const createOptions = (select) => {
+    const sciFiOpt = document.createElement("option");
+    sciFiOpt.value = genres.sciFi;
+    sciFiOpt.innerHTML = genres.sciFi;
+
+    const comedyOpt = document.createElement("option");
+    comedyOpt.value = genres.comedy;
+    comedyOpt.innerHTML = genres.comedy;
+
+    const horrorOpt = document.createElement("option");
+    horrorOpt.value = genres.horror;
+    horrorOpt.innerHTML = genres.horror;
+
+    const romanceOpt = document.createElement("option");
+    romanceOpt.value = genres.romance;
+    romanceOpt.innerHTML = genres.romance;
+
+    const actionOpt = document.createElement("option");
+    actionOpt.value = genres.action;
+    actionOpt.innerHTML = genres.action;
+
+    const thrillerOpt = document.createElement("option");
+    thrillerOpt.value = genres.thriller;
+    thrillerOpt.innerHTML = genres.thriller;
+
+    const dramaOpt = document.createElement("option");
+    dramaOpt.value = genres.drama;
+    dramaOpt.innerHTML = genres.drama;
+
+    const mysteryOpt = document.createElement("option");
+    mysteryOpt.value = genres.mystery;
+    mysteryOpt.innerHTML = genres.mystery;
+
+    const crimeOpt = document.createElement("option");
+    crimeOpt.value = genres.crime;
+    crimeOpt.innerHTML = genres.crime;
+
+    const animationOpt = document.createElement("option");
+    animationOpt.value = genres.animation;
+    animationOpt.innerHTML = genres.animation;
+
+    const adventureOpt = document.createElement("option");
+    adventureOpt.value = genres.adventure;
+    adventureOpt.innerHTML = genres.adventure;
+
+    const fantasyOpt = document.createElement("option");
+    fantasyOpt.value = genres.fantasy;
+    fantasyOpt.innerHTML = genres.fantasy;
+
+    const comedyRomanceOpt = document.createElement("option");
+    comedyRomanceOpt.value = genres.comedyRomance;
+    comedyRomanceOpt.innerHTML = genres.comedyRomance;
+
+    const actionComedyOpt = document.createElement("option");
+    actionComedyOpt.value = genres.actionComedy;
+    actionComedyOpt.innerHTML = genres.actionComedy;
+
+    const superHeroOpt = document.createElement("option");
+    superHeroOpt.value = genres.superHero;
+    superHeroOpt.innerHTML = genres.superHero;
+
+    const documentaryOpt = document.createElement("option");
+    documentaryOpt.value = genres.documentary;
+    documentaryOpt.innerHTML = genres.documentary;
+
+    const warOpt = document.createElement("option");
+    warOpt.value = genres.war;
+    warOpt.innerHTML = genres.war;
+
+    const musicalOpt = document.createElement("option");
+    musicalOpt.value = genres.musical;
+    musicalOpt.innerHTML = genres.musical;
+
+    const historyOpt = document.createElement("option");
+    historyOpt.value = genres.history;
+    historyOpt.innerHTML = genres.history;
+
+    const biographyOpt = document.createElement("option");
+    biographyOpt.value = genres.biography;
+    biographyOpt.innerHTML = genres.biography;
+
+    select.appendChild(sciFiOpt);
+
+    select.appendChild(comedyOpt);
+
+    select.appendChild(horrorOpt);
+
+    select.appendChild(romanceOpt);
+
+    select.appendChild(actionOpt);
+
+    select.appendChild(thrillerOpt);
+
+    select.appendChild(dramaOpt);
+
+    select.appendChild(mysteryOpt);
+
+    select.appendChild(crimeOpt);
+
+    select.appendChild(animationOpt);
+
+    select.appendChild(adventureOpt);
+
+    select.appendChild(fantasyOpt);
+
+    select.appendChild(comedyRomanceOpt);
+
+    select.appendChild(actionComedyOpt);
+
+    select.appendChild(superHeroOpt);
+
+    select.appendChild(documentaryOpt);
+
+    select.appendChild(warOpt);
+
+    select.appendChild(musicalOpt);
+
+    select.appendChild(historyOpt);
+
+    select.appendChild(biographyOpt);
+    return select;
 }
 
 export {
@@ -367,5 +509,6 @@ export {
     clearContent,
     createTableVideoRentals,
     createTableGetListOfAllRentals,
-    createNewUserInputForm
+    createNewUserInputForm, 
+    createNewVideoInputForm
 }
