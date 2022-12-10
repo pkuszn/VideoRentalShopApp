@@ -37,11 +37,29 @@ export class UserDTO {
 }
 
 export class LoginUserDTO {
+  id;
   user;
   password;
 
-  constructor(user, password){
+  constructor(id, user, password){
+    this.id = id;
     this.user = user;
     this.password = password;
+  }
+}
+
+export class RentVideoDTO {
+  firstName;
+  lastName;
+  id;
+  userName;
+  videoTitle;
+
+  constructor(firstName = null, lastName = null, id = null, userName, videoTitle){
+    this.firstName = firstName,
+    this.lastName = lastName,
+    this.id = id,
+    this.userName = userName,
+    this.videoTitle = videoTitle
   }
 }

@@ -32,9 +32,30 @@ namespace VideoRentalShopApp.Services
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<List<VideoResult>> GetMyVideosAsync(string userName)
+        public async Task<List<VideoResult>> GetMyVideosAsync(string userName)
         {
-            throw new NotImplementedException();
+            User user = await UserCollection.Find(f => f.UserName.Equals(userName)).FirstOrDefaultAsync();
+            if(user == null)
+            {
+                Logger.LogError($"Cannot find user with {nameof(userName)}: {userName}");
+                return null;
+            }
+
+            List<VideoRent> videoRental = await VideoRentalCollection.Find(f => f.UserId == user.Id).Project(p => p.Videos).FirstOrDefaultAsync();
+            return await GetMyVideos(videoRental);
+        }
+
+        private async Task<List<VideoResult>> GetMyVideos(List<VideoRent> videoRentalCollection)
+        {
+            if((videoRentalCollection?.Count ?? 0) == 0)
+            {
+                Logger.LogError("Collection with user videos is empty");
+                return null;
+            }
+
+            string[] videosArray = videoRentalCollection.Select(s => s.Title).ToArray();
+
+            return new();
         }
 
         public async Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync()

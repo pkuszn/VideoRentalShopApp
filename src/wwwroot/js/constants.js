@@ -20,6 +20,7 @@
     deleteVideo: 'VideoRentalShop/DeleteVideo/',
     deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/',
     getLoginUsers: 'VideoRentalShop/GetLoginUsers',
+    getMyVideos: 'VideoRentalShop/GetMyVideos/'
 }
 
 export const propertyNameVideoRentalList = {
@@ -60,7 +61,8 @@ export const context = {
     getListOfAllRentals: "getListOfAllRentals",
     getVideos: "getVideos",
     getVideoRentals: "getVideoRentals",
-    getUsers: "getUsers"
+    getUsers: "getUsers",
+    rentVideoByUser: "rentVideoByUser"
 }
 
 export const genres = {

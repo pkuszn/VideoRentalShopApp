@@ -1,6 +1,7 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos } from './fetch.js'
 import { createNewUser, createNewVideo } from './send.js'
-import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers} from './utils.js'
+import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
+     createTableVideosForRent} from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
@@ -15,6 +16,7 @@ var logoutButton = document.getElementById('logout-button');
 var getUsersButton = document.getElementById('get-users-button');
 var getAvailableVideosButton = document.getElementById('get-available-videos');
 var getMyVideosButton = document.getElementById('get-videos-by-user');
+var rentVideoByUser = document.getElementById('rent-video-by-user');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -59,8 +61,15 @@ const getAvailableVideos = async() => {
     container = createTableVideos(response, container, headers);
 }
 
-const getMyVideos = async(user) => {
+const getMyVideos = async (user) => {
 
+}
+
+const getVideosFoRent = async () => {
+    const response = await fetchAvailableVideos();
+    console.log(response);
+    const headers = objectProperties(Object.values(response)[0]);
+    container = createTableVideosForRent(response, container, headers);
 }
 
 getVideosButton.addEventListener('click', (e) => {
@@ -116,6 +125,13 @@ getMyVideosButton.addEventListener('click', (e) => {
    e.preventDefault();
    welcomeHeader.remove();
    clearContent(container); 
+});
+
+rentVideoByUser.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    getVideosFoRent();
 });
 
 document.addEventListener('click', addNewUserListener);
@@ -224,14 +240,15 @@ async function loginUser(){
         return obj.user === login.value;
     });
 
-    if(loggedUser.length == 0){
+    if(loggedUser?.length == 0){
         alert(`User ${login.value} doesn't exists`);
         return;
     }
 
     if(loggedUser[0]?.password === password.value){
         alert(`Logged in`);
-        const loggedUserDTO = new LoginUserDTO(login.value, password.value);
+        const loggedUserDTO = new LoginUserDTO(loggedUser[0]?.id, login.value, password.value);
+        window.sessionStorage.setItem("identifier", loggedUserDTO.id);
         window.sessionStorage.setItem("user", loggedUserDTO.user);
         top.location.href = "/index.html";//redirection
     }

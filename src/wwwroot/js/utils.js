@@ -216,6 +216,52 @@ function createTableVideos(videos, container, headers) {
     return container;
 }
 
+function createTableVideosForRent(videos, container, headers) {
+    if (videos === null) {
+        return;
+    }
+    console.log(videos);
+    const table = document.createElement('table');
+    const tableAttr = document.createAttribute('class');
+    tableAttr.value = 'fl-table';
+    table.setAttributeNode(tableAttr);
+
+    const tableHead = document.createElement('thead');
+    const trHead = document.createElement('tr');
+    for (let i = 0; i < headers.length; i++) {
+        const header = document.createElement('th');
+        const headerAttr = document.createAttribute('class');
+        headerAttr.value = 'headers';
+        header.setAttributeNode(headerAttr);
+        const headerText = document.createTextNode(headers[i]);
+        header.appendChild(headerText);
+        trHead.appendChild(header);
+    }
+    actionHeader(trHead);
+    tableHead.appendChild(trHead);
+
+    const tableBody = document.createElement('tbody');
+    for (let i = 0; i < videos.length; i++) {
+        const row = document.createElement('tr');
+        row.appendChild(createRow(videos[i].id, propertyNameVideo.id));
+        row.appendChild(createRow(videos[i].title, propertyNameVideo.title));
+        row.appendChild(createRow(videos[i].genre, propertyNameVideo.genre));
+        row.appendChild(createRow(videos[i].director, propertyNameVideo.director));
+        row.appendChild(createRow(videos[i].runtime, propertyNameVideo.runtime));
+        row.appendChild(createRow(videos[i].score, propertyNameVideo.score));
+        row.appendChild(createRow(videos[i].description, propertyNameVideo.description));
+        row.appendChild(createRow(videos[i].actors, propertyNameVideo.actors));
+        row.appendChild(createRow(videos[i].createdDate, propertyNameVideo.createdDate));
+        row.appendChild(createRow(videos[i].isAvailable, propertyNameVideo.isAvailable));
+        row.appendChild(actionRowRent(context.rentVideoByUser));
+        tableBody.appendChild(row);
+    }
+    table.appendChild(tableHead);
+    table.appendChild(tableBody);
+    container.appendChild(table);
+    return container;
+}
+
 function createTableUsers(users, container, headers) {
     if (users === null) {
         return;
@@ -369,6 +415,30 @@ const createRow = (element, prop) => {
     const tdText = document.createTextNode(element);
     td.appendChild(tdText);
     return td;
+}
+
+
+const actionRowRent = (context) => {
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('class');
+    const divIdAttr = document.createAttribute('id');
+    divIdAttr.value = context;
+    divAttr.value = 'action-row';
+    div.setAttributeNode(divIdAttr);
+    div.setAttributeNode(divAttr);
+
+    const buttonRent = document.createElement('a');
+    const buttonRentAttr = document.createAttribute('id');
+    const buttonDeleteAttrClass = document.createAttribute('class');
+    buttonDeleteAttrClass.value = 'button-row';
+    buttonRent.setAttributeNode(buttonDeleteAttrClass);
+    buttonRentAttr.value = 'rent-row-button';
+    buttonRent.setAttributeNode(buttonRentAttr);
+    buttonRent.textContent = 'Rent';
+    buttonRent.classList.add('button-rent');
+
+    div.appendChild(buttonRent);
+    return div;
 }
 
 const actionRow = (context) => {
@@ -552,5 +622,6 @@ export {
     createTableGetListOfAllRentals,
     createNewUserInputForm, 
     createNewVideoInputForm, 
-    createTableUsers
+    createTableUsers, 
+    createTableVideosForRent
 }

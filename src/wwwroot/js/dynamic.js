@@ -1,6 +1,6 @@
 import { api, context } from './constants.js'
 import { clearContent } from './utils.js'
-import { VideoDTO } from './dtos.js'
+import { VideoDTO, RentVideoDTO } from './dtos.js'
 
 $(document).on('click', '.button-delete', function (event) {
     // alert($(this).parent().parent().children('#id').html());
@@ -31,7 +31,6 @@ $(document).on('click', '.button-delete', function (event) {
         success: function (data) {
             console.log(data);
             window.location.href = "/"+ "index.html"
-
         },
         error: function (jqXHR, textStatus, errorThrow) {
             console.log(jqXHR, textStatus, errorThrow);
@@ -47,7 +46,7 @@ $(document).on('click', '.button-update', function (event) {
     clearContent(clear);
 
     switch (className) {
-        case context.getVideos: {
+        case context.rentVideoByUser: {
             const video = new VideoDTO($(this).parent().parent().children('#id').html(),
                 $(this).parent().parent().children('#title').html(),
                 $(this).parent().parent().children('#genre').html(),
@@ -65,4 +64,46 @@ $(document).on('click', '.button-update', function (event) {
         }
     }
 });
+
+$(document).on('click', '.button-rent', function (event) {
+    alert($(this).parent().parent().html());
+    let clear = document.getElementById('table-wrapper');
+    let className = $(this).parent().attr("id");
+    clearContent(clear);
+
+    let title = $(this).parent().parent().children('#title').html();
+    console.log(videos);
+    var query = "";
+    switch (className) {
+        case context.rentVideoByUser: {
+            query = api.rentFilm
+            break;
+        }
+        case context.getVideoRentals: {
+            query = api.deleteVideoRental + id;
+            break;
+        }
+        case context.getUsers: {
+            query = api.deleteUser + id;
+            break;
+        }
+    }
+    alert(query);
+    let a = $(this).attr('href', query);
+    $.ajax({
+        url: query,
+        type: 'POST',
+        success: function (data) {
+            console.log(data);
+            window.location.href = "/"+ "index.html"
+
+        },
+        error: function (jqXHR, textStatus, errorThrow) {
+            console.log(jqXHR, textStatus, errorThrow);
+            window.location.href = "/"+ "index.html";
+        }
+    });
+});
+
+
 
