@@ -46,7 +46,6 @@ namespace VideoRentalShopApp
             app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                //TODO: SESJE, czy jak to mamy, to nie mo¿emy zapisywaæ sesji????
                 OnPrepareResponse = context =>
                 {
                     context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");

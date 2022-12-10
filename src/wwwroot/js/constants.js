@@ -59,7 +59,8 @@ export const propertyNameVideoRental = {
 export const context = {
     getListOfAllRentals: "getListOfAllRentals",
     getVideos: "getVideos",
-    getVideoRentals: "getVideoRentals"
+    getVideoRentals: "getVideoRentals",
+    getUsers: "getUsers"
 }
 
 export const genres = {
@@ -83,4 +84,13 @@ export const genres = {
     musical: "Musical",
     history: "History",
     biography: "Biography"
+}
+
+export const propertyNameUser = {
+    id: 'id',
+    firstName: "First Name",
+    lastName: "Last Name",
+    address: "Address",
+    contact: "Contact",
+    registrationDate: "Registration Date"
 }

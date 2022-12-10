@@ -1,6 +1,6 @@
-﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers} from './fetch.js'
+﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers } from './fetch.js'
 import { createNewUser, createNewVideo } from './send.js'
-import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm} from './utils.js'
+import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers} from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
@@ -12,6 +12,7 @@ var addNewUserButton = document.getElementById('add-new-user-button');
 var addNewVideoButton = document.getElementById('add-new-video-button');
 var loginButton = document.getElementById('login-button');
 var logoutButton = document.getElementById('logout-button');
+var getUsersButton = document.getElementById('get-users-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -33,6 +34,14 @@ const getListOfAllRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableGetListOfAllRentals(response, container, headers);
+}
+
+const getUsers = async () => {
+    const response = await fetchUsers();
+    console.log(response);
+    const headers = objectProperties(Object.values(response)[0]);
+    console.log(headers);
+    container = createTableUsers(response, container, headers);
 }
 
 const getListOfLoginUsers = async () => {
@@ -61,6 +70,13 @@ getListOfAllRentalsButton.addEventListener('click', (e) => {
     clearContent(container);
     getListOfAllRentals();
 });
+
+getUsersButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    getUsers();
+})
 
 addNewUserButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -200,3 +216,5 @@ logoutButton.addEventListener('click', (e) => {
     window.sessionStorage.clear();
     top.location.href = "/index.html";//redirection
 });
+
+

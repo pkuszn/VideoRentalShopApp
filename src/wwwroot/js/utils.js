@@ -1,4 +1,4 @@
-﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context, genres} from './constants.js'
+﻿import { propertyNameVideo, propertyNameVideoRental, propertyNameVideoRentalList, context, genres, propertyNameUser} from './constants.js'
 
 function createNewVideoInputForm(container){
     const div = document.createElement('div');
@@ -8,8 +8,7 @@ function createNewVideoInputForm(container){
 
     const header = document.createElement('h3');
     const headerAttr = document.createAttribute('id');
-    headerAttr.value = 'header-new-video';
-    header.setAttributeNode(headerAttr);
+    headerAttr.value = 'header-new-video';header.setAttributeNode(headerAttr);
     header.textContent = 'Add new video';
 
     const titleInput = document.createElement('input');
@@ -209,6 +208,48 @@ function createTableVideos(videos, container, headers) {
         row.appendChild(createRow(videos[i].createdDate, propertyNameVideo.createdDate));
         row.appendChild(createRow(videos[i].isAvailable, propertyNameVideo.isAvailable));
         row.appendChild(actionRow(context.getVideos));
+        tableBody.appendChild(row);
+    }
+    table.appendChild(tableHead);
+    table.appendChild(tableBody);
+    container.appendChild(table);
+    return container;
+}
+
+function createTableUsers(users, container, headers) {
+    if (users === null) {
+        return;
+    }
+    console.log(users);
+    const table = document.createElement('table');
+    const tableAttr = document.createAttribute('class');
+    tableAttr.value = 'fl-table';
+    table.setAttributeNode(tableAttr);
+
+    const tableHead = document.createElement('thead');
+    const trHead = document.createElement('tr');
+    for (let i = 0; i < headers.length; i++) {
+        const header = document.createElement('th');
+        const headerAttr = document.createAttribute('class');
+        headerAttr.value = 'headers';
+        header.setAttributeNode(headerAttr);
+        const headerText = document.createTextNode(headers[i]);
+        header.appendChild(headerText);
+        trHead.appendChild(header);
+    }
+    actionHeader(trHead);
+    tableHead.appendChild(trHead);
+
+    const tableBody = document.createElement('tbody');
+    for (let i = 0; i < users.length; i++) {
+        const row = document.createElement('tr');
+        row.appendChild(createRow(users[i].id, propertyNameUser.id));
+        row.appendChild(createRow(users[i].firstName, propertyNameUser.firstName));
+        row.appendChild(createRow(users[i].lastName, propertyNameUser.lastName));
+        row.appendChild(createRow(users[i].address, propertyNameUser.address));
+        row.appendChild(createRow(users[i].contact, propertyNameUser.contact));
+        row.appendChild(createRow(users[i].registrationDate, propertyNameUser.registrationDate));
+        row.appendChild(actionRow(context.getUsers));
         tableBody.appendChild(row);
     }
     table.appendChild(tableHead);
@@ -510,5 +551,6 @@ export {
     createTableVideoRentals,
     createTableGetListOfAllRentals,
     createNewUserInputForm, 
-    createNewVideoInputForm
+    createNewVideoInputForm, 
+    createTableUsers
 }

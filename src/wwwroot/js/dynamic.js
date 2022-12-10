@@ -18,22 +18,24 @@ $(document).on('click', '.button-delete', function (event) {
             query = api.deleteVideoRental + id;
             break;
         }
+        case context.getUsers: {
+            query = api.deleteUser + id;
+            break;
+        }
     }
     alert(query);
     let a = $(this).attr('href', query);
     $.ajax({
         url: query,
         type: 'DELETE',
-        data: {
-            id: id
-        },
         success: function (data) {
             console.log(data);
-            top.location.href = "/index.html";//redirection
+            window.location.href = "/"+ "index.html"
+
         },
         error: function (jqXHR, textStatus, errorThrow) {
-            console.log(textStatus);
-            top.location.href = "/index.html";//redirection
+            console.log(jqXHR, textStatus, errorThrow);
+            window.location.href = "/"+ "index.html";
         }
     });
 });
@@ -44,7 +46,7 @@ $(document).on('click', '.button-update', function (event) {
     let className = $(this).parent().attr("id");
     clearContent(clear);
 
-    switch(className){
+    switch (className) {
         case context.getVideos: {
             const video = new VideoDTO($(this).parent().parent().children('#id').html(),
                 $(this).parent().parent().children('#title').html(),
