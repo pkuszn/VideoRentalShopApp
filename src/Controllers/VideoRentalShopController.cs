@@ -56,10 +56,17 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpPut]
-        [Route("ReturnRentedVideo")]
-        public async Task<bool> ReturnRentedVideoAsync(RentFilmCriteria criteria)
+        [Route("ReturnRentedVideoById")]
+        public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
         {
-            return await VideoRentalShopService.ReturnRentedVideoAsync(criteria.Title, criteria.UserId, criteria.FirstName, criteria.LastName);
+            return await VideoRentalShopService.ReturnRentedVideoByIdAsync(criteria.Title, criteria.UserId);
+        }
+
+        [HttpPut]
+        [Route("ReturnRentedVideoByNames")]
+        public async Task<bool> ReturnRentedVideByNamesAsync(RentFilmByNamesCriteria criteria)
+        {
+            return await VideoRentalShopService.ReturnRentedVideoByNamesAsync(criteria.Title, criteria.FirstName, criteria.LastName);
         }
 
         [HttpGet]
@@ -77,10 +84,17 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpPost]
-        [Route("RentFilm")]
-        public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)
+        [Route("RentFilmByNames")]
+        public async Task<bool> RentVideoAsyncByNames(RentFilmByNamesCriteria criteria)
         {
-            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId, criteria.FirstName, criteria.LastName);
+            return await VideoRentalShopService.RentVideoByNamesAsync(criteria);
+        }
+
+        [HttpPost]
+        [Route("RentFilmById")]
+        public async Task<bool> RentVideoAsyncById(RentFilmByIdCriteria criteria)
+        {
+            return await VideoRentalShopService.RentVideoByIdAsync(criteria);
         }
 
         [HttpGet]

@@ -1,6 +1,6 @@
 import { api, context } from './constants.js'
 import { clearContent } from './utils.js'
-import { VideoDTO, RentVideoDTO } from './dtos.js'
+import { VideoDTO, RentVideoByIdDTO } from './dtos.js'
 
 $(document).on('click', '.button-delete', function (event) {
     // alert($(this).parent().parent().children('#id').html());
@@ -72,35 +72,33 @@ $(document).on('click', '.button-rent', function (event) {
     clearContent(clear);
 
     let title = $(this).parent().parent().children('#title').html();
-    console.log(videos);
+    let id = window.sessionStorage.getItem('identifier');
     var query = "";
     switch (className) {
         case context.rentVideoByUser: {
-            query = api.rentFilm
+            query = api.rentFilmById;            
             break;
         }
-        case context.getVideoRentals: {
-            query = api.deleteVideoRental + id;
-            break;
-        }
-        case context.getUsers: {
-            query = api.deleteUser + id;
+        default: {
             break;
         }
     }
     alert(query);
-    let a = $(this).attr('href', query);
+    const rent = new RentVideoByIdDTO(id, title);
     $.ajax({
         url: query,
         type: 'POST',
+        data: {
+            id: rent.id,
+            title: rent.videoTitle
+        },
         success: function (data) {
             console.log(data);
-            window.location.href = "/"+ "index.html"
-
+            // window.location.href = "/"+ "index.html"
         },
         error: function (jqXHR, textStatus, errorThrow) {
             console.log(jqXHR, textStatus, errorThrow);
-            window.location.href = "/"+ "index.html";
+            // window.location.href = "/"+ "index.html";
         }
     });
 });

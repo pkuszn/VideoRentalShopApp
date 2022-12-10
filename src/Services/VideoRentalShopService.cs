@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VideoRentalShopApp.Configuration;
 using VideoRentalShopApp.DataTransferObjects;
+using VideoRentalShopApp.DataTransferObjects.Criteria;
 using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 using VideoRentalShopApp.Models;
@@ -69,44 +70,25 @@ namespace VideoRentalShopApp.Services
             return loginList.Select(s => new LoginResult { Id = s.Id, User = s.UserName, Password = s.Password }).ToList();
         }
 
-        public async Task<bool> ReturnRentedVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
+        public async Task<bool> ReturnRentedVideoByIdAsync(string videoTitle, string userId)
         {
-            if (string.IsNullOrEmpty(videoTitle))
-            {
-                return false;
-            }
-            if (!string.IsNullOrEmpty(userId))
-            {
-                return await ReturnRentedVideoBasedOn(videoTitle, userId);
-            }
-            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-            {
-                return await ReturnRentedVideoBasedOn(videoTitle, firstName, lastName);
-            }
-            else
-            {
-                return false;
-            }
+            return await ReturnRentedVideoBasedOn(videoTitle, userId);
         }
 
-        public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
+        public async Task<bool> ReturnRentedVideoByNamesAsync(string videoTitle, string firstName, string lastName)
         {
-            if (string.IsNullOrEmpty(videoTitle))
-            {
-                return false;
-            }
-            if (!string.IsNullOrEmpty(userId))
-            {
-                return await RentVideoAsyncBasedOn(videoTitle, userId);
-            }
-            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-            {
-                return await RentVideoAsyncBasedOn(videoTitle, firstName, lastName);
-            }
-            else
-            {
-                return false;
-            }
+            return await ReturnRentedVideoBasedOn(videoTitle, firstName, lastName);
+        }
+
+
+        public async Task<bool> RentVideoByNamesAsync(RentFilmByNamesCriteria criteria)
+        {
+            return await RentVideoAsyncBasedOn(criteria.Title, criteria.FirstName, criteria.LastName);
+        }
+
+        public async Task<bool> RentVideoByIdAsync(RentFilmByIdCriteria criteria)
+        {
+            return await RentVideoAsyncBasedOn(criteria.Title, criteria.UserId);
         }
 
         public async Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre)
@@ -624,6 +606,5 @@ namespace VideoRentalShopApp.Services
             }
             return userRentedVideosResults;
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
+using VideoRentalShopApp.DataTransferObjects.Criteria;
 using VideoRentalShopApp.DataTransferObjects.Results;
 
 namespace VideoRentalShopApp.Interfaces
@@ -10,10 +11,12 @@ namespace VideoRentalShopApp.Interfaces
         Task<List<VideoResult>> GetMyVideosAsync(string userName);
         Task<List<LoginResult>> GetLoginUsers();
         Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync();
-        Task<bool> ReturnRentedVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null);
+        Task<bool> ReturnRentedVideoByIdAsync(string videoTitle, string userId);
+        Task<bool> ReturnRentedVideoByNamesAsync(string videoTitle, string firstName, string lastName);
         Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre);
         Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre);
-        Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null);
+        Task<bool> RentVideoByNamesAsync(RentFilmByNamesCriteria criteria);
+        Task<bool> RentVideoByIdAsync(RentFilmByIdCriteria criteria);
         Task<List<UserResult>> GetUsersAsync();
         Task<UserResult> GetUserAsync(string id);
         Task<string> CreateUserAsync(UserCriteria criteria);

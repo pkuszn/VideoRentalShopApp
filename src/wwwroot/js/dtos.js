@@ -48,18 +48,12 @@ export class LoginUserDTO {
   }
 }
 
-export class RentVideoDTO {
-  firstName;
-  lastName;
+export class RentVideoByIdDTO {
   id;
-  userName;
   videoTitle;
 
-  constructor(firstName = null, lastName = null, id = null, userName, videoTitle){
-    this.firstName = firstName,
-    this.lastName = lastName,
+  constructor(id, videoTitle){
     this.id = id,
-    this.userName = userName,
     this.videoTitle = videoTitle
   }
 }
