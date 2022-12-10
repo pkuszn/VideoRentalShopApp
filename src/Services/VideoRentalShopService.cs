@@ -20,7 +20,6 @@ namespace VideoRentalShopApp.Services
         private readonly IMongoCollection<User> UserCollection;
         private readonly IMongoCollection<Video> VideoCollection;
         private readonly IMongoCollection<VideoRental> VideoRentalCollection;
-        private readonly IMongoCollection<Login> LoginCollection;
         private readonly ILogger<VideoRentalShopService> Logger;
         private readonly IMongoDatabase Database;
 
@@ -30,9 +29,14 @@ namespace VideoRentalShopApp.Services
             UserCollection = Database.GetCollection<User>(videoRentalShopConfiguration.Value.UserCollectionName) ?? throw new NullReferenceException();
             VideoCollection = Database.GetCollection<Video>(videoRentalShopConfiguration.Value.VideoCollectionName) ?? throw new NullReferenceException();
             VideoRentalCollection = Database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
-            LoginCollection = Database.GetCollection<Login>(videoRentalShopConfiguration.Value.LoginCollectionName) ?? throw new NullReferenceException();
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        public Task<List<VideoResult>> GetMyVideosAsync(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync()
         {
             return await GetListOfRentsAsync();
@@ -40,8 +44,8 @@ namespace VideoRentalShopApp.Services
 
         public async Task<List<LoginResult>> GetLoginUsers()
         {
-            List<Login> loginList = await LoginCollection.Find(_ => true).ToListAsync();
-            return loginList.Select(s => new LoginResult { Id = s.Id, User = s.User, Password = s.Password }).ToList();
+            List<User> loginList = await UserCollection.Find(_ => true).ToListAsync();
+            return loginList.Select(s => new LoginResult { Id = s.Id, User = s.UserName, Password = s.Password }).ToList();
         }
 
         public async Task<bool> ReturnRentedVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
@@ -599,5 +603,6 @@ namespace VideoRentalShopApp.Services
             }
             return userRentedVideosResults;
         }
+
     }
 }

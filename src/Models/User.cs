@@ -15,6 +15,9 @@ namespace VideoRentalShopApp.Models
         public string Address { get; set; }
         public long Contact { get; set; }
         //ISODate
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public DateTime RegistrationDate { get; set; }
     }
 }

@@ -41,6 +41,9 @@ async function createNewVideo(video) {
     .catch(error => console.error('Unable to insert videos', error));
 }
 
+async function getMyVideos(id){
+}
+
 export {
     createNewUser, 
     createNewVideo,

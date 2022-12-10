@@ -1,4 +1,4 @@
-﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers } from './fetch.js'
+﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos } from './fetch.js'
 import { createNewUser, createNewVideo } from './send.js'
 import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers} from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
@@ -13,6 +13,8 @@ var addNewVideoButton = document.getElementById('add-new-video-button');
 var loginButton = document.getElementById('login-button');
 var logoutButton = document.getElementById('logout-button');
 var getUsersButton = document.getElementById('get-users-button');
+var getAvailableVideosButton = document.getElementById('get-available-videos');
+var getMyVideosButton = document.getElementById('get-videos-by-user');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -48,6 +50,17 @@ const getListOfLoginUsers = async () => {
     const response = await fetchLoginUsers();
     console.log(response);
     return response;
+}
+
+const getAvailableVideos = async() => {
+    const response = await fetchAvailableVideos();
+    console.log(response);
+    const headers = objectProperties(Object.values(response)[0]);
+    container = createTableVideos(response, container, headers);
+}
+
+const getMyVideos = async(user) => {
+
 }
 
 getVideosButton.addEventListener('click', (e) => {
@@ -90,6 +103,19 @@ addNewVideoButton.addEventListener('click', (e) => {
     welcomeHeader.remove();
     clearContent(container);
     container = createNewVideoInputForm(container);
+});
+
+getAvailableVideosButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    getAvailableVideos();
+});
+
+getMyVideosButton.addEventListener('click', (e) => {
+   e.preventDefault();
+   welcomeHeader.remove();
+   clearContent(container); 
 });
 
 document.addEventListener('click', addNewUserListener);
@@ -198,12 +224,12 @@ async function loginUser(){
         return obj.user === login.value;
     });
 
-    if(loggedUser == null){
-        alert(`User ${login} doesn't exists`);
+    if(loggedUser.length == 0){
+        alert(`User ${login.value} doesn't exists`);
         return;
     }
 
-    if(loggedUser[0].password === password.value){
+    if(loggedUser[0]?.password === password.value){
         alert(`Logged in`);
         const loggedUserDTO = new LoginUserDTO(login.value, password.value);
         window.sessionStorage.setItem("user", loggedUserDTO.user);

@@ -7,6 +7,7 @@ namespace VideoRentalShopApp.Interfaces
 {
     public interface IVideoRentalShopService
     {
+        Task<List<VideoResult>> GetMyVideosAsync(string userName);
         Task<List<LoginResult>> GetLoginUsers();
         Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync();
         Task<bool> ReturnRentedVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null);
