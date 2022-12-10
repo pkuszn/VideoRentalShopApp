@@ -41,25 +41,7 @@ async function createNewVideo(video) {
     .catch(error => console.error('Unable to insert videos', error));
 }
 
-
-async function setSession(User, Password){
-    return await fetch(api.setSession, {
-        method: 'POST',
-        dataType: 'JSON',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            user: User,
-            password: Password
-        })
-    })
-    .catch(error => console.log('Unable to set session variables', error));
-}
-
 export {
     createNewUser, 
     createNewVideo,
-    setSession
 }

@@ -1,7 +1,7 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers} from './fetch.js'
-import { createNewUser, createNewVideo, setSession } from './send.js'
+import { createNewUser, createNewVideo } from './send.js'
 import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm} from './utils.js'
-import { UserDTO, VideoDTO } from './dtos.js'
+import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -11,6 +11,7 @@ var welcomeHeader = document.getElementById('welcome');
 var addNewUserButton = document.getElementById('add-new-user-button');
 var addNewVideoButton = document.getElementById('add-new-video-button');
 var loginButton = document.getElementById('login-button');
+var logoutButton = document.getElementById('logout-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -161,7 +162,6 @@ function resetNewUserListener(event) {
     }
 };
 
-
 loginButton.addEventListener('click', async (e) => {
     e.preventDefault();
     await loginUser();
@@ -178,13 +178,25 @@ async function loginUser(){
     }
 
     const loginUsers = await getListOfLoginUsers();
-    let user = loginUsers.find(f => f.user == login);
-    if(user == null){
+    let loggedUser = loginUsers.filter(obj => {
+        return obj.user === login.value;
+    });
+
+    if(loggedUser == null){
         alert(`User ${login} doesn't exists`);
         return;
     }
-    if(user.password == password){
+
+    if(loggedUser[0].password === password.value){
         alert(`Logged in`);
-        await setSession(login, password);
+        const loggedUserDTO = new LoginUserDTO(login.value, password.value);
+        window.sessionStorage.setItem("user", loggedUserDTO.user);
+        top.location.href = "/index.html";//redirection
     }
 }
+
+logoutButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.sessionStorage.clear();
+    top.location.href = "/index.html";//redirection
+});

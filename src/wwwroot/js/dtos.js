@@ -20,7 +20,6 @@ export class VideoDTO {
   }
 }
 
-
 export class UserDTO {
   firstName;
   lastName
@@ -34,5 +33,15 @@ export class UserDTO {
     this.address = address;
     this.contact = contact;
     this.registrationDate = registrationDate;
+  }
+}
+
+export class LoginUserDTO {
+  user;
+  password;
+
+  constructor(user, password){
+    this.user = user;
+    this.password = password;
   }
 }
