@@ -438,3 +438,26 @@ select {
     justify-content: center;
     justify-items: center;
 }
+
+
+#delete-videos-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#videos{
+    width: 95.5%
+}
+
+#delete-users-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#users{
+    width: 95.5%
+}

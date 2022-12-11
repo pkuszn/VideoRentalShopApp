@@ -41,10 +41,31 @@ async function createNewVideo(video) {
     .catch(error => console.error('Unable to insert videos', error));
 }
 
-async function getMyVideos(id){
+async function deleteVideo(id) {
+    return await fetch(api.deleteVideo+id, {
+        method: 'DELETE',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    }).catch(error => console.error('Unable to insert videos', error));
+}
+
+async function deleteUser(id) {
+    return await fetch(api.deleteUser+id, {
+        method: 'DELETE',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    }).catch(error => console.error('Unable to insert videos', error));
 }
 
 export {
     createNewUser, 
     createNewVideo,
+    deleteVideo,
+    deleteUser
 }

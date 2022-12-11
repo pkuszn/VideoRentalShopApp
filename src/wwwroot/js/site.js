@@ -1,7 +1,9 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos } from './fetch.js'
-import { createNewUser, createNewVideo } from './send.js'
-import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
-     createTableVideosForRent, createTableVideosWithoutActions} from './utils.js'
+import { createNewUser, createNewVideo, deleteVideo, deleteUser } from './send.js'
+import {
+    createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
+    createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList
+} from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
@@ -16,11 +18,13 @@ var logoutButton = document.getElementById('logout-button');
 var getUsersButton = document.getElementById('get-users-button');
 var getAvailableVideosButton = document.getElementById('get-available-videos');
 var getMyVideosButton = document.getElementById('get-videos-by-user');
-var rentVideoByUser = document.getElementById('rent-video-by-user');
+var rentVideoByUserButton = document.getElementById('rent-video-by-user');
+var removeVideoButton = document.getElementById('remove-video-button');
+var removeUserButton = document.getElementById('remove-user-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -29,9 +33,18 @@ const getVideos = async () => {
     container = createTableVideos(response, container, headers);
 }
 
+const getVideosRaw = async () => {
+    const response = await fetchVideos();
+    if (response == undefined) {
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
+    container = createDeleteVideosList(response, container);
+}
+
 const getVideoRentals = async () => {
     const response = await fetchVideoRentals();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -42,7 +55,7 @@ const getVideoRentals = async () => {
 
 const getListOfAllRentals = async () => {
     const response = await fetchListOfAllRentals();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -54,7 +67,7 @@ const getListOfAllRentals = async () => {
 
 const getUsers = async () => {
     const response = await fetchUsers();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -64,9 +77,21 @@ const getUsers = async () => {
     container = createTableUsers(response, container, headers);
 }
 
+const getUsersRaw = async () => {
+    const response = await fetchUsers();
+    if (response == undefined) {
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
+    console.log(response);
+    const headers = objectProperties(Object.values(response)[0]);
+    console.log(headers);
+    container = createDeleteUsersList(response, container, headers);
+}
+
 const getListOfLoginUsers = async () => {
     const response = await fetchLoginUsers();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -74,9 +99,9 @@ const getListOfLoginUsers = async () => {
     return response;
 }
 
-const getAvailableVideos = async() => {
+const getAvailableVideos = async () => {
     const response = await fetchAvailableVideos();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -87,7 +112,7 @@ const getAvailableVideos = async() => {
 
 const getMyVideos = async (id) => {
     const response = await fetchMyVideos(id);
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.");
         top.location.href = "/index.html";//redirectior
     }
@@ -98,7 +123,7 @@ const getMyVideos = async (id) => {
 
 const getVideosForRent = async () => {
     const response = await fetchAvailableVideos();
-    if(response == undefined){
+    if (response == undefined) {
         alert("An unknown error has occured.")
         top.location.href = "/index.html";//redirection
     }
@@ -157,23 +182,37 @@ getAvailableVideosButton.addEventListener('click', (e) => {
 });
 
 getMyVideosButton.addEventListener('click', (e) => {
-   e.preventDefault();
-   welcomeHeader.remove();
-   clearContent(container); 
-   let id = window.sessionStorage.getItem("identifier");
-   if(id == undefined){
-    alert("User id is not defiend.");
-    return;
-   }
-   getMyVideos(id);
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    let id = window.sessionStorage.getItem("identifier");
+    if (id == undefined) {
+        alert("User id is not defiend.");
+        return;
+    }
+    getMyVideos(id);
 });
 
-rentVideoByUser.addEventListener('click', (e) => {
+rentVideoByUserButton.addEventListener('click', (e) => {
     e.preventDefault();
     welcomeHeader.remove();
     clearContent(container);
     getVideosForRent();
 });
+
+removeVideoButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    getVideosRaw();
+});
+
+removeUserButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    getUsersRaw();
+})
 
 document.addEventListener('click', addNewUserListener);
 document.addEventListener('click', resetNewUserListener);
@@ -181,9 +220,9 @@ document.addEventListener('click', resetNewUserListener);
 document.addEventListener('click', addNewVideoListener);
 document.addEventListener('click', resetNewVideoListener);
 
-async function addNewVideoListener(event){
+async function addNewVideoListener(event) {
     var element = event.target;
-    if(element.id == 'add-new-video-button-in-container'){
+    if (element.id == 'add-new-video-button-in-container') {
         let datetime = new Date();
         datetime.toISOString();
         let selectedGenre = document.getElementById('genre').value;
@@ -266,10 +305,10 @@ loginButton.addEventListener('click', async (e) => {
     await loginUser();
 });
 
-async function loginUser(){
+async function loginUser() {
     const login = document.getElementById('login');
     const password = document.getElementById('password');
-    if(login.value == "" || password.value == ""){
+    if (login.value == "" || password.value == "") {
         alert('Password or Login required!');
         login.value = "";
         password.value = "";
@@ -281,12 +320,12 @@ async function loginUser(){
         return obj.user === login.value;
     });
 
-    if(loggedUser?.length == 0){
+    if (loggedUser?.length == 0) {
         alert(`User ${login.value} doesn't exists`);
         return;
     }
 
-    if(loggedUser[0]?.password === password.value){
+    if (loggedUser[0]?.password === password.value) {
         alert(`Logged in`);
         const loggedUserDTO = new LoginUserDTO(loggedUser[0]?.id, login.value, password.value);
         window.sessionStorage.setItem("identifier", loggedUserDTO.id);
@@ -301,4 +340,32 @@ logoutButton.addEventListener('click', (e) => {
     top.location.href = "/index.html";//redirection
 });
 
+
+document.addEventListener('click', deleteVideosListListener);
+
+async function deleteVideosListListener(event) {
+    var element = event.target;
+    if (element.id == 'delete-videos-button-in-container') {
+        let videoId = document.getElementById('videos').value;
+        if(videoId == undefined){
+            alert("Video is undefined!");
+        }
+        await deleteVideo(videoId);
+        top.location.href = "/index.html";//redirection
+    }
+};
+
+document.addEventListener('click', deleteUsersListListener);
+
+async function deleteUsersListListener(event) {
+    var element = event.target;
+    if (element.id == 'delete-users-button-in-container') {
+        let userId = document.getElementById('users').value;
+        if(userId == undefined){
+            alert("User is undefined!");
+        }
+        await deleteUser(userId);
+        top.location.href = "/index.html";//redirection
+    }
+};
 

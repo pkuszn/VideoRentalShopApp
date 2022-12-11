@@ -659,6 +659,109 @@ const createOptions = (select) => {
     return select;
 }
 
+
+const createDeleteVideosOptions = (select, response) => {
+    console.log(response);
+    for (let i = 0; i < response.length; i++) {
+        const Opt = document.createElement("option");
+        Opt.value = response[i].id;
+        Opt.innerHTML = response[i].title;
+        select.appendChild(Opt);
+    };
+    return select;
+}
+
+const createDeleteUsersOptions = (select, response) => {
+    console.log(response);
+    for (let i = 0; i < response.length; i++) {
+        const Opt = document.createElement("option");
+        Opt.value = response[i].id;
+        Opt.innerHTML = response[i].firstName + " " + response[i].lastName;
+        select.appendChild(Opt);
+    };
+    return select;
+}
+
+function createDeleteVideosList(response, container){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'delete-videos-container';
+    div.setAttributeNode(divAttr);
+    
+    const header = document.createElement('h3');const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'delete-videos';
+    header.setAttributeNode(headerAttr);
+    header.textContent = 'Delete selected video';
+
+    var videosSelect = document.createElement('select');
+    const videosSelectAttr = document.createAttribute('id');
+    videosSelectAttr.value = 'videos';
+    videosSelect.setAttributeNode(videosSelectAttr);
+    videosSelect = createDeleteVideosOptions(videosSelect, response);
+    
+    const deleteVideosButton = document.createElement('button');
+    const deleteVideosButtonAttr = document.createAttribute('class');
+    const deleteVideosButtonAttrId = document.createAttribute('id');
+    deleteVideosButtonAttrId.value = 'delete-videos-button-in-container';
+    deleteVideosButton.setAttributeNode(deleteVideosButtonAttrId);
+    deleteVideosButtonAttr.value = 'button-9';
+    deleteVideosButton.setAttributeNode(deleteVideosButtonAttr);
+    deleteVideosButton.textContent = 'Delete';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-delete-videos-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(deleteVideosButton);
+
+    div.append(header);
+    div.appendChild(videosSelect);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
+function createDeleteUsersList(response, container){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'delete-users-container';
+    div.setAttributeNode(divAttr);
+    
+    const header = document.createElement('h3');const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'delete-users';
+    header.setAttributeNode(headerAttr);
+    header.textContent = 'Delete selected user';
+
+    var userSelect = document.createElement('select');
+    const userSelectAttr = document.createAttribute('id');
+    userSelectAttr.value = 'users';
+    userSelect.setAttributeNode(userSelectAttr);
+    userSelect = createDeleteUsersOptions(userSelect, response);
+    
+    const deleteVideosButton = document.createElement('button');
+    const deleteVideosButtonAttr = document.createAttribute('class');
+    const deleteVideosButtonAttrId = document.createAttribute('id');
+    deleteVideosButtonAttrId.value = 'delete-users-button-in-container';
+    deleteVideosButton.setAttributeNode(deleteVideosButtonAttrId);
+    deleteVideosButtonAttr.value = 'button-9';
+    deleteVideosButton.setAttributeNode(deleteVideosButtonAttr);
+    deleteVideosButton.textContent = 'Delete';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-delete-users-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(deleteVideosButton);
+
+    div.append(header);
+    div.appendChild(userSelect);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
 export {
     createTableVideos,
     objectProperties,
@@ -669,5 +772,7 @@ export {
     createNewVideoInputForm, 
     createTableUsers, 
     createTableVideosForRent,
-    createTableVideosWithoutActions
+    createTableVideosWithoutActions,
+    createDeleteVideosList,
+    createDeleteUsersList
 }
