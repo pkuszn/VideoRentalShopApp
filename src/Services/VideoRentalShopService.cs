@@ -33,30 +33,42 @@ namespace VideoRentalShopApp.Services
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<List<VideoResult>> GetMyVideosAsync(string userName)
+        public async Task<List<VideoResult>> GetMyVideosAsync(string id)
         {
-            User user = await UserCollection.Find(f => f.UserName.Equals(userName)).FirstOrDefaultAsync();
-            if(user == null)
+            User user = await UserCollection.Find(f => f.Id == id).FirstOrDefaultAsync();
+            if (user == null)
             {
-                Logger.LogError($"Cannot find user with {nameof(userName)}: {userName}");
+                Logger.LogError($"Cannot find user with {nameof(id)}: {id}");
                 return null;
             }
 
             List<VideoRent> videoRental = await VideoRentalCollection.Find(f => f.UserId == user.Id).Project(p => p.Videos).FirstOrDefaultAsync();
-            return await GetMyVideos(videoRental);
+            return await GetMyVideos(videoRental.Select(s => s.Title).ToArray());
         }
 
-        private async Task<List<VideoResult>> GetMyVideos(List<VideoRent> videoRentalCollection)
+        private async Task<List<VideoResult>> GetMyVideos(string[] videosArray)
         {
-            if((videoRentalCollection?.Count ?? 0) == 0)
+            if ((videosArray?.Length ?? 0) == 0)
             {
                 Logger.LogError("Collection with user videos is empty");
                 return null;
             }
 
-            string[] videosArray = videoRentalCollection.Select(s => s.Title).ToArray();
-
-            return new();
+            FilterDefinition<Video> filter = Builders<Video>.Filter.In(movie => movie.Title, videosArray);
+            List<Video> videos = await VideoCollection.Find(filter).ToListAsync();
+            return videos != null || videos.Count > 0 ? videos.Select(s => new VideoResult
+            {
+                Id = s.Id,
+                Title = s.Title,
+                Director = s.Director,
+                Genre = s.Genre,
+                Runtime = s.Runtime,
+                Score = s.Score,
+                Description = s.Description,
+                CreatedDate = s.CreatedDate,
+                IsAvailable = s.IsAvailable,
+                Actors = s.Actors
+            }).ToList() : new();
         }
 
         public async Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync()
@@ -70,14 +82,14 @@ namespace VideoRentalShopApp.Services
             return loginList.Select(s => new LoginResult { Id = s.Id, User = s.UserName, Password = s.Password }).ToList();
         }
 
-        public async Task<bool> ReturnRentedVideoByIdAsync(string videoTitle, string userId)
+        public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
         {
-            return await ReturnRentedVideoBasedOn(videoTitle, userId);
+            return await ReturnRentedVideoBasedOn(criteria.Title, criteria.UserId);
         }
 
-        public async Task<bool> ReturnRentedVideoByNamesAsync(string videoTitle, string firstName, string lastName)
+        public async Task<bool> ReturnRentedVideoByNamesAsync(RentFilmByNamesCriteria criteria)
         {
-            return await ReturnRentedVideoBasedOn(videoTitle, firstName, lastName);
+            return await ReturnRentedVideoBasedOn(criteria.Title, criteria.FirstName, criteria.LastName);
         }
 
         public async Task<bool> RentVideoByNamesAsync(RentFilmByNamesCriteria criteria)
@@ -318,7 +330,6 @@ namespace VideoRentalShopApp.Services
             await VideoRentalCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
 
-        //TODO: Dodać pole status do filmu i pozmieniać kody. Ostatnia rzecz do zrobienia.
         private async Task<List<VideoResult>> GetListOfAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
             SortDefinition<Video> sort = sortByTitle
@@ -453,7 +464,7 @@ namespace VideoRentalShopApp.Services
         private async Task<bool> UpdateVideoAvailabilityAsync(string videoTitle)
         {
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
-            if(video == null)
+            if (video == null)
             {
                 return false;
             }
@@ -466,7 +477,7 @@ namespace VideoRentalShopApp.Services
 
         private async Task<VideoRental> CreateRentalCardAsync(User user)
         {
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }

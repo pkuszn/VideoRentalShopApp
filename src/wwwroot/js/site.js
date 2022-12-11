@@ -1,4 +1,4 @@
-﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos } from './fetch.js'
+﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos } from './fetch.js'
 import { createNewUser, createNewVideo } from './send.js'
 import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
      createTableVideosForRent} from './utils.js'
@@ -85,11 +85,18 @@ const getAvailableVideos = async() => {
     container = createTableVideos(response, container, headers);
 }
 
-const getMyVideos = async (user) => {
-
+const getMyVideos = async (id) => {
+    const response = await fetchMyVideos(id);
+    if(response == undefined){
+        alert("An unknown error has occured.");
+        top.location.href = "/index.html";//redirectior
+    }
+    console.log(response);
+    const headers = objectProperties(Object.values(response)[0]);
+    container = createTableVideos(response, container, headers);
 }
 
-const getVideosFoRent = async () => {
+const getVideosForRent = async () => {
     const response = await fetchAvailableVideos();
     if(response == undefined){
         alert("An unknown error has occured.")
@@ -153,13 +160,19 @@ getMyVideosButton.addEventListener('click', (e) => {
    e.preventDefault();
    welcomeHeader.remove();
    clearContent(container); 
+   let id = window.sessionStorage.getItem("identifier");
+   if(id == undefined){
+    alert("User id is not defiend.");
+    return;
+   }
+   getMyVideos(id);
 });
 
 rentVideoByUser.addEventListener('click', (e) => {
     e.preventDefault();
     welcomeHeader.remove();
     clearContent(container);
-    getVideosFoRent();
+    getVideosForRent();
 });
 
 document.addEventListener('click', addNewUserListener);

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,6 +23,13 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpGet]
+        [Route("GetMyVideos/{id}")]
+        public async Task<List<VideoResult>> GetMyVideosAsync(string id)
+        {
+            return await VideoRentalShopService.GetMyVideosAsync(id);
+        }
+
+        [HttpGet]
         [Route("GetLoginUsers")]
         public async Task<List<LoginResult>> GetLoginResultsAsync()
         {
@@ -41,14 +47,14 @@ namespace VideoRentalShopApp.Controllers
         [Route("ReturnRentedVideoById")]
         public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
         {
-            return await VideoRentalShopService.ReturnRentedVideoByIdAsync(criteria.Title, criteria.UserId);
+            return await VideoRentalShopService.ReturnRentedVideoByIdAsync(criteria);
         }
 
         [HttpPut]
         [Route("ReturnRentedVideoByNames")]
         public async Task<bool> ReturnRentedVideByNamesAsync(RentFilmByNamesCriteria criteria)
         {
-            return await VideoRentalShopService.ReturnRentedVideoByNamesAsync(criteria.Title, criteria.FirstName, criteria.LastName);
+            return await VideoRentalShopService.ReturnRentedVideoByNamesAsync(criteria);
         }
 
         [HttpGet]
@@ -84,8 +90,8 @@ namespace VideoRentalShopApp.Controllers
         public async Task<List<UserResult>> GetUsersAsync()
         {
             return await VideoRentalShopService.GetUsersAsync();
-        }        
-        
+        }
+
         [HttpGet]
         [Route("GetVideos")]
         public async Task<List<VideoResult>> GetVideosAsync()

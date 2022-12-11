@@ -8,15 +8,15 @@ namespace VideoRentalShopApp.Interfaces
 {
     public interface IVideoRentalShopService
     {
-        Task<List<VideoResult>> GetMyVideosAsync(string userName);
+        Task<List<VideoResult>> GetMyVideosAsync(string id);
         Task<List<LoginResult>> GetLoginUsers();
         Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync();
-        Task<bool> ReturnRentedVideoByIdAsync(string videoTitle, string userId);
-        Task<bool> ReturnRentedVideoByNamesAsync(string videoTitle, string firstName, string lastName);
-        Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre);
-        Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre);
+        Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria);
+        Task<bool> ReturnRentedVideoByNamesAsync(RentFilmByNamesCriteria criteria);
         Task<bool> RentVideoByNamesAsync(RentFilmByNamesCriteria criteria);
         Task<bool> RentVideoByIdAsync(RentFilmByIdCriteria criteria);
+        Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre);
+        Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre);
         Task<List<UserResult>> GetUsersAsync();
         Task<UserResult> GetUserAsync(string id);
         Task<string> CreateUserAsync(UserCriteria criteria);
