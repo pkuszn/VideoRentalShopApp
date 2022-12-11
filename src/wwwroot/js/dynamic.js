@@ -66,11 +66,8 @@ $(document).on('click', '.button-update', function (event) {
 });
 
 $(document).on('click', '.button-rent', function (event) {
-    alert($(this).parent().parent().html());
-    let clear = document.getElementById('table-wrapper');
+    // alert($(this).parent().parent().html());
     let className = $(this).parent().attr("id");
-    clearContent(clear);
-
     let title = $(this).parent().parent().children('#title').html();
     let id = window.sessionStorage.getItem('identifier');
     var query = "";
@@ -87,11 +84,16 @@ $(document).on('click', '.button-rent', function (event) {
     const rent = new RentVideoByIdDTO(id, title);
     $.ajax({
         url: query,
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },        
         type: 'POST',
-        data: {
-            id: rent.id,
+        dataType: 'json',
+        data: JSON.stringify({
+            userId: rent.id,
             title: rent.videoTitle
-        },
+        }),
         success: function (data) {
             console.log(data);
             // window.location.href = "/"+ "index.html"

@@ -20,6 +20,10 @@ var rentVideoByUser = document.getElementById('rent-video-by-user');
 
 const getVideos = async () => {
     const response = await fetchVideos();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideos(response, container, headers);
@@ -27,6 +31,10 @@ const getVideos = async () => {
 
 const getVideoRentals = async () => {
     const response = await fetchVideoRentals();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideoRentals(response, container, headers);
@@ -34,6 +42,10 @@ const getVideoRentals = async () => {
 
 const getListOfAllRentals = async () => {
     const response = await fetchListOfAllRentals();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
@@ -42,6 +54,10 @@ const getListOfAllRentals = async () => {
 
 const getUsers = async () => {
     const response = await fetchUsers();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
@@ -50,12 +66,20 @@ const getUsers = async () => {
 
 const getListOfLoginUsers = async () => {
     const response = await fetchLoginUsers();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     console.log(response);
     return response;
 }
 
 const getAvailableVideos = async() => {
     const response = await fetchAvailableVideos();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
     container = createTableVideos(response, container, headers);
@@ -67,6 +91,10 @@ const getMyVideos = async (user) => {
 
 const getVideosFoRent = async () => {
     const response = await fetchAvailableVideos();
+    if(response == undefined){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
     container = createTableVideosForRent(response, container, headers);

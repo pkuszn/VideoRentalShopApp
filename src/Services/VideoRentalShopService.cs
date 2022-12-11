@@ -80,7 +80,6 @@ namespace VideoRentalShopApp.Services
             return await ReturnRentedVideoBasedOn(videoTitle, firstName, lastName);
         }
 
-
         public async Task<bool> RentVideoByNamesAsync(RentFilmByNamesCriteria criteria)
         {
             return await RentVideoAsyncBasedOn(criteria.Title, criteria.FirstName, criteria.LastName);
@@ -328,15 +327,15 @@ namespace VideoRentalShopApp.Services
                 : null;
 
             List<Video> videos = sort == null
-                ? await VideoCollection.Find(_ => true).ToListAsync()
-                : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
+                ? await VideoCollection.Find(f => f.IsAvailable == true).ToListAsync()
+                : await VideoCollection.Find(f => f.IsAvailable == true).Sort(sort).ToListAsync();
 
             FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
             FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
 
             List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
             VideoCollection videoCollection = new(videos, videoRentals);
-            Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
+            Logger.LogInformation($"Available videos in shop: {videoCollection.AvailableVideoList.Count}");
             return videoCollection.AvailableVideoList.Select(s => new VideoResult
             {
                 Id = s.Id,
@@ -421,11 +420,8 @@ namespace VideoRentalShopApp.Services
             VideoRental videoRental = await VideoRentalCollection.Find(f => f.UserId == user.Id).FirstOrDefaultAsync();
             if (videoRental == null)
             {
-                Logger.LogError($"VideoRental is null");
-                if(!await CreateRentalCardAsync(user))
-                {
-                    return false;
-                }
+                Logger.LogError($"VideoRental is null. Required to create video rental card for new user.");
+                videoRental = await CreateRentalCardAsync(user);
             }
 
             if (videoRental.Videos == null)
@@ -468,20 +464,21 @@ namespace VideoRentalShopApp.Services
             return true;
         }
 
-        private async Task<bool> CreateRentalCardAsync(User user)
+        private async Task<VideoRental> CreateRentalCardAsync(User user)
         {
             if(user == null)
             {
-                return false;
+                return null;
             }
-            await VideoRentalCollection.InsertOneAsync(new VideoRental
+            VideoRental videoRental = new()
             {
                 UserId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Videos = new()
-            });
-            return true;
+            };
+            await VideoRentalCollection.InsertOneAsync(videoRental);
+            return videoRental;
         }
 
         private async Task<bool> ReturnRentedVideoBasedOn(string videoTitle, string userId)

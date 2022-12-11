@@ -30,24 +30,6 @@ namespace VideoRentalShopApp.Controllers
             return await VideoRentalShopService.GetLoginUsers();
         }
 
-        [HttpPost]
-        [Route("SetSession")]
-        public async Task<string> SetSession(SessionCriteria criteria)
-        {
-            HttpContext.Session.SetString(nameof(criteria.User), criteria.User);
-            HttpContext.Session.SetString(nameof(criteria.Password), criteria.Password);
-            Logger.LogInformation($"Session variables has been set to {HttpContext.Session.GetString(nameof(criteria.User))}");
-            return HttpContext.Session.GetString(nameof(criteria.User));
-        }
-
-        [HttpGet]
-        [Route("Logout")]
-        public async Task<IActionResult> LogoutSession()
-        {
-            HttpContext.Session.Clear();
-            return Ok();
-        }
-
         [HttpGet]
         [Route("GetListOfRents")]
         public async Task<List<UserRentedVideosResults>> GetListOfRentsAsync()
