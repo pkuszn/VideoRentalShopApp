@@ -1,6 +1,6 @@
 import { api, context } from './constants.js'
-import { clearContent } from './utils.js'
-import { VideoDTO, RentVideoByIdDTO } from './dtos.js'
+import { clearContent, updateVideoInputForm, updateUserInputForm} from './utils.js'
+import { VideoDTOId, RentVideoByIdDTO, UserDTOId} from './dtos.js'
 
 $(document).on('click', '.button-delete', function (event) {
     // alert($(this).parent().parent().children('#id').html());
@@ -41,13 +41,12 @@ $(document).on('click', '.button-delete', function (event) {
 
 $(document).on('click', '.button-update', function (event) {
     alert($(this).parent().parent().html());
-    let clear = document.getElementById('table-wrapper');
+    let container = document.getElementById('table-wrapper');
     let className = $(this).parent().attr("id");
-    clearContent(clear);
-
     switch (className) {
-        case context.rentVideoByUser: {
-            const video = new VideoDTO($(this).parent().parent().children('#id').html(),
+        case context.getVideos: {
+            const video = new VideoDTOId(
+                $(this).parent().parent().children('#id').html(),
                 $(this).parent().parent().children('#title').html(),
                 $(this).parent().parent().children('#genre').html(),
                 $(this).parent().parent().children('#director').html(),
@@ -57,9 +56,24 @@ $(document).on('click', '.button-update', function (event) {
                 $(this).parent().parent().children('#createdDate').html(),
                 $(this).parent().parent().children('#isAvailable').html());
             console.log(video);
+            clearContent(container);
+            container = updateVideoInputForm(container, video);
             break;
         }
-        case context.getVideoRentals: {
+        case context.getUsers: {
+            let datetime = new Date();
+            datetime.toISOString();
+            const user = new UserDTOId(
+                $(this).parent().parent().children('#id').html(),
+                $(this).parent().parent().children('#first-name').html(),
+                $(this).parent().parent().children('#last-name').html(),
+                $(this).parent().parent().children('#address').html(),
+                $(this).parent().parent().children('#contact').html(),
+                datetime
+            )
+            console.log(user);
+            clearContent(container);
+            container = updateUserInputForm(container, user);
             break;
         }
     }

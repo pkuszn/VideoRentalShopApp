@@ -97,6 +97,111 @@ function createNewVideoInputForm(container){
     return container;
 }
 
+function updateVideoInputForm(container, obj){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'update-video-container';
+    div.setAttributeNode(divAttr);
+
+    const header = document.createElement('h3');
+    const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'header-new-video';header.setAttributeNode(headerAttr);
+    header.textContent = `Update video with ${obj.id} id`;
+
+    const titleInput = document.createElement('input');
+    const titleInputAttr = document.createAttribute('id');
+    titleInputAttr.value = 'title';
+    titleInput.placeholder = "Title";
+    titleInput.setAttributeNode(titleInputAttr);
+    titleInput.value = obj.title;
+
+    const genreLabel = document.createElement('label');
+    genreLabel.htmlFor = 'genre'
+    genreLabel.textContent = 'Select a genre: ';
+
+    var genreSelect = document.createElement('select');
+    const genreSelectAttr = document.createAttribute('id');
+    genreSelectAttr.value = 'genre';
+    genreSelect.setAttributeNode(genreSelectAttr);
+    genreSelect = createOptions(genreSelect);
+    genreSelect.value = obj.genre;
+
+    
+    const directorInput = document.createElement('input');
+    const directorInputAttr = document.createAttribute('id');
+    directorInputAttr.value = 'director';
+    directorInput.placeholder = "Director";
+    directorInput.setAttributeNode(directorInputAttr);
+    directorInput.value = obj.director;
+
+    const scoreInput = document.createElement('input');
+    const scoreInputAttr = document.createAttribute('id');
+    scoreInputAttr.value = 'score';
+    scoreInput.placeholder = "Score";
+    scoreInput.setAttributeNode(scoreInputAttr);
+    scoreInput.value = obj.score;
+
+    const descriptionInput = document.createElement('input');
+    const descriptionInputAttr = document.createAttribute('id');
+    descriptionInputAttr.value = 'description';
+    descriptionInput.placeholder = "Description";
+    descriptionInput.setAttributeNode(descriptionInputAttr);
+    descriptionInput.value = obj.description;
+
+    const runtimeInput = document.createElement('input');
+    const runtimeInputAttr = document.createAttribute('id');
+    runtimeInputAttr.value = 'runtime';
+    runtimeInput.placeholder = "Runtime";
+    runtimeInput.setAttributeNode(runtimeInputAttr);
+    runtimeInput.value = obj.runtime;
+
+    const actorsInput = document.createElement('input');
+    const actorsInputAttr = document.createAttribute('id');
+    actorsInputAttr.value = 'actors';
+    actorsInput.placeholder = "Actors";
+    actorsInput.setAttributeNode(actorsInputAttr);
+    actorsInput.value = obj.actors;
+
+    const addButton = document.createElement('button');
+    const addButtonAttr = document.createAttribute('class');
+    const addButtonAttrId = document.createAttribute('id');
+    addButtonAttrId.value = 'update-video-button-in-container';
+    addButton.setAttributeNode(addButtonAttrId);
+    addButtonAttr.value = 'button-9';
+    addButton.setAttributeNode(addButtonAttr);
+    addButton.textContent = 'Update';
+
+    const resetButton = document.createElement('button');
+    const resetButtonAttr = document.createAttribute('class');
+    const resetButtonAttrId = document.createAttribute('id');
+    resetButtonAttrId.value = 'reset-update-video-button-in-container';
+    resetButton.setAttributeNode(resetButtonAttrId);
+    resetButtonAttr.value = 'button-9';
+    resetButton.setAttributeNode(resetButtonAttr);
+    resetButton.textContent = 'Reset';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-update-video-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(addButton);
+    divButtons.appendChild(resetButton);
+
+    div.append(header);
+    div.appendChild(titleInput);
+    div.appendChild(genreLabel);
+    div.appendChild(genreSelect);
+    div.appendChild(directorInput);
+    div.appendChild(runtimeInput);
+    div.appendChild(scoreInput);
+    div.appendChild(descriptionInput);
+    div.appendChild(actorsInput);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
 function createNewUserInputForm(container){
     const div = document.createElement('div');
     const divAttr = document.createAttribute('id');
@@ -154,6 +259,82 @@ function createNewUserInputForm(container){
     const divButtons = document.createElement('div');
     const divButtonAttr = document.createAttribute('id');
     divButtonAttr.value = 'buttons-new-user-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(addButton);
+    divButtons.appendChild(resetButton);
+
+    div.append(header);
+    div.appendChild(firstNameInput);
+    div.appendChild(lastNameInput);
+    div.appendChild(addressInput);
+    div.appendChild(contactInput);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
+function updateUserInputForm(container, obj){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'update-user-container';
+    div.setAttributeNode(divAttr);
+    //TODO: 4 inputy
+
+    const header = document.createElement('h3');const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'header-update-user';
+    header.setAttributeNode(headerAttr);
+    header.textContent = `Update user with ${obj.id} id`;
+
+    const firstNameInput = document.createElement('input');
+    const firstNameInputAttr = document.createAttribute('id');
+    firstNameInputAttr.value = 'first-name';
+    firstNameInput.placeholder = "First name";
+    firstNameInput.setAttributeNode(firstNameInputAttr);
+    firstNameInput.value = obj.firstName;
+
+    const lastNameInput = document.createElement('input');
+    const lastNameInputAttr = document.createAttribute('id');
+    lastNameInputAttr.value = 'last-name';
+    lastNameInput.placeholder = "Last name";
+    lastNameInput.setAttributeNode(lastNameInputAttr);
+    lastNameInput.value = obj.lastName;
+
+    const addressInput = document.createElement('input');
+    const addressInputAttr = document.createAttribute('id');
+    addressInputAttr.value = 'address';
+    addressInput.placeholder = "Address";
+    addressInput.setAttributeNode(addressInputAttr);
+    addressInput.value = obj.address;
+
+    const contactInput = document.createElement('input');
+    const contactInputAttr = document.createAttribute('id');
+    contactInputAttr.value = 'contact';
+    contactInput.placeholder = "Contact";
+    contactInput.setAttributeNode(contactInputAttr);
+    contactInput.value = obj.contact;
+
+    const addButton = document.createElement('button');
+    const addButtonAttr = document.createAttribute('class');
+    const addButtonAttrId = document.createAttribute('id');
+    addButtonAttrId.value = 'update-user-button-in-container';
+    addButton.setAttributeNode(addButtonAttrId);
+    addButtonAttr.value = 'button-9';
+    addButton.setAttributeNode(addButtonAttr);
+    addButton.textContent = 'Update';
+
+    const resetButton = document.createElement('button');
+    const resetButtonAttr = document.createAttribute('class');
+    const resetButtonAttrId = document.createAttribute('id');
+    resetButtonAttrId.value = 'reset-update-user-button-in-container';
+    resetButton.setAttributeNode(resetButtonAttrId);
+    resetButtonAttr.value = 'button-9';
+    resetButton.setAttributeNode(resetButtonAttr);
+    resetButton.textContent = 'Reset';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-update-user-container';
     divButtons.setAttributeNode(divButtonAttr);
 
     divButtons.appendChild(addButton);
@@ -762,6 +943,46 @@ function createDeleteUsersList(response, container){
     return container;
 }
 
+function createRentFilmForUserList(response, container){
+    const div = document.createElement('div');
+    const divAttr = document.createAttribute('id');
+    divAttr.value = 'rent-video-to-users-container';
+    div.setAttributeNode(divAttr);
+    
+    const header = document.createElement('h3');const headerAttr = document.createAttribute('id');
+    headerAttr.value = 'rent-video-to-users';
+    header.setAttributeNode(headerAttr);
+    header.textContent = 'Rent video for speciffic client';
+
+    var userSelect = document.createElement('select');
+    const userSelectAttr = document.createAttribute('id');
+    userSelectAttr.value = 'users';
+    userSelect.setAttributeNode(userSelectAttr);
+    userSelect = createDeleteUsersOptions(userSelect, response);
+    
+    const deleteVideosButton = document.createElement('button');
+    const deleteVideosButtonAttr = document.createAttribute('class');
+    const deleteVideosButtonAttrId = document.createAttribute('id');
+    deleteVideosButtonAttrId.value = 'delete-users-button-in-container';
+    deleteVideosButton.setAttributeNode(deleteVideosButtonAttrId);
+    deleteVideosButtonAttr.value = 'button-9';
+    deleteVideosButton.setAttributeNode(deleteVideosButtonAttr);
+    deleteVideosButton.textContent = 'Delete';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'buttons-delete-users-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    divButtons.appendChild(deleteVideosButton);
+
+    div.append(header);
+    div.appendChild(userSelect);
+    div.appendChild(divButtons);
+    container.appendChild(div);
+    return container;
+}
+
 export {
     createTableVideos,
     objectProperties,
@@ -774,5 +995,7 @@ export {
     createTableVideosForRent,
     createTableVideosWithoutActions,
     createDeleteVideosList,
-    createDeleteUsersList
+    createDeleteUsersList,
+    updateVideoInputForm,
+    updateUserInputForm
 }

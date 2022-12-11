@@ -42,7 +42,7 @@ async function createNewVideo(video) {
 }
 
 async function deleteVideo(id) {
-    return await fetch(api.deleteVideo+id, {
+    return await fetch(api.deleteVideo + id, {
         method: 'DELETE',
         dataType: 'JSON',
         headers: {
@@ -53,7 +53,7 @@ async function deleteVideo(id) {
 }
 
 async function deleteUser(id) {
-    return await fetch(api.deleteUser+id, {
+    return await fetch(api.deleteUser + id, {
         method: 'DELETE',
         dataType: 'JSON',
         headers: {
@@ -63,9 +63,51 @@ async function deleteUser(id) {
     }).catch(error => console.error('Unable to insert videos', error));
 }
 
+async function updateVideo(video){
+    return await fetch(api.updateVideo + video.id, {
+        method: 'PUT',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: video.title,
+            genre: video.genre,
+            director: video.director,
+            score: video.score,
+            description: video.description,
+            actors: video.actors,
+            createdDate: video.createdDate,
+            isAvailable: video.isAvailable
+        })
+    }).catch(error => console.error('Unable to insert videos', error));
+}
+
+async function updateUser(user) {
+    return await fetch(api.updateUser+id, {
+        method: 'PUT',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            address: user.address,
+            contact: user.contact,
+            registrationDate: user.registrationDate
+        })
+    })
+    .catch(error => console.error('Unable to insert videos', error));
+}
+
 export {
     createNewUser, 
     createNewVideo,
     deleteVideo,
-    deleteUser
+    deleteUser,
+    updateVideo,
+    updateUser
 }

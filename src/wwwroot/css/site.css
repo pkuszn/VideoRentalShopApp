@@ -461,3 +461,17 @@ select {
 #users{
     width: 95.5%
 }
+
+#update-video-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#update-user-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -92,9 +92,9 @@ export const genres = {
 
 export const propertyNameUser = {
     id: 'id',
-    firstName: "First Name",
-    lastName: "Last Name",
-    address: "Address",
-    contact: "Contact",
-    registrationDate: "Registration Date"
+    firstName: "first-name",
+    lastName: "last-name",
+    address: "address",
+    contact: "contact",
+    registrationDate: "registration-date"
 }

@@ -4,7 +4,7 @@ import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
     createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList
 } from './utils.js'
-import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
+import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -365,6 +365,28 @@ async function deleteUsersListListener(event) {
             alert("User is undefined!");
         }
         await deleteUser(userId);
+        top.location.href = "/index.html";//redirection
+    }
+};
+
+document.addEventListener('click', updateVideoListListener);
+
+async function updateVideoListListener(event) {
+    var element = event.target;
+    if (element.id == 'update-video-button-in-container') {
+        let selectedGenre = document.getElementById('genre').value;
+        let actors = document.getElementById('actors').value;
+        let arrayActors = actors.split(',');
+        const videoDtoId = new VideoDTOId(
+            document.getElementById('id').value,
+            document.getElementById('title').value,
+            selectedGenre,
+            document.getElementById('director').value,
+            document.getElementById('score').value,
+            document.getElementById('description').value,
+            arrayActors,
+            datetime,
+            true);
         top.location.href = "/index.html";//redirection
     }
 };
