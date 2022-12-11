@@ -1,7 +1,7 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos } from './fetch.js'
 import { createNewUser, createNewVideo } from './send.js'
 import { createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
-     createTableVideosForRent} from './utils.js'
+     createTableVideosForRent, createTableVideosWithoutActions} from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
@@ -82,7 +82,7 @@ const getAvailableVideos = async() => {
     }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
-    container = createTableVideos(response, container, headers);
+    container = createTableVideosWithoutActions(response, container, headers);
 }
 
 const getMyVideos = async (id) => {
@@ -93,7 +93,7 @@ const getMyVideos = async (id) => {
     }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
-    container = createTableVideos(response, container, headers);
+    container = createTableVideosWithoutActions(response, container, headers);
 }
 
 const getVideosForRent = async () => {
