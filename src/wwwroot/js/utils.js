@@ -927,7 +927,7 @@ function createDeleteUsersList(response, container){
     deleteVideosButton.setAttributeNode(deleteVideosButtonAttrId);
     deleteVideosButtonAttr.value = 'button-9';
     deleteVideosButton.setAttributeNode(deleteVideosButtonAttr);
-    deleteVideosButton.textContent = 'Delete';
+    deleteVideosButton.textContent = 'Rent';
 
     const divButtons = document.createElement('div');
     const divButtonAttr = document.createAttribute('id');
@@ -943,43 +943,51 @@ function createDeleteUsersList(response, container){
     return container;
 }
 
-function createRentFilmForUserList(response, container){
-    const div = document.createElement('div');
-    const divAttr = document.createAttribute('id');
-    divAttr.value = 'rent-video-to-users-container';
-    div.setAttributeNode(divAttr);
+function createRentFilmForUserList(responseUser, responseVideo, container){
+    const userDiv = document.createElement('div');
+    const userDivAttr = document.createAttribute('id');
+    userDivAttr.value = 'rent-video-users-container';
+    userDiv.setAttributeNode(userDivAttr);
     
-    const header = document.createElement('h3');const headerAttr = document.createAttribute('id');
-    headerAttr.value = 'rent-video-to-users';
-    header.setAttributeNode(headerAttr);
-    header.textContent = 'Rent video for speciffic client';
+    const userHeader = document.createElement('h3');const userHeaderAttr = document.createAttribute('id');
+    userHeaderAttr.value = 'rent-video-users';
+    userHeader.setAttributeNode(userHeaderAttr);
+    userHeader.textContent = 'Rent video for speciffic client';
 
     var userSelect = document.createElement('select');
     const userSelectAttr = document.createAttribute('id');
     userSelectAttr.value = 'users';
     userSelect.setAttributeNode(userSelectAttr);
-    userSelect = createDeleteUsersOptions(userSelect, response);
+    userSelect = createDeleteUsersOptions(userSelect, responseUser);
     
-    const deleteVideosButton = document.createElement('button');
-    const deleteVideosButtonAttr = document.createAttribute('class');
-    const deleteVideosButtonAttrId = document.createAttribute('id');
-    deleteVideosButtonAttrId.value = 'delete-users-button-in-container';
-    deleteVideosButton.setAttributeNode(deleteVideosButtonAttrId);
-    deleteVideosButtonAttr.value = 'button-9';
-    deleteVideosButton.setAttributeNode(deleteVideosButtonAttr);
-    deleteVideosButton.textContent = 'Delete';
+    const rentVideoButton = document.createElement('button');
+    const rentVideoButtonAttr = document.createAttribute('class');
+    const rentVideoButtonAttrId = document.createAttribute('id');
+    rentVideoButtonAttrId.value = 'rent-video-users-button-in-container';
+    rentVideoButton.setAttributeNode(rentVideoButtonAttrId);
+    rentVideoButtonAttr.value = 'button-9';
+    rentVideoButton.setAttributeNode(rentVideoButtonAttr);
+    rentVideoButton.textContent = 'Rent';
 
     const divButtons = document.createElement('div');
     const divButtonAttr = document.createAttribute('id');
-    divButtonAttr.value = 'buttons-delete-users-container';
+    divButtonAttr.value = 'rent-video-users-container';
     divButtons.setAttributeNode(divButtonAttr);
 
-    divButtons.appendChild(deleteVideosButton);
+    var videosSelect = document.createElement('select');
+    const videosSelectAttr = document.createAttribute('id');
+    videosSelectAttr.value = 'videos';
+    videosSelect.setAttributeNode(videosSelectAttr);
+    videosSelect = createDeleteVideosOptions(videosSelect, responseVideo);
+    
+    divButtons.appendChild(rentVideoButton);
 
-    div.append(header);
-    div.appendChild(userSelect);
-    div.appendChild(divButtons);
-    container.appendChild(div);
+    userDiv.append(userHeader);
+    userDiv.appendChild(userSelect);
+    userDiv.appendChild(videosSelect);
+    userDiv.appendChild(divButtons);
+    
+    container.appendChild(userDiv);
     return container;
 }
 
@@ -997,5 +1005,6 @@ export {
     createDeleteVideosList,
     createDeleteUsersList,
     updateVideoInputForm,
-    updateUserInputForm
+    updateUserInputForm,
+    createRentFilmForUserList,
 }

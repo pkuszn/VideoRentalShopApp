@@ -475,3 +475,10 @@ select {
     flex-direction: column;
     justify-content: center;
 }
+
+#rent-video-users-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}

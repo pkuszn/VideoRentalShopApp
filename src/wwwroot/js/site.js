@@ -2,7 +2,7 @@
 import { createNewUser, createNewVideo, deleteVideo, deleteUser } from './send.js'
 import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
-    createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList
+    createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList
 } from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId } from './dtos.js'
 
@@ -21,6 +21,7 @@ var getMyVideosButton = document.getElementById('get-videos-by-user');
 var rentVideoByUserButton = document.getElementById('rent-video-by-user');
 var removeVideoButton = document.getElementById('remove-video-button');
 var removeUserButton = document.getElementById('remove-user-button');
+var rentVideoForUser = document.getElementById('rent-video-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -132,6 +133,18 @@ const getVideosForRent = async () => {
     container = createTableVideosForRent(response, container, headers);
 }
 
+const rentVideoForSpecificUser = async() => {
+    const responseUser = await fetchUsers();
+    const responseAvailableVideos = await fetchAvailableVideos();
+    if(responseUser == undefined || responseAvailableVideos == undefined ){
+        alert("An unknown error has occured.")
+        top.location.href = "/index.html";//redirection
+    }
+    console.log(responseUser);
+    console.log(responseAvailableVideos);
+    container = createRentFilmForUserList(responseUser, responseAvailableVideos, container);
+}
+
 getVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
     welcomeHeader.remove();
@@ -213,6 +226,13 @@ removeUserButton.addEventListener('click', (e) => {
     clearContent(container);
     getUsersRaw();
 })
+
+rentVideoForUser.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    rentVideoForSpecificUser();
+});
 
 document.addEventListener('click', addNewUserListener);
 document.addEventListener('click', resetNewUserListener);
