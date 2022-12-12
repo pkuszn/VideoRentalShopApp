@@ -1006,6 +1006,54 @@ function createRentFilmForUserList(responseUser, responseVideo, container){
     return container;
 }
 
+function createReturnRentedVideoList(responseUser, responseVideo, container){
+    const userDiv = document.createElement('div');
+    const userDivAttr = document.createAttribute('id');
+    userDivAttr.value = 'return-rented-video-user-container';
+    userDiv.setAttributeNode(userDivAttr);
+    
+    const userHeader = document.createElement('h3');const userHeaderAttr = document.createAttribute('id');
+    userHeaderAttr.value = 'return-rented-video-user';
+    userHeader.setAttributeNode(userHeaderAttr);
+    userHeader.textContent = 'Return rented video of specific client';
+
+    var userSelect = document.createElement('select');
+    const userSelectAttr = document.createAttribute('id');
+    userSelectAttr.value = 'users';
+    userSelect.setAttributeNode(userSelectAttr);
+    userSelect = createDeleteUsersOptions(userSelect, responseUser);
+    
+    const rentVideoButton = document.createElement('button');
+    const rentVideoButtonAttr = document.createAttribute('class');
+    const rentVideoButtonAttrId = document.createAttribute('id');
+    rentVideoButtonAttrId.value = 'return-rented-video-user-button-in-container';
+    rentVideoButton.setAttributeNode(rentVideoButtonAttrId);
+    rentVideoButtonAttr.value = 'button-9';
+    rentVideoButton.setAttributeNode(rentVideoButtonAttr);
+    rentVideoButton.textContent = 'Return';
+
+    const divButtons = document.createElement('div');
+    const divButtonAttr = document.createAttribute('id');
+    divButtonAttr.value = 'return-rented-video-user-container';
+    divButtons.setAttributeNode(divButtonAttr);
+
+    var videosSelect = document.createElement('select');
+    const videosSelectAttr = document.createAttribute('id');
+    videosSelectAttr.value = 'videos';
+    videosSelect.setAttributeNode(videosSelectAttr);
+    videosSelect = createDeleteVideosOptions(videosSelect, responseVideo);
+    
+    divButtons.appendChild(rentVideoButton);
+
+    userDiv.append(userHeader);
+    userDiv.appendChild(userSelect);
+    userDiv.appendChild(videosSelect);
+    userDiv.appendChild(divButtons);
+    
+    container.appendChild(userDiv);
+    return container;
+}
+
 export {
     createTableVideos,
     objectProperties,
@@ -1022,4 +1070,7 @@ export {
     updateVideoInputForm,
     updateUserInputForm,
     createRentFilmForUserList,
+    createReturnRentedVideoList,
+    createDeleteUsersOptions,
+    createDeleteVideosOptions
 }

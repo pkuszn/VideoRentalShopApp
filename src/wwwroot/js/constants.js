@@ -22,7 +22,8 @@
     deleteVideo: 'VideoRentalShop/DeleteVideo/',
     deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/',
     getLoginUsers: 'VideoRentalShop/GetLoginUsers',
-    getMyVideos: 'VideoRentalShop/GetMyVideos/'
+    getMyVideos: 'VideoRentalShop/GetMyVideos/',
+    getUsersWhoHaveRentedVideos: 'VideoRentalShop/GetUsersWhoHaveRentedVideos/'
 }
 
 export const propertyNameVideoRentalList = {
