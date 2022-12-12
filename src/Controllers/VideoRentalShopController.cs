@@ -23,6 +23,13 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpGet]
+        [Route("GetUsersWhoHaveRentedVideos")]
+        public async Task<List<UserResult>> GetUsersWhoHaveRentedVideos()
+        {
+            return await VideoRentalShopService.GetUsersWhoHaveRentedMovies();
+        }
+
+        [HttpGet]
         [Route("GetMyVideos/{id}")]
         public async Task<List<VideoResult>> GetMyVideosAsync(string id)
         {

@@ -32,6 +32,21 @@ namespace VideoRentalShopApp.Services
             VideoRentalCollection = Database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+        public async Task<List<UserResult>> GetUsersWhoHaveRentedMovies()
+        {
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            if ((videoRentals?.Count ?? 0) == 0)
+            {
+                Logger.LogError($"{nameof(videoRentals)} is null or empty.");
+                return null;
+            }
+
+            string[] userIds = videoRentals.Select(s => s.UserId).ToArray();
+
+            FilterDefinition<User> filter = Builders<User>.Filter.In(i => i.Id, userIds);
+            List<User> users = await UserCollection.Find(filter).ToListAsync();
+            return users.Select(s => new UserResult() { Id = s.Id, FirstName = s.FirstName, LastName = s.LastName, Address = s.Address, Contact = s.Contact, RegistrationDate = s.RegistrationDate }).ToList();
+        }
 
         public async Task<List<VideoResult>> GetMyVideosAsync(string id)
         {
@@ -515,7 +530,7 @@ namespace VideoRentalShopApp.Services
 
             if (filter == null || videoRentalIdTitle == null)
             {
-                Logger.LogInformation($"Cannot return rented video because video rental of user {user.FirstName} {user.LastName} not exists");
+                Logger.LogInformation($"Cannot return rented video. Video rental card of user {user.FirstName} {user.LastName} not exists");
                 return false;
             }
 
