@@ -1,5 +1,5 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos } from './fetch.js'
-import { createNewUser, createNewVideo, deleteVideo, deleteUser } from './send.js'
+import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser} from './send.js'
 import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
     createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList
@@ -397,17 +397,22 @@ async function updateVideoListListener(event) {
         let selectedGenre = document.getElementById('genre').value;
         let actors = document.getElementById('actors').value;
         let arrayActors = actors.split(',');
+        let datetime = new Date();
+        datetime.toISOString();
         const videoDtoId = new VideoDTOId(
             document.getElementById('id').value,
             document.getElementById('title').value,
             selectedGenre,
             document.getElementById('director').value,
+            document.getElementById('runtime').value,
             document.getElementById('score').value,
             document.getElementById('description').value,
             arrayActors,
             datetime,
             true);
-        top.location.href = "/index.html";//redirection
+        console.log(videoDtoId);
+        await updateVideo(videoDtoId);
+        // top.location.href = "/index.html";//redirection
     }
 };
 

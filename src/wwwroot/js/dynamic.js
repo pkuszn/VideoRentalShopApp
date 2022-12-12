@@ -43,6 +43,8 @@ $(document).on('click', '.button-update', function (event) {
     alert($(this).parent().parent().html());
     let container = document.getElementById('table-wrapper');
     let className = $(this).parent().attr("id");
+    var datetime = new Date();
+    datetime.toISOString();
     switch (className) {
         case context.getVideos: {
             const video = new VideoDTOId(
@@ -50,19 +52,18 @@ $(document).on('click', '.button-update', function (event) {
                 $(this).parent().parent().children('#title').html(),
                 $(this).parent().parent().children('#genre').html(),
                 $(this).parent().parent().children('#director').html(),
+                $(this).parent().parent().children("#runtime").html(),
                 $(this).parent().parent().children('#score').html(),
                 $(this).parent().parent().children('#description').html(),
                 $(this).parent().parent().children('#actors').html(),
-                $(this).parent().parent().children('#createdDate').html(),
-                $(this).parent().parent().children('#isAvailable').html());
+                datetime,
+                true);
             console.log(video);
             clearContent(container);
             container = updateVideoInputForm(container, video);
             break;
         }
         case context.getUsers: {
-            let datetime = new Date();
-            datetime.toISOString();
             const user = new UserDTOId(
                 $(this).parent().parent().children('#id').html(),
                 $(this).parent().parent().children('#first-name').html(),

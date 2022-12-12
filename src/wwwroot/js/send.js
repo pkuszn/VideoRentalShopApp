@@ -64,6 +64,7 @@ async function deleteUser(id) {
 }
 
 async function updateVideo(video){
+    console.log(video);
     return await fetch(api.updateVideo + video.id, {
         method: 'PUT',
         dataType: 'JSON',
@@ -75,6 +76,7 @@ async function updateVideo(video){
             title: video.title,
             genre: video.genre,
             director: video.director,
+            runtime: video.runtime,
             score: video.score,
             description: video.description,
             actors: video.actors,

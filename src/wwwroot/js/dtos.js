@@ -2,16 +2,18 @@ export class VideoDTO {
   title;
   genre;
   director;
+  runtime
   score;
   description;
   actors;
   createdDate;
   isAvailable;
 
-  constructor(title, genre, director, score, description, actors, createdDate, isAvailable) {
+  constructor(title, genre, director, runtime, score, description, actors, createdDate, isAvailable) {
     this.title = title;
     this.genre = genre;
     this.director = director;
+    this.runtime = runtime;
     this.score = score;
     this.description = description;
     this.actors = actors;
@@ -25,17 +27,19 @@ export class VideoDTOId {
   title;
   genre;
   director;
+  runtime;
   score;
   description;
   actors;
   createdDate;
   isAvailable;
 
-  constructor(id, title, genre, director, score, description, actors, createdDate, isAvailable) {
+  constructor(id, title, genre, director, runtime, score, description, actors, createdDate, isAvailable) {
     this.id = id;
     this.title = title;
     this.genre = genre;
     this.director = director;
+    this.runtime = runtime;
     this.score = score;
     this.description = description;
     this.actors = actors;

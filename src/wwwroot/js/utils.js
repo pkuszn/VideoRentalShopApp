@@ -108,6 +108,13 @@ function updateVideoInputForm(container, obj){
     headerAttr.value = 'header-new-video';header.setAttributeNode(headerAttr);
     header.textContent = `Update video with ${obj.id} id`;
 
+    const idParagraph = document.createElement('p');
+    const idParagraphAttr = document.createAttribute('id');
+    idParagraphAttr.value = 'id';
+    idParagraph.setAttributeNode(idParagraphAttr);
+    idParagraph.value = obj.id;
+    idParagraph.innerHTML = obj.id;
+
     const titleInput = document.createElement('input');
     const titleInputAttr = document.createAttribute('id');
     titleInputAttr.value = 'title';
@@ -125,7 +132,6 @@ function updateVideoInputForm(container, obj){
     genreSelect.setAttributeNode(genreSelectAttr);
     genreSelect = createOptions(genreSelect);
     genreSelect.value = obj.genre;
-
     
     const directorInput = document.createElement('input');
     const directorInputAttr = document.createAttribute('id');
@@ -133,6 +139,13 @@ function updateVideoInputForm(container, obj){
     directorInput.placeholder = "Director";
     directorInput.setAttributeNode(directorInputAttr);
     directorInput.value = obj.director;
+
+    const runtimeInput = document.createElement('input');
+    const runtimeInputAttr = document.createAttribute('id');
+    runtimeInputAttr.value = 'runtime';
+    runtimeInput.placeholder = "Runtime";
+    runtimeInput.setAttributeNode(runtimeInputAttr);
+    runtimeInput.value = obj.runtime;
 
     const scoreInput = document.createElement('input');
     const scoreInputAttr = document.createAttribute('id');
@@ -147,13 +160,6 @@ function updateVideoInputForm(container, obj){
     descriptionInput.placeholder = "Description";
     descriptionInput.setAttributeNode(descriptionInputAttr);
     descriptionInput.value = obj.description;
-
-    const runtimeInput = document.createElement('input');
-    const runtimeInputAttr = document.createAttribute('id');
-    runtimeInputAttr.value = 'runtime';
-    runtimeInput.placeholder = "Runtime";
-    runtimeInput.setAttributeNode(runtimeInputAttr);
-    runtimeInput.value = obj.runtime;
 
     const actorsInput = document.createElement('input');
     const actorsInputAttr = document.createAttribute('id');
@@ -189,6 +195,7 @@ function updateVideoInputForm(container, obj){
     divButtons.appendChild(resetButton);
 
     div.append(header);
+    div.appendChild(idParagraph);
     div.appendChild(titleInput);
     div.appendChild(genreLabel);
     div.appendChild(genreSelect);
