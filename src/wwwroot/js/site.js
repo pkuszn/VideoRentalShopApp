@@ -4,7 +4,7 @@ import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
     createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList
 } from './utils.js'
-import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId } from './dtos.js'
+import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId, UserDTOId } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -416,3 +416,21 @@ async function updateVideoListListener(event) {
     }
 };
 
+document.addEventListener('click', updateUserListListener);
+
+async function updateUserListListener(event){
+    var element = event.target;
+    if(element.id == 'update-user-button-in-container'){
+        var datetime = new Date();
+        datetime.toISOString();
+        const user = new UserDTOId(
+            document.getElementById('id').value,
+            document.getElementById('first-name').value,
+            document.getElementById('last-name').value,
+            document.getElementById('address').value,
+            document.getElementById('contact').value,
+            datetime);
+        console.log(user);
+        await updateUser(user)
+    }
+}

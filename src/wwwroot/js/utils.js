@@ -293,6 +293,13 @@ function updateUserInputForm(container, obj){
     header.setAttributeNode(headerAttr);
     header.textContent = `Update user with ${obj.id} id`;
 
+    const idParagraph = document.createElement('p');
+    const idParagraphAttr = document.createAttribute('id');
+    idParagraphAttr.value = 'id';
+    idParagraph.setAttributeNode(idParagraphAttr);
+    idParagraph.value = obj.id;
+    idParagraph.innerHTML = obj.id;
+
     const firstNameInput = document.createElement('input');
     const firstNameInputAttr = document.createAttribute('id');
     firstNameInputAttr.value = 'first-name';
@@ -348,6 +355,7 @@ function updateUserInputForm(container, obj){
     divButtons.appendChild(resetButton);
 
     div.append(header);
+    div.appendChild(idParagraph);
     div.appendChild(firstNameInput);
     div.appendChild(lastNameInput);
     div.appendChild(addressInput);

@@ -87,7 +87,7 @@ async function updateVideo(video){
 }
 
 async function updateUser(user) {
-    return await fetch(api.updateUser+id, {
+    return await fetch(api.updateUser + user.id, {
         method: 'PUT',
         dataType: 'JSON',
         headers: {

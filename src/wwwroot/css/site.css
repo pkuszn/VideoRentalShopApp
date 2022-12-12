@@ -124,7 +124,7 @@ input {
     padding: 20px 5px;
     border: none;
     text-decoration: none;
-    border-radius: 3px;
+    border-radius: 3px; 
     font-size: 14px;
     flex-direction: row;
     font-family: 'Montserrat', sans-serif;
@@ -481,4 +481,8 @@ select {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+}
+
+#update-user-container #id{
+    visibility: hidden;
 }
