@@ -9,7 +9,7 @@
     returnRentedVideoByNames: 'VideoRentalShop/ReturnRentedVideoByNames',
     returnRentedVideoById: 'VideoRentalShop/ReturnRentedVideoById',
     getAvailableVideos: 'VideoRentalShop/GetAvailableVideos',
-    getAvaialbleVideosShort: 'VideoRentalShop/GetAvaialbleVideosShort',
+    getAvailableVideosShort: 'VideoRentalShop/GetAvailableVideoShort',
     rentFilmByNames: 'VideoRentalShop/RentFilmByNames',
     rentFilmById: 'VideoRentalShop/RentFilmById',
     insertUser: 'VideoRentalShop/InsertUser',

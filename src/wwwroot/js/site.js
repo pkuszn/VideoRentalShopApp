@@ -1,8 +1,8 @@
-﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos, fetchUserWhoHaveRentedVideos } from './fetch.js'
+﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos, fetchUserWhoHaveRentedVideos, fetchVideosShort } from './fetch.js'
 import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser, rentVideoById, returnRentedVideoById } from './send.js'
 import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
-    createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList, createReturnRentedVideoList
+    createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList, createReturnRentedVideoList, createTableVideosShort
 } from './utils.js'
 import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId, UserDTOId, RentVideoByIdDTO } from './dtos.js'
 
@@ -23,6 +23,7 @@ var removeVideoButton = document.getElementById('remove-video-button');
 var removeUserButton = document.getElementById('remove-user-button');
 var rentVideoForUserButton = document.getElementById('rent-video-button');
 var returnVideoFromRentalButton = document.getElementById('return-movie-from-rental');
+var getVideosShortButton = document.getElementById('get-videos-short-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -33,6 +34,17 @@ const getVideos = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableVideos(response, container, headers);
+}
+
+const getVideosShort = async() => {
+    const response = await fetchVideosShort();
+    if(response == undefined){
+        alert("No videos available")
+        top.location.href = "/index.html";//redirection
+    }
+    const headers = objectProperties(Object.values(response)[0]);
+    console.log(headers);
+    container = createTableVideosShort(response, container, headers);
 }
 
 const getVideosRaw = async () => {
@@ -170,6 +182,13 @@ getVideosButton.addEventListener('click', (e) => {
     welcomeHeader.remove();
     clearContent(container);
     getVideos();
+});
+
+getVideosShortButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    welcomeHeader.remove();
+    clearContent(container);
+    getVideosShort();
 });
 
 getVideoRentalsButton.addEventListener('click', (e) => {
@@ -492,5 +511,6 @@ async function returnVideoListener(event){
         let videoTitleText = videoTitle.options[videoTitle.selectedIndex].text;
         const returnVideoDTO = new RentVideoByIdDTO(userId, videoTitleText);
         await returnRentedVideoById(returnVideoDTO);
+        top.location.href = "/index.html";//redirection
     }
 }

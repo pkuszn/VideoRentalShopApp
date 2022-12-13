@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -538,10 +539,23 @@ namespace VideoRentalShopApp.Services
                 Logger.LogInformation($"Cannot return rented video. Video rental card of user {user.FirstName} {user.LastName} not exists");
                 return false;
             }
-
-            UpdateDefinitionBuilder<VideoRental> update = Builders<VideoRental>.Update;
             DateTime dateNow = DateTime.UtcNow;
-            UpdateDefinition<VideoRental> setRealEndOfRentDate = update.Set("Videos.$.RealEndOfRentalDate", dateNow.ToString());
+            string date = dateNow.ToString();
+            UpdateDefinition<VideoRental> update = Builders<VideoRental>.Update
+                .Set("Videos.$[agencyUser].TotalDownloads", 1);
+
+            //TODO: Do ogarnięcia edycja RealEndOfRental
+            UpdateOptions updateOptions = new UpdateOptions
+            {
+                ArrayFilters = new[]
+            {
+                new BsonDocumentArrayFilterDefinition<VideoRental>(
+            new BsonDocument("agencyUser.Code", Code)
+            )
+            }
+            };
+
+            UpdateDefinition<VideoRental> setRealEndOfRentDate = update.Set(x => x.Videos[-1].RealEndOfRentalDate.Value, date);
             VideoRental result = await VideoRentalCollection.FindOneAndUpdateAsync(videoRentalIdTitle, setRealEndOfRentDate);
             await ReturnRentedVideo(video);
             return result != null;
