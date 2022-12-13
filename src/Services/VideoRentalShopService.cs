@@ -34,7 +34,9 @@ namespace VideoRentalShopApp.Services
         }
         public async Task<List<UserResult>> GetUsersWhoHaveRentedMovies()
         {
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            FilterDefinitionBuilder<VideoRental> filterVideoRental = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filterVideoRental.ElemMatch(x => x.Videos, c => c.RealEndOfRentalDate.Equals(null));
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
             if ((videoRentals?.Count ?? 0) == 0)
             {
                 Logger.LogError($"{nameof(videoRentals)} is null or empty.");

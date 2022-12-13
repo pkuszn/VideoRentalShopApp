@@ -121,6 +121,21 @@ async function rentVideoById(rent){
     .catch(error => console.error(`Unable to rent video ${rent.title} to user with id ${rent.userId}`, error));
 }
 
+async function returnRentedVideoById(rent){
+    return await fetch(api.returnRentedVideoById, {
+        method: 'PUT',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: rent.userId,
+            title: rent.title
+        })
+    })
+    .catch(error => console.error(`Unable to rent video ${rent.title} to user with id ${rent.userId}`, error));
+}
 
 export {
     createNewUser, 
@@ -129,5 +144,6 @@ export {
     deleteUser,
     updateVideo,
     updateUser,
-    rentVideoById
+    rentVideoById,
+    returnRentedVideoById
 }

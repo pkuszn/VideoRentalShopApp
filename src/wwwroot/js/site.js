@@ -1,5 +1,5 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos, fetchUserWhoHaveRentedVideos } from './fetch.js'
-import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser, rentVideoById} from './send.js'
+import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser, rentVideoById, returnRentedVideoById } from './send.js'
 import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
     createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList, createReturnRentedVideoList
@@ -387,9 +387,7 @@ logoutButton.addEventListener('click', (e) => {
     top.location.href = "/index.html";//redirection
 });
 
-
 document.addEventListener('click', deleteVideosListListener);
-
 async function deleteVideosListListener(event) {
     var element = event.target;
     if (element.id == 'delete-videos-button-in-container') {
@@ -403,7 +401,6 @@ async function deleteVideosListListener(event) {
 };
 
 document.addEventListener('click', deleteUsersListListener);
-
 async function deleteUsersListListener(event) {
     var element = event.target;
     if (element.id == 'delete-users-button-in-container') {
@@ -417,7 +414,6 @@ async function deleteUsersListListener(event) {
 };
 
 document.addEventListener('click', updateVideoListListener);
-
 async function updateVideoListListener(event) {
     var element = event.target;
     if (element.id == 'update-video-button-in-container') {
@@ -444,7 +440,6 @@ async function updateVideoListListener(event) {
 };
 
 document.addEventListener('click', updateUserListListener);
-
 async function updateUserListListener(event){
     var element = event.target;
     if(element.id == 'update-user-button-in-container'){
@@ -462,9 +457,8 @@ async function updateUserListListener(event){
     }
 }
 
-document.addEventListener('click', rentVideo);
-
-async function rentVideo(event){
+document.addEventListener('click', rentVideoListener);
+async function rentVideoListener(event){
     var element = event.target;
     if(element.id == 'rent-video-users-button-in-container'){
         let userId = document.getElementById('users').value;
@@ -476,21 +470,27 @@ async function rentVideo(event){
     }
 }
 
-document.addEventListener('change', changeVideo);
-
-async function changeVideo(event){
+document.addEventListener('change', changeUsersListener);
+async function changeUsersListener(event){
     var element = event.target;
-    if(element.id == 'videos-special'){
-        alert('test');
+    if(element.id == 'users-special'){
+        let userId = document.getElementById('users-special').value;
+        const userMovies = await fetchMyVideos(userId);
+        const users = await fetchUserWhoHaveRentedVideos();
+        clearContent(container);
+        container = createReturnRentedVideoList(users, userMovies, container);
     }
 }
 
-document.addEventListener('change', changeUsers);
-
-async function changeUsers(event){
+document.addEventListener('click', returnVideoListener);
+async function returnVideoListener(event){
     var element = event.target;
-    if(element.id == 'users-special'){
-        let selectedVideo = document.getElementById('videos-special').value;
-        alert(selectedVideo);
+    if(element.id == 'return-rented-video-user-button-in-container'){
+        alert('test');
+        let userId = document.getElementById('users-special').value;
+        let videoTitle = document.getElementById('videos-special');
+        let videoTitleText = videoTitle.options[videoTitle.selectedIndex].text;
+        const returnVideoDTO = new RentVideoByIdDTO(userId, videoTitleText);
+        await returnRentedVideoById(returnVideoDTO);
     }
 }

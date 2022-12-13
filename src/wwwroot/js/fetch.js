@@ -136,6 +136,22 @@ async function fetchUserWhoHaveRentedVideos() {
         .catch(error => console.error('Unable to get login users', error));
 }
 
+async function fetchUser(id){
+    return await fetch(api.getUser + id, {
+        method: 'GET',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((result => { return result.json(); }))
+        .then(data => {
+            console.log(data);
+            return data;
+        })
+        .catch(error => console.error('Unable to get login users', error));
+}
 
 export {
     fetchVideos,
@@ -145,5 +161,6 @@ export {
     fetchUsers,
     fetchAvailableVideos,
     fetchMyVideos,
-    fetchUserWhoHaveRentedVideos
+    fetchUserWhoHaveRentedVideos,
+    fetchUser
 }
