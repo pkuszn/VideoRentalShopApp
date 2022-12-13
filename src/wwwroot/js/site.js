@@ -115,7 +115,7 @@ const getAvailableVideos = async () => {
 const getMyVideos = async (id) => {
     const response = await fetchMyVideos(id);
     if (response == undefined) {
-        alert("An unknown error has occured.");
+        alert("You don't own any videos");
         top.location.href = "/index.html";//redirectior
     }
     console.log(response);

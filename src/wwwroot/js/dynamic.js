@@ -106,16 +106,16 @@ $(document).on('click', '.button-rent', function (event) {
         type: 'POST',
         dataType: 'json',
         data: JSON.stringify({
-            userId: rent.id,
-            title: rent.videoTitle
+            userId: rent.userId,
+            title: rent.title
         }),
         success: function (data) {
             console.log(data);
-            // window.location.href = "/"+ "index.html"
+            window.location.href = "/"+ "index.html"
         },
         error: function (jqXHR, textStatus, errorThrow) {
             console.log(jqXHR, textStatus, errorThrow);
-            // window.location.href = "/"+ "index.html";
+            window.location.href = "/"+ "index.html";
         }
     });
 });
