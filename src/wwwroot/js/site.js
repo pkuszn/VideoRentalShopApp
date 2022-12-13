@@ -1,10 +1,10 @@
 ﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos, fetchUserWhoHaveRentedVideos } from './fetch.js'
-import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser} from './send.js'
+import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser, rentVideoById} from './send.js'
 import {
     createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
     createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList, createReturnRentedVideoList
 } from './utils.js'
-import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId, UserDTOId } from './dtos.js'
+import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId, UserDTOId, RentVideoByIdDTO } from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -146,14 +146,14 @@ const rentVideoForSpecificUser = async() => {
     container = createRentFilmForUserList(responseUser, responseAvailableVideos, container);
 }
 
-//TODO: Wyciągnięcie pierwszego elementu z JSONA
 const returnRentedVideoOfSpecificClient = async() => {
     const responseUsers = await fetchUserWhoHaveRentedVideos();
     if(responseUsers == undefined){
         alert("ResponseUsers who have rented videos is null or empty.");
         top.location.href = "/index.html";//redirection
     }
-    let firstUser = JSON.parse(responseUsers[0]);
+    let firstUser = responseUsers[0];
+    console.log(firstUser);
     const responseUserVideos = await fetchMyVideos(firstUser.id);
     if(responseUsers == undefined ||  firstUser == undefined || responseUserVideos == undefined){
         alert("An uknown error has occured.");
@@ -162,7 +162,7 @@ const returnRentedVideoOfSpecificClient = async() => {
     console.log(responseUsers);
     console.log(firstUser);
     console.log(responseUserVideos);
-    container = createReturnRentedVideoList(firstUser, responseUserVideos, container);
+    container = createReturnRentedVideoList(responseUsers, responseUserVideos, container);
 }
 
 getVideosButton.addEventListener('click', (e) => {
@@ -220,7 +220,7 @@ getMyVideosButton.addEventListener('click', (e) => {
     clearContent(container);
     let id = window.sessionStorage.getItem("identifier");
     if (id == undefined) {
-        alert("User id is not defiend.");
+        alert("User id is not defined.");
         return;
     }
     getMyVideos(id);
@@ -439,7 +439,7 @@ async function updateVideoListListener(event) {
             true);
         console.log(videoDtoId);
         await updateVideo(videoDtoId);
-        // top.location.href = "/index.html";//redirection
+        top.location.href = "/index.html";//redirection
     }
 };
 
@@ -459,5 +459,38 @@ async function updateUserListListener(event){
             datetime);
         console.log(user);
         await updateUser(user)
+    }
+}
+
+document.addEventListener('click', rentVideo);
+
+async function rentVideo(event){
+    var element = event.target;
+    if(element.id == 'rent-video-users-button-in-container'){
+        let userId = document.getElementById('users').value;
+        let videoTitle = document.getElementById('videos');
+        let videoTitleText = videoTitle.options[videoTitle.selectedIndex].text;
+        const rentVideoDto = new RentVideoByIdDTO(userId, videoTitleText);
+        await rentVideoById(rentVideoDto);
+        top.location.href = "/index.html";//redirection
+    }
+}
+
+document.addEventListener('change', changeVideo);
+
+async function changeVideo(event){
+    var element = event.target;
+    if(element.id == 'videos-special'){
+        alert('test');
+    }
+}
+
+document.addEventListener('change', changeUsers);
+
+async function changeUsers(event){
+    var element = event.target;
+    if(element.id == 'users-special'){
+        let selectedVideo = document.getElementById('videos-special').value;
+        alert(selectedVideo);
     }
 }

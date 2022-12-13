@@ -268,7 +268,10 @@ namespace VideoRentalShopApp.Services
 
         public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
         {
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => c.RealEndOfRentalDate.Equals(null));
+
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
             return videoRentals.Select(s => new VideoRentalResult
             {
                 Id = s.Id,
@@ -486,7 +489,7 @@ namespace VideoRentalShopApp.Services
 
             video.IsAvailable = false;
             await VideoCollection.FindOneAndReplaceAsync(f => f.Id.Equals(video.Id), video);
-            Logger.LogInformation($"Availability video with title: {nameof(videoTitle)} has been changed to false");
+            Logger.LogInformation($"Availability video with {nameof(videoTitle)}: {videoTitle} has been changed to false");
             return true;
         }
 

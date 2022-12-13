@@ -96,11 +96,11 @@ export class LoginUserDTO {
 }
 
 export class RentVideoByIdDTO {
-  id;
-  videoTitle;
+  userId;
+  title;
 
-  constructor(id, videoTitle){
-    this.id = id,
-    this.videoTitle = videoTitle
+  constructor(userId, title){
+    this.userId = userId,
+    this.title = title
   }
 }

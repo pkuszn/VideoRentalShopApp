@@ -16,7 +16,7 @@ async function createNewUser(user) {
             registrationDate: user.registrationDate
         })
     })
-    .catch(error => console.error('Unable to insert videos', error));
+    .catch(error => console.error('Unable to insert user', error));
 }
 
 async function createNewVideo(video) {
@@ -38,7 +38,7 @@ async function createNewVideo(video) {
             isAvailable: video.isAvailable
         })
     })
-    .catch(error => console.error('Unable to insert videos', error));
+    .catch(error => console.error('Unable to insert video', error));
 }
 
 async function deleteVideo(id) {
@@ -49,7 +49,7 @@ async function deleteVideo(id) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-    }).catch(error => console.error('Unable to insert videos', error));
+    }).catch(error => console.error(`Unable to delete video with id ${id}`, error));
 }
 
 async function deleteUser(id) {
@@ -60,7 +60,7 @@ async function deleteUser(id) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-    }).catch(error => console.error('Unable to insert videos', error));
+    }).catch(error => console.error(`Unable to delete user with id ${id}`, error));
 }
 
 async function updateVideo(video){
@@ -83,7 +83,7 @@ async function updateVideo(video){
             createdDate: video.createdDate,
             isAvailable: video.isAvailable
         })
-    }).catch(error => console.error('Unable to insert videos', error));
+    }).catch(error => console.error(`Unable to update video with id ${video.id} `, error));
 }
 
 async function updateUser(user) {
@@ -102,8 +102,25 @@ async function updateUser(user) {
             registrationDate: user.registrationDate
         })
     })
-    .catch(error => console.error('Unable to insert videos', error));
+    .catch(error => console.error(`Unable to update user with id ${user.id}`, error));
 }
+
+async function rentVideoById(rent){
+    return await fetch(api.rentFilmById, {
+        method: 'POST',
+        dataType: 'JSON',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: rent.userId,
+            title: rent.title
+        })
+    })
+    .catch(error => console.error(`Unable to rent video ${rent.title} to user with id ${rent.userId}`, error));
+}
+
 
 export {
     createNewUser, 
@@ -111,5 +128,6 @@ export {
     deleteVideo,
     deleteUser,
     updateVideo,
-    updateUser
+    updateUser,
+    rentVideoById
 }

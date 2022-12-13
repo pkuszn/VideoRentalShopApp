@@ -486,3 +486,18 @@ select {
 #update-user-container #id{
     visibility: hidden;
 }
+
+#return-rented-video-user-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#videos-special{
+    width: 95.5%;
+}
+
+#users-special{
+    width: 95.5%
+}

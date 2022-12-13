@@ -856,7 +856,7 @@ const createOptions = (select) => {
 }
 
 
-const createDeleteVideosOptions = (select, response) => {
+const createVideosOptions = (select, response) => {
     console.log(response);
     for (let i = 0; i < response.length; i++) {
         const Opt = document.createElement("option");
@@ -867,7 +867,7 @@ const createDeleteVideosOptions = (select, response) => {
     return select;
 }
 
-const createDeleteUsersOptions = (select, response) => {
+const createUsersOptions = (select, response) => {
     console.log(response);
     for (let i = 0; i < response.length; i++) {
         const Opt = document.createElement("option");
@@ -875,6 +875,15 @@ const createDeleteUsersOptions = (select, response) => {
         Opt.innerHTML = response[i].firstName + " " + response[i].lastName;
         select.appendChild(Opt);
     };
+    return select;
+}
+
+const createSingleUserOptions = (select, response) => {
+    console.log(response);
+    const Opt = document.createElement("option");
+    Opt.value = response.id;
+    Opt.innerHTML = response.firstName + " " + response.lastName;
+    select.appendChild(Opt);
     return select;
 }
 
@@ -893,7 +902,7 @@ function createDeleteVideosList(response, container){
     const videosSelectAttr = document.createAttribute('id');
     videosSelectAttr.value = 'videos';
     videosSelect.setAttributeNode(videosSelectAttr);
-    videosSelect = createDeleteVideosOptions(videosSelect, response);
+    videosSelect = createVideosOptions(videosSelect, response);
     
     const deleteVideosButton = document.createElement('button');
     const deleteVideosButtonAttr = document.createAttribute('class');
@@ -933,7 +942,7 @@ function createDeleteUsersList(response, container){
     const userSelectAttr = document.createAttribute('id');
     userSelectAttr.value = 'users';
     userSelect.setAttributeNode(userSelectAttr);
-    userSelect = createDeleteUsersOptions(userSelect, response);
+    userSelect = createUsersOptions(userSelect, response);
     
     const deleteVideosButton = document.createElement('button');
     const deleteVideosButtonAttr = document.createAttribute('class');
@@ -973,7 +982,7 @@ function createRentFilmForUserList(responseUser, responseVideo, container){
     const userSelectAttr = document.createAttribute('id');
     userSelectAttr.value = 'users';
     userSelect.setAttributeNode(userSelectAttr);
-    userSelect = createDeleteUsersOptions(userSelect, responseUser);
+    userSelect = createUsersOptions(userSelect, responseUser);
     
     const rentVideoButton = document.createElement('button');
     const rentVideoButtonAttr = document.createAttribute('class');
@@ -993,7 +1002,7 @@ function createRentFilmForUserList(responseUser, responseVideo, container){
     const videosSelectAttr = document.createAttribute('id');
     videosSelectAttr.value = 'videos';
     videosSelect.setAttributeNode(videosSelectAttr);
-    videosSelect = createDeleteVideosOptions(videosSelect, responseVideo);
+    videosSelect = createVideosOptions(videosSelect, responseVideo);
     
     divButtons.appendChild(rentVideoButton);
 
@@ -1019,9 +1028,9 @@ function createReturnRentedVideoList(responseUser, responseVideo, container){
 
     var userSelect = document.createElement('select');
     const userSelectAttr = document.createAttribute('id');
-    userSelectAttr.value = 'users';
+    userSelectAttr.value = 'users-special';
     userSelect.setAttributeNode(userSelectAttr);
-    userSelect = createDeleteUsersOptions(userSelect, responseUser);
+    userSelect = createUsersOptions(userSelect, responseUser);
     
     const rentVideoButton = document.createElement('button');
     const rentVideoButtonAttr = document.createAttribute('class');
@@ -1039,9 +1048,9 @@ function createReturnRentedVideoList(responseUser, responseVideo, container){
 
     var videosSelect = document.createElement('select');
     const videosSelectAttr = document.createAttribute('id');
-    videosSelectAttr.value = 'videos';
+    videosSelectAttr.value = 'videos-special';
     videosSelect.setAttributeNode(videosSelectAttr);
-    videosSelect = createDeleteVideosOptions(videosSelect, responseVideo);
+    videosSelect = createVideosOptions(videosSelect, responseVideo);
     
     divButtons.appendChild(rentVideoButton);
 
@@ -1071,6 +1080,6 @@ export {
     updateUserInputForm,
     createRentFilmForUserList,
     createReturnRentedVideoList,
-    createDeleteUsersOptions,
-    createDeleteVideosOptions
+    createUsersOptions as createDeleteUsersOptions,
+    createVideosOptions as createDeleteVideosOptions
 }
