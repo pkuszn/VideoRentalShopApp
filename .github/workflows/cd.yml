@@ -1,8 +1,7 @@
-name: CI
+name: CD
 on:
-  pull_request:
+  push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
   build: 
@@ -19,3 +18,12 @@ jobs:
         run:  dotnet build --no-restore
       - name: Test
         run: dotnet test
+      - name: Publish
+        run: dotnet publish ./VideoRentalShopApp/VideoRentalShopApp.csproj -c Release -o ${{ env.DOTNET_ROOT }}/api
+
+  deploy-dev:
+    run-on: ubuntu-latest
+    needs: build
+    steps:
+      
+     
