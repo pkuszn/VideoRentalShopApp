@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
 using VideoRentalShopApp.DataTransferObjects.Criteria;
+using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 
 namespace VideoRentalShopApp.Controllers
@@ -13,10 +16,32 @@ namespace VideoRentalShopApp.Controllers
     public class VideoRentalShopController : ControllerBase
     {
         private readonly IVideoRentalShopService VideoRentalShopService;
-
-        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService)
+        private readonly ILogger<VideoRentalShopController> Logger;
+        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService, ILogger<VideoRentalShopController> logger)
         {
             VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        [HttpGet]
+        [Route("GetUsersWhoHaveRentedVideos")]
+        public async Task<List<UserResult>> GetUsersWhoHaveRentedVideos()
+        {
+            return await VideoRentalShopService.GetUsersWhoHaveRentedMovies();
+        }
+
+        [HttpGet]
+        [Route("GetMyVideos/{id}")]
+        public async Task<List<VideoResult>> GetMyVideosAsync(string id)
+        {
+            return await VideoRentalShopService.GetMyVideosByIdAsync(id);
+        }
+
+        [HttpGet]
+        [Route("GetLoginUsers")]
+        public async Task<List<LoginResult>> GetLoginResultsAsync()
+        {
+            return await VideoRentalShopService.GetLoginUsers();
         }
 
         [HttpGet]
@@ -27,10 +52,17 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpPut]
-        [Route("ReturnRentedVideo")]
-        public async Task<bool> ReturnRentedVideoAsync(RentFilmCriteria criteria)
+        [Route("ReturnRentedVideoById")]
+        public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
         {
-            return await VideoRentalShopService.ReturnRentedVideoAsync(criteria.Title, criteria.UserId, criteria.FirstName, criteria.LastName);
+            return await VideoRentalShopService.ReturnRentedVideoByIdAsync(criteria);
+        }
+
+        [HttpPut]
+        [Route("ReturnRentedVideoByNames")]
+        public async Task<bool> ReturnRentedVideByNamesAsync(RentFilmByNamesCriteria criteria)
+        {
+            return await VideoRentalShopService.ReturnRentedVideoByNamesAsync(criteria);
         }
 
         [HttpGet]
@@ -48,10 +80,17 @@ namespace VideoRentalShopApp.Controllers
         }
 
         [HttpPost]
-        [Route("RentFilm")]
-        public async Task<bool> RentVideoAsync(RentFilmCriteria criteria)
+        [Route("RentFilmByNames")]
+        public async Task<bool> RentVideoAsyncByNames(RentFilmByNamesCriteria criteria)
         {
-            return await VideoRentalShopService.RentVideoAsync(criteria.Title, criteria.UserId, criteria.FirstName, criteria.LastName);
+            return await VideoRentalShopService.RentVideoByNamesAsync(criteria);
+        }
+
+        [HttpPost]
+        [Route("RentFilmById")]
+        public async Task<bool> RentVideoAsyncById(RentFilmByIdCriteria criteria)
+        {
+            return await VideoRentalShopService.RentVideoByIdAsync(criteria);
         }
 
         [HttpGet]
@@ -59,8 +98,8 @@ namespace VideoRentalShopApp.Controllers
         public async Task<List<UserResult>> GetUsersAsync()
         {
             return await VideoRentalShopService.GetUsersAsync();
-        }        
-        
+        }
+
         [HttpGet]
         [Route("GetVideos")]
         public async Task<List<VideoResult>> GetVideosAsync()
@@ -147,9 +186,10 @@ namespace VideoRentalShopApp.Controllers
 
         [HttpDelete]
         [Route("DeleteVideo/{id}")]
-        public async Task DeleteVideoAsync(string id)
+        public async Task<ActionResult> DeleteVideoAsync(string id)
         {
-            await VideoRentalShopService.DeleteVideoAsync(id);
+            bool deleted = await VideoRentalShopService.DeleteVideoAsync(id);
+            return deleted ? Ok(deleted) : Problem($"Video with {nameof(id)}: {id} is rented. Cannot delete rented video", statusCode: (int)HttpStatusCode.BadRequest);
         }
 
         [HttpDelete]

@@ -1,7 +1,7 @@
 [
   {
     "Title": "Na zachodzie bez zmian",
-    "Genre": "Wojenny",
+    "Genre": "War",
     "Director": "Edward Berger",
     "Runtime": 147,
     "Score": 7.4,
@@ -11,6 +11,7 @@
       "Daniel Brühl",
       "Albrecht Schuch"
     ],
+    "IsAvailable": true,
     "CreatedDate": ISODate()
   },
   {
@@ -29,7 +30,7 @@
   },
   {
     "Title": "Dobry opiekun",
-    "Genre": "Dramat",
+    "Genre": "Drama",
     "Director": "Tobias Lindholm",
     "Runtime": 121,
     "Score": 6.4,
@@ -38,7 +39,114 @@
       "Jessica Chastain",
       "Eddie Redmayne",
       "Nnamdi Asomugha"
+
     ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Skazani na Shawshank",
+    "Genre": "Drama",
+    "Director": "Frank Darabont",
+    "Runtime": 142,
+    "Score": 9.3,
+    "Description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+    "Actors": [
+      "Tim Robbins",
+      "Morgan Freeman",
+      "Bob Gunton"
+    ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Godfather",
+    "Genre": "Crime",
+    "Director": "Francis Ford Coppola",
+    "Runtime": 175,
+    "Score": 9.2,
+    "Description": "The aging patriarch of an organized crime dynasty in postwar New York City transfers control of his clandestine empire to his reluctant youngest son.",
+    "Actors": [
+      "marlon Brando",
+      "Al Pacino",
+      "James Caan"
+    ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Pulp Fiction",
+    "Genre": "Crime",
+    "Director": "Quentin Tarantino",
+    "Runtime": 154,
+    "Score": 8.9,
+    "Description": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+    "Actors": [
+      "John Travolta",
+      "Uma Thurman",
+      "Samuel L. Jackson"
+    ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Forrest Gump",
+    "Genre": "Drama",
+    "Director": "Eric Roth",
+    "Runtime": 142,
+    "Score": 8.8,
+    "Description": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.",
+    "Actors": [
+      "Tom Hanks",
+      "Robin Wright",
+      "Gary Sinise"
+    ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Inception",
+    "Genre": "Action",
+    "Director": "Christopher Nolan",
+    "Runtime": 148,
+    "Score": 8.8,
+    "Description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+    "Actors": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Star Wars",
+    "Genre": "Fantasy",
+    "Director": "George Lucas",
+    "Runtime": 121,
+    "Score": 8.6,
+    "Description": "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
+    "Actors": [
+      "Mark Hamill",
+      "Harrison Ford",
+      "Carrie Fisher"
+    ],
+    "IsAvailable": true,
+    "CreatedDate": ISODate()
+  },
+  {
+    "Title": "Saving Private Ryan",
+    "Genre": "War",
+    "Director": "Steven Spielbierg",
+    "Runtime": 139,
+    "Score": 8.6,
+    "Description": "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
+    "Actors": [
+      "Tom Hanks",
+      "Matt Damon",
+      "Tom Sizemore"
+    ],
+    "IsAvailable": true,
     "CreatedDate": ISODate()
   }
 ]

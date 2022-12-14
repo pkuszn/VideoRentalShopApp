@@ -7,9 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using VideoRentalShopApp.Configuration;
 using VideoRentalShopApp.DataTransferObjects;
+using VideoRentalShopApp.DataTransferObjects.Criteria;
+using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 using VideoRentalShopApp.Models;
-using VideoRentalShopApp.Utils;
 using static VideoRentalShopApp.Constants.Enums;
 
 namespace VideoRentalShopApp.Services
@@ -30,49 +31,95 @@ namespace VideoRentalShopApp.Services
             VideoRentalCollection = Database.GetCollection<VideoRental>(videoRentalShopConfiguration.Value.RentalCollectionName) ?? throw new NullReferenceException();
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+        public async Task<List<UserResult>> GetUsersWhoHaveRentedMovies()
+        {
+            FilterDefinitionBuilder<VideoRental> filterVideoRental = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filterVideoRental.ElemMatch(x => x.Videos, c => c.RealEndOfRentalDate.Equals(null));
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
+            if ((videoRentals?.Count ?? 0) == 0)
+            {
+                Logger.LogError($"{nameof(videoRentals)} is null or empty.");
+                return null;
+            }
+
+            string[] userIds = videoRentals.Select(s => s.UserId).ToArray();
+
+            FilterDefinition<User> filter = Builders<User>.Filter.In(i => i.Id, userIds);
+            List<User> users = await UserCollection.Find(filter).ToListAsync();
+            return users.Select(s => new UserResult() { Id = s.Id, FirstName = s.FirstName, LastName = s.LastName, Address = s.Address, Contact = s.Contact, RegistrationDate = s.RegistrationDate }).ToList();
+        }
+
+        public async Task<List<VideoResult>> GetMyVideosByIdAsync(string id)
+        {
+            User user = await UserCollection.Find(f => f.Id == id).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                Logger.LogError($"Cannot find user with {nameof(id)}: {id}");
+                return null;
+            }
+
+            List<VideoRent> videoRental = await VideoRentalCollection.Find(f => f.UserId == user.Id).Project(p => p.Videos).FirstOrDefaultAsync();
+            return await GetMyVideosAsync(videoRental.Select(s => s.Title).ToArray());
+        }
+
+        private async Task<List<VideoResult>> GetMyVideosAsync(string[] videosArray)
+        {
+            if ((videosArray?.Length ?? 0) == 0)
+            {
+                Logger.LogError("Collection with user videos is empty");
+                return null;
+            }
+
+            FilterDefinitionBuilder<Video> filter = Builders<Video>.Filter;
+            FilterDefinition<Video> videoFilter = filter.And(
+              filter.Eq(x => x.IsAvailable, false),
+              filter.In(movie => movie.Title, videosArray));
+
+            List<Video> videos = await VideoCollection.Find(videoFilter).ToListAsync();
+            return videos != null || videos.Count > 0 ? videos.Select(s => new VideoResult
+            {
+                Id = s.Id,
+                Title = s.Title,
+                Director = s.Director,
+                Genre = s.Genre,
+                Runtime = s.Runtime,
+                Score = s.Score,
+                Description = s.Description,
+                CreatedDate = s.CreatedDate,
+                IsAvailable = s.IsAvailable,
+                Actors = s.Actors
+            }).ToList() : new();
+        }
+
         public async Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync()
         {
             return await GetListOfRentsAsync();
         }
 
-        public async Task<bool> ReturnRentedVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
+        public async Task<List<LoginResult>> GetLoginUsers()
         {
-            if (string.IsNullOrEmpty(videoTitle))
-            {
-                return false;
-            }
-            if (!string.IsNullOrEmpty(userId))
-            {
-                return await ReturnRentedVideoBasedOn(videoTitle, userId);
-            }
-            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-            {
-                return await ReturnRentedVideoBasedOn(videoTitle, firstName, lastName);
-            }
-            else
-            {
-                return false;
-            }
+            List<User> loginList = await UserCollection.Find(_ => true).ToListAsync();
+            return loginList.Select(s => new LoginResult { Id = s.Id, User = s.UserName, Password = s.Password }).ToList();
         }
 
-        public async Task<bool> RentVideoAsync(string videoTitle, string userId = null, string firstName = null, string lastName = null)
+        public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
         {
-            if (string.IsNullOrEmpty(videoTitle))
-            {
-                return false;
-            }
-            if (!string.IsNullOrEmpty(userId))
-            {
-                return await RentVideoAsyncBasedOn(videoTitle, userId);
-            }
-            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-            {
-                return await RentVideoAsyncBasedOn(videoTitle, firstName, lastName);
-            }
-            else
-            {
-                return false;
-            }
+            return await ReturnRentedVideoBasedOn(criteria.Title, criteria.UserId);
+        }
+
+        public async Task<bool> ReturnRentedVideoByNamesAsync(RentFilmByNamesCriteria criteria)
+        {
+            return await ReturnRentedVideoBasedOn(criteria.Title, criteria.FirstName, criteria.LastName);
+        }
+
+        public async Task<bool> RentVideoByNamesAsync(RentFilmByNamesCriteria criteria)
+        {
+            return await RentVideoAsyncBasedOn(criteria.Title, criteria.FirstName, criteria.LastName);
+        }
+
+        public async Task<bool> RentVideoByIdAsync(RentFilmByIdCriteria criteria)
+        {
+            return await RentVideoAsyncBasedOn(criteria.Title, criteria.UserId);
         }
 
         public async Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre)
@@ -219,21 +266,42 @@ namespace VideoRentalShopApp.Services
             });
         }
 
-        public async Task DeleteVideoAsync(string id)
+        public async Task<bool> DeleteVideoAsync(string id)
         {
+            Video video = await VideoCollection.Find(f => f.Id == id).FirstOrDefaultAsync();
+            if(video == null)
+            {
+                Logger.LogError($"Video with {nameof(id)}: id not exists in db.");
+            }
+
+            if (!video.IsAvailable)
+            {
+                Logger.LogError("Cannot remove rented video.");
+                return false;
+            }
+
             await VideoCollection.DeleteOneAsync(x => x.Id.Equals(id));
+            return true;
         }
 
         public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
         {
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(_ => true).ToListAsync();
+            List<Video> videos = await VideoCollection.Find(f => f.IsAvailable == false).ToListAsync();
+
+            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => c.RealEndOfRentalDate.Equals(null));
+
+            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
+            List<VideoRent> videoRents = videoRentals.Select(s => s.Videos).FirstOrDefault();
+            List<VideoRent> rentedVideos = videoRents.Where(w => videos.Any(a => a.Title.Equals(w.Title))).ToList();
+
             return videoRentals.Select(s => new VideoRentalResult
             {
                 Id = s.Id,
                 UserId = s.UserId,
                 FirstName = s.FirstName,
                 LastName = s.LastName,
-                Videos = s.Videos.Select(s => new VideoRentResult
+                Videos = rentedVideos.Select(s => new VideoRentResult
                 {
                     Title = s.Title,
                     StartRentalDate = s.StartRentalDate,
@@ -303,7 +371,6 @@ namespace VideoRentalShopApp.Services
             await VideoRentalCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
 
-        //TODO: Dodać pole status do filmu i pozmieniać kody. Ostatnia rzecz do zrobienia.
         private async Task<List<VideoResult>> GetListOfAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
             SortDefinition<Video> sort = sortByTitle
@@ -312,16 +379,11 @@ namespace VideoRentalShopApp.Services
                 : null;
 
             List<Video> videos = sort == null
-                ? await VideoCollection.Find(_ => true).ToListAsync()
-                : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
+                ? await VideoCollection.Find(f => f.IsAvailable == true).ToListAsync()
+                : await VideoCollection.Find(f => f.IsAvailable == true).Sort(sort).ToListAsync();
 
-            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
-            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
-
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
-            VideoCollection videoCollection = new(videos, videoRentals);
-            Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
-            return videoCollection.AvailableVideoList.Select(s => new VideoResult
+            Logger.LogInformation($"Available videos in shop: {videos.Count}");
+            return videos.Select(s => new VideoResult
             {
                 Id = s.Id,
                 Title = s.Title,
@@ -347,20 +409,15 @@ namespace VideoRentalShopApp.Services
                 ? await VideoCollection.Find(_ => true).ToListAsync()
                 : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
 
-
-            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
-            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
-
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
-            VideoCollection videoCollection = new(videos, videoRentals);
-            Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
-            return videoCollection.AvailableVideoList.Select(s => new VideoShortResult
+            Logger.LogInformation($"Available videos on shop collection: {videos.Count}");
+            return videos.Select(s => new VideoShortResult
             {
                 Id = s.Id,
                 Title = s.Title,
                 Runtime = s.Runtime,
                 Genre = s.Genre,
-                Director = s.Director
+                Director = s.Director,
+                IsAvailable = s.IsAvailable
             }).ToList();
         }
 
@@ -405,11 +462,8 @@ namespace VideoRentalShopApp.Services
             VideoRental videoRental = await VideoRentalCollection.Find(f => f.UserId == user.Id).FirstOrDefaultAsync();
             if (videoRental == null)
             {
-                Logger.LogError($"VideoRental is null");
-                if(!await CreateRentalCardAsync(user))
-                {
-                    return false;
-                }
+                Logger.LogError($"VideoRental is null. Required to create video rental card for new user.");
+                videoRental = await CreateRentalCardAsync(user);
             }
 
             if (videoRental.Videos == null)
@@ -441,31 +495,32 @@ namespace VideoRentalShopApp.Services
         private async Task<bool> UpdateVideoAvailabilityAsync(string videoTitle)
         {
             Video video = await VideoCollection.Find(f => f.Title.Equals(videoTitle)).FirstOrDefaultAsync();
-            if(video == null)
+            if (video == null)
             {
                 return false;
             }
 
             video.IsAvailable = false;
             await VideoCollection.FindOneAndReplaceAsync(f => f.Id.Equals(video.Id), video);
-            Logger.LogInformation($"Availability video with title: {nameof(videoTitle)} has been changed to false");
+            Logger.LogInformation($"Availability video with {nameof(videoTitle)}: {videoTitle} has been changed to false");
             return true;
         }
 
-        private async Task<bool> CreateRentalCardAsync(User user)
+        private async Task<VideoRental> CreateRentalCardAsync(User user)
         {
-            if(user == null)
+            if (user == null)
             {
-                return false;
+                return null;
             }
-            await VideoRentalCollection.InsertOneAsync(new VideoRental
+            VideoRental videoRental = new()
             {
                 UserId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Videos = new()
-            });
-            return true;
+            };
+            await VideoRentalCollection.InsertOneAsync(videoRental);
+            return videoRental;
         }
 
         private async Task<bool> ReturnRentedVideoBasedOn(string videoTitle, string userId)
@@ -489,16 +544,17 @@ namespace VideoRentalShopApp.Services
               filter.Eq(x => x.UserId, user.Id),
               filter.ElemMatch(x => x.Videos, c => c.Title == videoTitle));
 
-            if (filter == null || videoRentalIdTitle == null)
-            {
-                Logger.LogInformation($"Cannot return rented video because video rental of user {user.FirstName} {user.LastName} not exists");
-                return false;
-            }
-
-            UpdateDefinitionBuilder<VideoRental> update = Builders<VideoRental>.Update;
             DateTime dateNow = DateTime.UtcNow;
-            UpdateDefinition<VideoRental> setRealEndOfRentDate = update.Set("Videos.$.RealEndOfRentalDate", dateNow.ToString());
-            VideoRental result = await VideoRentalCollection.FindOneAndUpdateAsync(videoRentalIdTitle, setRealEndOfRentDate);
+            VideoRental videoRentalResult = await VideoRentalCollection.Find(videoRentalIdTitle).FirstOrDefaultAsync();
+            videoRentalResult.Videos.ForEach(f =>
+            {
+                if (f.Title.Equals(videoTitle))
+                {
+                    f.RealEndOfRentalDate = dateNow;
+                }
+            });
+
+            VideoRental result = await VideoRentalCollection.FindOneAndReplaceAsync(f => f.UserId == userId, videoRentalResult);
             await ReturnRentedVideo(video);
             return result != null;
         }
@@ -583,7 +639,7 @@ namespace VideoRentalShopApp.Services
                         Title = video.Title,
                         StartRentalDate = video.StartRentalDate,
                         EndRentalDate = video.EndRentalDate,
-                        RealEndOfRentalDate = video.EndRentalDate,
+                        RealEndOfRentalDate = video.RealEndOfRentalDate,
                         RegistrationDate = user.RegistrationDate
                     });
                 }

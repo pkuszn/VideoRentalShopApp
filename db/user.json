@@ -4,6 +4,9 @@
     "LastName": "Nowak",
     "Address": "Warszawa",
     "Contact": 854123555,
+    "UserName": "maro123",
+    "Email": "maro123@gmail.com",
+    "Password": "maro123",
     "RegistrationDate": ISODate()
   },
   {
@@ -11,6 +14,9 @@
     "LastName": "Mostowiak",
     "Address": "Grabina",
     "Contact": 991221235,
+    "UserName": "andrzej83",
+    "Email": "andrzej@gmail.com",
+    "Password": "andrzej123",
     "RegistrationDate": ISODate()
   },
   {
@@ -18,6 +24,25 @@
     "LastName": "Konopnicka",
     "Address": "Dziergowice",
     "Contact": 772334229,
+    "UserName": "mariaXX",
+    "Email": "mariaX@gmail.com",
+    "Password": "xx123",
+    "RegistrationDate": ISODate()
+  },
+  {
+    "FirstName": "Patryk",
+    "LastName": "Kuszneruk",
+    "Address": "Szymocice",
+    "Contact": 772334229,
+    "UserName": "Patryk",
+    "Email": "patryk98@gmail.com",
+    "Password": "patryk98",
+    "RegistrationDate": ISODate()
+  },
+  {
+    "UserName": "Admin",
+    "Email": "patryk98@gmail.com",
+    "Password": "root",
     "RegistrationDate": ISODate()
   }
 ]

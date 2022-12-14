@@ -6,10 +6,12 @@
     getUser: 'VideoRentalShop/GetUser',
     getVideoRental: 'VideoRentalShop/GetVideoRental',
     getListOfRents: 'VideoRentalShop/GetListOfRents',
-    returnRentedVideo: 'VideoRentalShop/ReturnRentedVideo',
+    returnRentedVideoByNames: 'VideoRentalShop/ReturnRentedVideoByNames',
+    returnRentedVideoById: 'VideoRentalShop/ReturnRentedVideoById',
     getAvailableVideos: 'VideoRentalShop/GetAvailableVideos',
-    getAvaialbleVideosShort: 'VideoRentalShop/GetAvaialbleVideosShort',
-    rentFilm: 'VideoRentalShop/RentFilm',
+    getAvailableVideosShort: 'VideoRentalShop/GetAvailableVideoShort',
+    rentFilmByNames: 'VideoRentalShop/RentFilmByNames',
+    rentFilmById: 'VideoRentalShop/RentFilmById',
     insertUser: 'VideoRentalShop/InsertUser',
     insertVideo: 'VideoRentalShop/InsertVideo',
     insertVideoRental: 'VideoRentalShop/InsertVideoRental',
@@ -18,7 +20,10 @@
     updateVideoRental: 'VideoRentalShop/UpdateVideoRental/',
     deleteUser: 'VideoRentalShop/DeleteUser/',
     deleteVideo: 'VideoRentalShop/DeleteVideo/',
-    deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/'
+    deleteVideoRental: 'VideoRentalShop/DeleteVideoRental/',
+    getLoginUsers: 'VideoRentalShop/GetLoginUsers',
+    getMyVideos: 'VideoRentalShop/GetMyVideos/',
+    getUsersWhoHaveRentedVideos: 'VideoRentalShop/GetUsersWhoHaveRentedVideos/'
 }
 
 export const propertyNameVideoRentalList = {
@@ -58,5 +63,39 @@ export const propertyNameVideoRental = {
 export const context = {
     getListOfAllRentals: "getListOfAllRentals",
     getVideos: "getVideos",
-    getVideoRentals: "getVideoRentals"
+    getVideoRentals: "getVideoRentals",
+    getUsers: "getUsers",
+    rentVideoByUser: "rentVideoByUser"
+}
+
+export const genres = {
+    comedy: "Comedy",
+    sciFi: "Science-Fiction",
+    horror: "Horror",
+    romance: "Romance",
+    action: "Action",
+    thriller: "Thriller",
+    drama: "Drama",
+    mystery: "Mystery",
+    crime: "Crime",
+    animation: "Animation",
+    adventure: "Adventure",
+    fantasy: "Fantasy",
+    comedyRomance: "Comedy Romance",
+    actionComedy: "Action Comedy",
+    superHero: "Super Hero",
+    documentary: "Documentary",
+    war: "War",
+    musical: "Musical",
+    history: "History",
+    biography: "Biography"
+}
+
+export const propertyNameUser = {
+    id: 'id',
+    firstName: "first-name",
+    lastName: "last-name",
+    address: "address",
+    contact: "contact",
+    registrationDate: "registration-date"
 }

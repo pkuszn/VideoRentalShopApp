@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Net;
 using VideoRentalShopApp.Extensions;
 
 namespace VideoRentalShopApp
@@ -25,6 +27,12 @@ namespace VideoRentalShopApp
             });
             services.AddConfig(Configuration);
             services.AddServices(Configuration);
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,7 +46,6 @@ namespace VideoRentalShopApp
             app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                //TODO: SESJE, czy jak to mamy, to nie mo¿emy zapisywaæ sesji????
                 OnPrepareResponse = context =>
                 {
                     context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
