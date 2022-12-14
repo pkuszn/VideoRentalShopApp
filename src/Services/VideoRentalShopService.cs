@@ -286,17 +286,22 @@ namespace VideoRentalShopApp.Services
 
         public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
         {
+            List<Video> videos = await VideoCollection.Find(f => f.IsAvailable == false).ToListAsync();
+
             FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
             FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => c.RealEndOfRentalDate.Equals(null));
 
             List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
+            List<VideoRent> videoRents = videoRentals.Select(s => s.Videos).FirstOrDefault();
+            List<VideoRent> rentedVideos = videoRents.Where(w => videos.Any(a => a.Title.Equals(w.Title))).ToList();
+
             return videoRentals.Select(s => new VideoRentalResult
             {
                 Id = s.Id,
                 UserId = s.UserId,
                 FirstName = s.FirstName,
                 LastName = s.LastName,
-                Videos = s.Videos.Select(s => new VideoRentResult
+                Videos = rentedVideos.Select(s => new VideoRentResult
                 {
                     Title = s.Title,
                     StartRentalDate = s.StartRentalDate,
