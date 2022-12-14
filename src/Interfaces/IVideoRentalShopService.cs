@@ -27,7 +27,7 @@ namespace VideoRentalShopApp.Interfaces
         Task<VideoResult> GetVideoAsync(string id);
         Task<string> CreateVideoAsync(VideoCriteria criteria);
         Task UpdateVideoAsync(string id, VideoCriteria criteria);
-        Task DeleteVideoAsync(string id);
+        Task<bool> DeleteVideoAsync(string id);
         Task<List<VideoRentalResult>> GetVideoRentalsAsync();
         Task<VideoRentalResult> GetVideoRentalAsync(string id);
         Task<string> CreateVideoRentalAsync(VideoRentalCriteria criteria);

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using VideoRentalShopApp.DataTransferObjects;
 using VideoRentalShopApp.DataTransferObjects.Criteria;
@@ -185,9 +186,10 @@ namespace VideoRentalShopApp.Controllers
 
         [HttpDelete]
         [Route("DeleteVideo/{id}")]
-        public async Task DeleteVideoAsync(string id)
+        public async Task<ActionResult> DeleteVideoAsync(string id)
         {
-            await VideoRentalShopService.DeleteVideoAsync(id);
+            bool deleted = await VideoRentalShopService.DeleteVideoAsync(id);
+            return deleted ? Ok(deleted) : Problem($"Video with {nameof(id)}: {id} is rented. Cannot delete rented video", statusCode: (int)HttpStatusCode.BadRequest);
         }
 
         [HttpDelete]

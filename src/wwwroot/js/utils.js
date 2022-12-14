@@ -444,7 +444,7 @@ function createTableVideosShort(videos, container, headers) {
         row.appendChild(createRow(videos[i].genre, propertyNameVideo.genre));
         row.appendChild(createRow(videos[i].director, propertyNameVideo.director));
         row.appendChild(createRow(videos[i].runtime, propertyNameVideo.runtime));
-        row.appendChild(createRow(videos[i].createdDate, propertyNameVideo.createdDate));
+        row.appendChild(createRow(videos[i].isAvailable, propertyNameVideo.isAvailable  ));
         row.appendChild(actionRow(context.getVideos));
         tableBody.appendChild(row);
     }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using VideoRentalShopApp.DataTransferObjects.Criteria;
 using VideoRentalShopApp.DataTransferObjects.Results;
 using VideoRentalShopApp.Interfaces;
 using VideoRentalShopApp.Models;
-using VideoRentalShopApp.Utils;
 using static VideoRentalShopApp.Constants.Enums;
 
 namespace VideoRentalShopApp.Services
@@ -268,9 +266,22 @@ namespace VideoRentalShopApp.Services
             });
         }
 
-        public async Task DeleteVideoAsync(string id)
+        public async Task<bool> DeleteVideoAsync(string id)
         {
+            Video video = await VideoCollection.Find(f => f.Id == id).FirstOrDefaultAsync();
+            if(video == null)
+            {
+                Logger.LogError($"Video with {nameof(id)}: id not exists in db.");
+            }
+
+            if (!video.IsAvailable)
+            {
+                Logger.LogError("Cannot remove rented video.");
+                return false;
+            }
+
             await VideoCollection.DeleteOneAsync(x => x.Id.Equals(id));
+            return true;
         }
 
         public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
