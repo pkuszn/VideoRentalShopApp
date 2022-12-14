@@ -534,29 +534,10 @@ namespace VideoRentalShopApp.Services
               filter.Eq(x => x.UserId, user.Id),
               filter.ElemMatch(x => x.Videos, c => c.Title == videoTitle));
 
-            if (filter == null || videoRentalIdTitle == null)
-            {
-                Logger.LogInformation($"Cannot return rented video. Video rental card of user {user.FirstName} {user.LastName} not exists");
-                return false;
-            }
             DateTime dateNow = DateTime.UtcNow;
             string date = dateNow.ToString();
-            UpdateDefinition<VideoRental> update = Builders<VideoRental>.Update
-                .Set("Videos.$[agencyUser].TotalDownloads", 1);
-
-            //TODO: Do ogarnięcia edycja RealEndOfRental
-            UpdateOptions updateOptions = new UpdateOptions
-            {
-                ArrayFilters = new[]
-            {
-                new BsonDocumentArrayFilterDefinition<VideoRental>(
-            new BsonDocument("agencyUser.Code", Code)
-            )
-            }
-            };
-
-            UpdateDefinition<VideoRental> setRealEndOfRentDate = update.Set(x => x.Videos[-1].RealEndOfRentalDate.Value, date);
-            VideoRental result = await VideoRentalCollection.FindOneAndUpdateAsync(videoRentalIdTitle, setRealEndOfRentDate);
+            UpdateDefinition<VideoRental> setRealEndOfRentDate = Builders<VideoRental>.Update.Set(x => x.Videos[-1].RealEndOfRentalDate.Value.ToString(), date);
+            var result = await VideoRentalCollection.UpdateOneAsync(videoRentalIdTitle, setRealEndOfRentDate);
             await ReturnRentedVideo(video);
             return result != null;
         }
@@ -641,7 +622,7 @@ namespace VideoRentalShopApp.Services
                         Title = video.Title,
                         StartRentalDate = video.StartRentalDate,
                         EndRentalDate = video.EndRentalDate,
-                        RealEndOfRentalDate = video.EndRentalDate,
+                        RealEndOfRentalDate = video.RealEndOfRentalDate,
                         RegistrationDate = user.RegistrationDate
                     });
                 }
