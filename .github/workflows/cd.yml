@@ -19,7 +19,7 @@ jobs:
       - name: Test
         run: dotnet test
       - name: Publish
-        run: dotnet publish ./VideoRentalShopApp.csproj -c Release -o ${{ env.DOTNET_ROOT }}/api
+        run: dotnet publish ./src/VideoRentalShopApp.csproj -c Release -o ${{ env.DOTNET_ROOT }}/api
       - name: upload artifact
         uses: actions/upload-artifact@v2.2.4
         with:
