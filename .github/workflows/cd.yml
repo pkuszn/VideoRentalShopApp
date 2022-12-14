@@ -42,7 +42,7 @@ jobs:
         uses: Azure/webapps-deploy@v2
         with:
           app-name: 'VideoRentalShopApp'
-          publish-profile: ${{ PUBLISH_PROFILE_DEV }}
+          publish-profile: ${{ secrets.PUBLISH_PROFILE_DEV }}
           
           
         
