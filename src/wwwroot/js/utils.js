@@ -589,7 +589,7 @@ function createTableUsers(users, container, headers) {
 
 //id, userId, firstName, lastnName, Videos
 function createTableVideoRentals(videoRentals, container, headers) {
-    if (videoRentals === null) {
+    if (videoRentals == null) {
         return;
     }
     console.log(videoRentals);

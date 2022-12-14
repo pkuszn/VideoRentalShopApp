@@ -33,7 +33,7 @@ namespace VideoRentalShopApp.Controllers
         [Route("GetMyVideos/{id}")]
         public async Task<List<VideoResult>> GetMyVideosAsync(string id)
         {
-            return await VideoRentalShopService.GetMyVideosAsync(id);
+            return await VideoRentalShopService.GetMyVideosByIdAsync(id);
         }
 
         [HttpGet]

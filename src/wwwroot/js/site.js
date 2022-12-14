@@ -28,7 +28,7 @@ var getVideosShortButton = document.getElementById('get-videos-short-button');
 const getVideos = async () => {
     const response = await fetchVideos();
     if (response == undefined) {
-        alert("An unknown error has occured.")
+        alert("Videos collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     const headers = objectProperties(Object.values(response)[0]);
@@ -49,8 +49,8 @@ const getVideosShort = async() => {
 
 const getVideosRaw = async () => {
     const response = await fetchVideos();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("Videos collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     container = createDeleteVideosList(response, container);
@@ -58,8 +58,8 @@ const getVideosRaw = async () => {
 
 const getVideoRentals = async () => {
     const response = await fetchVideoRentals();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("Video Rentals collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     const headers = objectProperties(Object.values(response)[0]);
@@ -69,8 +69,8 @@ const getVideoRentals = async () => {
 
 const getListOfAllRentals = async () => {
     const response = await fetchListOfAllRentals();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("Video Rentals collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -81,8 +81,8 @@ const getListOfAllRentals = async () => {
 
 const getUsers = async () => {
     const response = await fetchUsers();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("Users collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -93,8 +93,8 @@ const getUsers = async () => {
 
 const getUsersRaw = async () => {
     const response = await fetchUsers();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("User collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -105,8 +105,8 @@ const getUsersRaw = async () => {
 
 const getListOfLoginUsers = async () => {
     const response = await fetchLoginUsers();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("List of login users is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -115,8 +115,8 @@ const getListOfLoginUsers = async () => {
 
 const getAvailableVideos = async () => {
     const response = await fetchAvailableVideos();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("Available videos collection is empty or undefined")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -126,8 +126,8 @@ const getAvailableVideos = async () => {
 
 const getMyVideos = async (id) => {
     const response = await fetchMyVideos(id);
-    if (response == undefined) {
-        alert("You don't own any videos");
+    if (response == undefined || response.length == 0) {
+        alert("You don't own any videos or undefined");
         top.location.href = "/index.html";//redirectior
     }
     console.log(response);
@@ -137,8 +137,8 @@ const getMyVideos = async (id) => {
 
 const getVideosForRent = async () => {
     const response = await fetchAvailableVideos();
-    if (response == undefined) {
-        alert("An unknown error has occured.")
+    if (response == undefined || response.length == 0) {
+        alert("Available videos collection is empty or undefined")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -149,8 +149,8 @@ const getVideosForRent = async () => {
 const rentVideoForSpecificUser = async() => {
     const responseUser = await fetchUsers();
     const responseAvailableVideos = await fetchAvailableVideos();
-    if(responseUser == undefined || responseAvailableVideos == undefined ){
-        alert("An unknown error has occured.");
+    if(responseUser == undefined || responseAvailableVideos == undefined || responseUser.length == 0 || responseAvailableVideos.length == 0 ){
+        alert("Cannot rent video. users or videos collection is empty or undefined.");
         top.location.href = "/index.html";//redirection
     }
     console.log(responseUser);

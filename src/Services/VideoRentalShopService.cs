@@ -51,7 +51,7 @@ namespace VideoRentalShopApp.Services
             return users.Select(s => new UserResult() { Id = s.Id, FirstName = s.FirstName, LastName = s.LastName, Address = s.Address, Contact = s.Contact, RegistrationDate = s.RegistrationDate }).ToList();
         }
 
-        public async Task<List<VideoResult>> GetMyVideosAsync(string id)
+        public async Task<List<VideoResult>> GetMyVideosByIdAsync(string id)
         {
             User user = await UserCollection.Find(f => f.Id == id).FirstOrDefaultAsync();
             if (user == null)
@@ -61,10 +61,10 @@ namespace VideoRentalShopApp.Services
             }
 
             List<VideoRent> videoRental = await VideoRentalCollection.Find(f => f.UserId == user.Id).Project(p => p.Videos).FirstOrDefaultAsync();
-            return await GetMyVideos(videoRental.Select(s => s.Title).ToArray());
+            return await GetMyVideosAsync(videoRental.Select(s => s.Title).ToArray());
         }
 
-        private async Task<List<VideoResult>> GetMyVideos(string[] videosArray)
+        private async Task<List<VideoResult>> GetMyVideosAsync(string[] videosArray)
         {
             if ((videosArray?.Length ?? 0) == 0)
             {
@@ -72,8 +72,12 @@ namespace VideoRentalShopApp.Services
                 return null;
             }
 
-            FilterDefinition<Video> filter = Builders<Video>.Filter.In(movie => movie.Title, videosArray);
-            List<Video> videos = await VideoCollection.Find(filter).ToListAsync();
+            FilterDefinitionBuilder<Video> filter = Builders<Video>.Filter;
+            FilterDefinition<Video> videoFilter = filter.And(
+              filter.Eq(x => x.IsAvailable, false),
+              filter.In(movie => movie.Title, videosArray));
+
+            List<Video> videos = await VideoCollection.Find(videoFilter).ToListAsync();
             return videos != null || videos.Count > 0 ? videos.Select(s => new VideoResult
             {
                 Id = s.Id,
@@ -362,13 +366,8 @@ namespace VideoRentalShopApp.Services
                 ? await VideoCollection.Find(f => f.IsAvailable == true).ToListAsync()
                 : await VideoCollection.Find(f => f.IsAvailable == true).Sort(sort).ToListAsync();
 
-            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
-            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
-
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
-            VideoCollection videoCollection = new(videos, videoRentals);
-            Logger.LogInformation($"Available videos in shop: {videoCollection.AvailableVideoList.Count}");
-            return videoCollection.AvailableVideoList.Select(s => new VideoResult
+            Logger.LogInformation($"Available videos in shop: {videos.Count}");
+            return videos.Select(s => new VideoResult
             {
                 Id = s.Id,
                 Title = s.Title,
@@ -394,20 +393,15 @@ namespace VideoRentalShopApp.Services
                 ? await VideoCollection.Find(_ => true).ToListAsync()
                 : await VideoCollection.Find(_ => true).Sort(sort).ToListAsync();
 
-
-            FilterDefinitionBuilder<VideoRental> filter = Builders<VideoRental>.Filter;
-            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filter.ElemMatch(x => x.Videos, c => !c.RealEndOfRentalDate.Equals(null));
-
-            List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
-            VideoCollection videoCollection = new(videos, videoRentals);
-            Logger.LogInformation($"Available videos on shop collection: {videoCollection.AvailableVideoList.Count}");
-            return videoCollection.AvailableVideoList.Select(s => new VideoShortResult
+            Logger.LogInformation($"Available videos on shop collection: {videos.Count}");
+            return videos.Select(s => new VideoShortResult
             {
                 Id = s.Id,
                 Title = s.Title,
                 Runtime = s.Runtime,
                 Genre = s.Genre,
-                Director = s.Director
+                Director = s.Director,
+                IsAvailable = s.IsAvailable
             }).ToList();
         }
 
@@ -535,9 +529,16 @@ namespace VideoRentalShopApp.Services
               filter.ElemMatch(x => x.Videos, c => c.Title == videoTitle));
 
             DateTime dateNow = DateTime.UtcNow;
-            string date = dateNow.ToString();
-            UpdateDefinition<VideoRental> setRealEndOfRentDate = Builders<VideoRental>.Update.Set(x => x.Videos[-1].RealEndOfRentalDate.Value.ToString(), date);
-            var result = await VideoRentalCollection.UpdateOneAsync(videoRentalIdTitle, setRealEndOfRentDate);
+            VideoRental videoRentalResult = await VideoRentalCollection.Find(videoRentalIdTitle).FirstOrDefaultAsync();
+            videoRentalResult.Videos.ForEach(f =>
+            {
+                if (f.Title.Equals(videoTitle))
+                {
+                    f.RealEndOfRentalDate = dateNow;
+                }
+            });
+
+            VideoRental result = await VideoRentalCollection.FindOneAndReplaceAsync(f => f.UserId == userId, videoRentalResult);
             await ReturnRentedVideo(video);
             return result != null;
         }
