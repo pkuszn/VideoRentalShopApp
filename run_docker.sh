@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-mongo = "mongo"
-vrsa = "video-rental-store-app"
+mongo="mongo"
+vrsa="video-rental-store-app"
 
 echo $mongo
 echo $vrsa
@@ -25,7 +25,7 @@ if [ ! "$(sudo docker ps -a -q -f name=$vrsa)" ]; then
 fi
 
 echo "> Pulling a mongodb image..."
-sudo docker pull $mongo
+sudo docker pull $mongo:latest
 
 echo "> Creating a mongodb container..."
 if [ ! "$(sudo docker ps -a -q -f name=$mongo)" ]; then
