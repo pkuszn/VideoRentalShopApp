@@ -1,7 +1,7 @@
 #!/bin/bash
 
-$mongo = "mongo"
-$vrsa = "video-rental-store-app"
+mongo = "mongo"
+vrsa = "video-rental-store-app"
 
 echo "> Creating an image..."
 if sudo docker image inspect $vrsa >/dev/null 2>&1; then
