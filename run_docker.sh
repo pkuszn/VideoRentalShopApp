@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "> Publishing app..."
-sudo dotnet publish -c Release
-
 $mongo = "mongo"
 $vrsa = "video-rental-store-app"
 
