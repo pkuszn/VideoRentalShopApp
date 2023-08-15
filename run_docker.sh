@@ -3,6 +3,9 @@
 mongo = "mongo"
 vrsa = "video-rental-store-app"
 
+echo $mongo
+echo $vrsa
+
 echo "> Creating an image..."
 if sudo docker image inspect $vrsa >/dev/null 2>&1; then
 	echo "Image exists locally"
