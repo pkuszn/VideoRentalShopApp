@@ -1,4 +1,4 @@
-﻿namespace VideoRentalShopApp.DataTransferObjects.Criteria
+﻿namespace VideoRentalStoreApp.DataTransferObjects.Criteria
 {
     public class RentFilmByIdCriteria
     {

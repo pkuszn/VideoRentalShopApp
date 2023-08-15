@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using VideoRentalShopApp.DataTransferObjects.Criteria;
+using VideoRentalStoreApp.DataTransferObjects.Criteria;
 
-namespace VideoRentalShopApp.DataTransferObjects
+namespace VideoRentalStoreApp.DataTransferObjects
 {
     public class VideoRentalCriteria
     {

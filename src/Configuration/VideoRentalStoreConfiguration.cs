@@ -1,6 +1,6 @@
-﻿namespace VideoRentalShopApp.Configuration
+﻿namespace VideoRentalStoreApp.Configuration
 {
-    public class VideoRentalShopConfiguration
+    public class VideoRentalStoreConfiguration
     {
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
@@ -9,3 +9,4 @@
         public string RentalCollectionName { get; set; }
     }
 }
+

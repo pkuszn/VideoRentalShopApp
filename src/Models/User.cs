@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace VideoRentalShopApp.Models
+namespace VideoRentalStoreApp.Models
 {
     public class User
     {

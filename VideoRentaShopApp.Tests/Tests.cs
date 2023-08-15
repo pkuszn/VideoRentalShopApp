@@ -11,7 +11,7 @@ namespace VideoRentaShopApp.Tests
         [Fact]
         public async Task GetVideosAsync_NotEmpty_True()
         {
-            using WebApplicationFactory<VideoRentalShopApp.Startup> app = new WebApplicationFactory<VideoRentalShopApp.Startup>();
+            using WebApplicationFactory<VideoRentalStoreApp.Startup> app = new WebApplicationFactory<VideoRentalStoreApp.Startup>();
             using System.Net.Http.HttpClient client = app.CreateClient();
 
             System.Net.Http.HttpResponseMessage response = await client.GetAsync("/VideoRentalShop/GetVideos");
@@ -22,7 +22,7 @@ namespace VideoRentaShopApp.Tests
         [Fact]
         public async Task GetUsersAsync_NotEmpty_True()
         {
-            using WebApplicationFactory<VideoRentalShopApp.Startup> app = new WebApplicationFactory<VideoRentalShopApp.Startup>();
+            using WebApplicationFactory<VideoRentalStoreApp.Startup> app = new WebApplicationFactory<VideoRentalStoreApp.Startup>();
             using System.Net.Http.HttpClient client = app.CreateClient();
 
             System.Net.Http.HttpResponseMessage response = await client.GetAsync("/VideoRentalShop/GetUsers");

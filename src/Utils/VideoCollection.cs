@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using VideoRentalShopApp.Models;
+using VideoRentalStoreApp.Models;
 
-namespace VideoRentalShopApp.Utils
+namespace VideoRentalStoreApp.Utils
 {
     internal class VideoCollection
     {

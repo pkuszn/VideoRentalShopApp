@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
-namespace VideoRentalShopApp.Models
+namespace VideoRentalStoreApp.Models
 {
     public class Video
     {

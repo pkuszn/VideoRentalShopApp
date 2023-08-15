@@ -1,4 +1,4 @@
-﻿namespace VideoRentalShopApp.DataTransferObjects
+﻿namespace VideoRentalStoreApp.DataTransferObjects
 {
     public class VideoShortResult
     {

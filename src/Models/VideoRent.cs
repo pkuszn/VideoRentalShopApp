@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VideoRentalShopApp.Models
+namespace VideoRentalStoreApp.Models
 {
     public class VideoRent
     {

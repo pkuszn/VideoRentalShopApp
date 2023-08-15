@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace VideoRentalShopApp
+namespace VideoRentalStoreApp
 {
     public class Program
     {

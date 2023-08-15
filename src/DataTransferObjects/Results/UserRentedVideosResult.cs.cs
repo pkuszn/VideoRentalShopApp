@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VideoRentalShopApp.DataTransferObjects
+namespace VideoRentalStoreApp.DataTransferObjects
 {
     public class UserRentedVideosResults
     {

@@ -1,17 +1,17 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
-using VideoRentalShopApp.Configuration;
-using VideoRentalShopApp.Interfaces;
-using VideoRentalShopApp.Services;
+using VideoRentalStoreApp.Configuration;
+using VideoRentalStoreApp.Interfaces;
+using VideoRentalStoreApp.Services;
 
-namespace VideoRentalShopApp.Extensions
+namespace VideoRentalStoreApp.Extensions
 {
-    public static class VideoRentalShopExtensions
+    public static class VideoRentalStoreExtensions
     {
         public static IServiceCollection AddConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.Configure<VideoRentalShopConfiguration>(configuration.GetSection("VideoRentalShop"));   
+            return services.Configure<VideoRentalStoreConfiguration>(configuration.GetSection("VideoRentalShop"));   
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
@@ -27,7 +27,7 @@ namespace VideoRentalShopApp.Extensions
 
         private static IServiceCollection AddScopedServices(this IServiceCollection services)
         {
-            return services.AddScoped<IVideoRentalShopService, VideoRentalShopService>();
+            return services.AddScoped<IVideoRentalStoreService, VideoRentalStoreService>();
         }
     }
 }

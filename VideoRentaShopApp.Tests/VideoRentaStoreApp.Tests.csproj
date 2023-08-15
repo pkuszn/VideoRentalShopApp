@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\VideoRentalShopApp.csproj" />
+    <ProjectReference Include="..\src\VideoRentalStoreApp.csproj" />
   </ItemGroup>
 
 </Project>

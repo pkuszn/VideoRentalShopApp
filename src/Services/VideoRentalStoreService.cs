@@ -5,25 +5,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VideoRentalShopApp.Configuration;
-using VideoRentalShopApp.DataTransferObjects;
-using VideoRentalShopApp.DataTransferObjects.Criteria;
-using VideoRentalShopApp.DataTransferObjects.Results;
-using VideoRentalShopApp.Interfaces;
-using VideoRentalShopApp.Models;
-using static VideoRentalShopApp.Constants.Enums;
+using VideoRentalStoreApp.Configuration;
+using VideoRentalStoreApp.DataTransferObjects;
+using VideoRentalStoreApp.DataTransferObjects.Criteria;
+using VideoRentalStoreApp.DataTransferObjects.Results;
+using VideoRentalStoreApp.Interfaces;
+using VideoRentalStoreApp.Models;
+using static VideoRentalStoreApp.Constants.Enums;
 
-namespace VideoRentalShopApp.Services
+namespace VideoRentalStoreApp.Services
 {
-    public class VideoRentalShopService : IVideoRentalShopService
+    public class VideoRentalStoreService : IVideoRentalStoreService
     {
         private readonly IMongoCollection<User> UserCollection;
         private readonly IMongoCollection<Video> VideoCollection;
         private readonly IMongoCollection<VideoRental> VideoRentalCollection;
-        private readonly ILogger<VideoRentalShopService> Logger;
+        private readonly ILogger<VideoRentalStoreService> Logger;
         private readonly IMongoDatabase Database;
 
-        public VideoRentalShopService(IMongoClient mongoClient, IOptions<VideoRentalShopConfiguration> videoRentalShopConfiguration, ILogger<VideoRentalShopService> logger)
+        public VideoRentalStoreService(IMongoClient mongoClient, IOptions<VideoRentalStoreConfiguration> videoRentalShopConfiguration, ILogger<VideoRentalStoreService> logger)
         {
             Database = mongoClient.GetDatabase(videoRentalShopConfiguration.Value.DatabaseName) ?? throw new NullReferenceException();
             UserCollection = Database.GetCollection<User>(videoRentalShopConfiguration.Value.UserCollectionName) ?? throw new NullReferenceException();

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoRentalShopApp", "src\VideoRentalShopApp.csproj", "{26F0CADB-BFBB-4179-8E53-399597C6A989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoRentalStoreApp", "src\VideoRentalStoreApp.csproj", "{26F0CADB-BFBB-4179-8E53-399597C6A989}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoRentaShopApp.Tests", "VideoRentaShopApp.Tests\VideoRentaShopApp.Tests.csproj", "{1FD8FDA0-5C2C-4456-9C94-F557D2E5EC3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoRentaStoreApp.Tests", "VideoRentaShopApp.Tests\VideoRentaStoreApp.Tests.csproj", "{1FD8FDA0-5C2C-4456-9C94-F557D2E5EC3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

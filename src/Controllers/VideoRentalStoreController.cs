@@ -4,22 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using VideoRentalShopApp.DataTransferObjects;
-using VideoRentalShopApp.DataTransferObjects.Criteria;
-using VideoRentalShopApp.DataTransferObjects.Results;
-using VideoRentalShopApp.Interfaces;
+using VideoRentalStoreApp.DataTransferObjects;
+using VideoRentalStoreApp.DataTransferObjects.Criteria;
+using VideoRentalStoreApp.DataTransferObjects.Results;
+using VideoRentalStoreApp.Interfaces;
 
-namespace VideoRentalShopApp.Controllers
+namespace VideoRentalStoreApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class VideoRentalShopController : ControllerBase
+    public class VideoRentalStoreController : ControllerBase
     {
-        private readonly IVideoRentalShopService VideoRentalShopService;
-        private readonly ILogger<VideoRentalShopController> Logger;
-        public VideoRentalShopController(IVideoRentalShopService videoRentalShopService, ILogger<VideoRentalShopController> logger)
+        private readonly IVideoRentalStoreService VideoRentalStoreService;
+        private readonly ILogger<VideoRentalStoreController> Logger;
+        public VideoRentalStoreController(IVideoRentalStoreService videoRentalStoreService, ILogger<VideoRentalStoreController> logger)
         {
-            VideoRentalShopService = videoRentalShopService ?? throw new ArgumentNullException(nameof(videoRentalShopService));
+            VideoRentalStoreService = videoRentalStoreService ?? throw new ArgumentNullException(nameof(videoRentalStoreService));
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -27,168 +27,168 @@ namespace VideoRentalShopApp.Controllers
         [Route("GetUsersWhoHaveRentedVideos")]
         public async Task<List<UserResult>> GetUsersWhoHaveRentedVideos()
         {
-            return await VideoRentalShopService.GetUsersWhoHaveRentedMovies();
+            return await VideoRentalStoreService.GetUsersWhoHaveRentedMovies();
         }
 
         [HttpGet]
         [Route("GetMyVideos/{id}")]
         public async Task<List<VideoResult>> GetMyVideosAsync(string id)
         {
-            return await VideoRentalShopService.GetMyVideosByIdAsync(id);
+            return await VideoRentalStoreService.GetMyVideosByIdAsync(id);
         }
 
         [HttpGet]
         [Route("GetLoginUsers")]
         public async Task<List<LoginResult>> GetLoginResultsAsync()
         {
-            return await VideoRentalShopService.GetLoginUsers();
+            return await VideoRentalStoreService.GetLoginUsers();
         }
 
         [HttpGet]
         [Route("GetListOfRents")]
         public async Task<List<UserRentedVideosResults>> GetListOfRentsAsync()
         {
-            return await VideoRentalShopService.GetListOfUserWithRentedVideosAsync();
+            return await VideoRentalStoreService.GetListOfUserWithRentedVideosAsync();
         }
 
         [HttpPut]
         [Route("ReturnRentedVideoById")]
         public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
         {
-            return await VideoRentalShopService.ReturnRentedVideoByIdAsync(criteria);
+            return await VideoRentalStoreService.ReturnRentedVideoByIdAsync(criteria);
         }
 
         [HttpPut]
         [Route("ReturnRentedVideoByNames")]
         public async Task<bool> ReturnRentedVideByNamesAsync(RentFilmByNamesCriteria criteria)
         {
-            return await VideoRentalShopService.ReturnRentedVideoByNamesAsync(criteria);
+            return await VideoRentalStoreService.ReturnRentedVideoByNamesAsync(criteria);
         }
 
         [HttpGet]
         [Route("GetAvailableVideos")]
         public async Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
-            return await VideoRentalShopService.GetAvailableVideosAsync(sortByTitle, sortByGenre);
+            return await VideoRentalStoreService.GetAvailableVideosAsync(sortByTitle, sortByGenre);
         }
 
         [HttpGet]
         [Route("GetAvailableVideoShort")]
         public async Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre)
         {
-            return await VideoRentalShopService.GetAvailableVideosShortAsync(sortByTitle, sortByGenre);
+            return await VideoRentalStoreService.GetAvailableVideosShortAsync(sortByTitle, sortByGenre);
         }
 
         [HttpPost]
         [Route("RentFilmByNames")]
         public async Task<bool> RentVideoAsyncByNames(RentFilmByNamesCriteria criteria)
         {
-            return await VideoRentalShopService.RentVideoByNamesAsync(criteria);
+            return await VideoRentalStoreService.RentVideoByNamesAsync(criteria);
         }
 
         [HttpPost]
         [Route("RentFilmById")]
         public async Task<bool> RentVideoAsyncById(RentFilmByIdCriteria criteria)
         {
-            return await VideoRentalShopService.RentVideoByIdAsync(criteria);
+            return await VideoRentalStoreService.RentVideoByIdAsync(criteria);
         }
 
         [HttpGet]
         [Route("GetUsers")]
         public async Task<List<UserResult>> GetUsersAsync()
         {
-            return await VideoRentalShopService.GetUsersAsync();
+            return await VideoRentalStoreService.GetUsersAsync();
         }
 
         [HttpGet]
         [Route("GetVideos")]
         public async Task<List<VideoResult>> GetVideosAsync()
         {
-            return await VideoRentalShopService.GetVideosAsync();
+            return await VideoRentalStoreService.GetVideosAsync();
         }
 
         [HttpGet]
         [Route("GetVideoRentals")]
         public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
         {
-            return await VideoRentalShopService.GetVideoRentalsAsync();
+            return await VideoRentalStoreService.GetVideoRentalsAsync();
         }
 
         [HttpGet]
         [Route("GetUser/{id}")]
         public async Task<UserResult> GetUserAsync(string id)
         {
-            return await VideoRentalShopService.GetUserAsync(id);
+            return await VideoRentalStoreService.GetUserAsync(id);
         }
 
         [HttpGet]
         [Route("GetVideo/{id}")]
         public async Task<VideoResult> GetVideoAsync(string id)
         {
-            return await VideoRentalShopService.GetVideoAsync(id);
+            return await VideoRentalStoreService.GetVideoAsync(id);
         }
 
         [HttpGet]
         [Route("GetVideoRental/{id}")]
         public async Task<VideoRentalResult> GetVideoRentalAsync(string id)
         {
-            return await VideoRentalShopService.GetVideoRentalAsync(id);
+            return await VideoRentalStoreService.GetVideoRentalAsync(id);
         }
 
         [HttpPost]
         [Route("InsertUser")]
         public async Task InsertUserAsync(UserCriteria criteria)
         {
-            await VideoRentalShopService.CreateUserAsync(criteria);
+            await VideoRentalStoreService.CreateUserAsync(criteria);
         }
 
         [HttpPost]
         [Route("InsertVideo")]
         public async Task InsertVideoAsync(VideoCriteria criteria)
         {
-            await VideoRentalShopService.CreateVideoAsync(criteria);
+            await VideoRentalStoreService.CreateVideoAsync(criteria);
         }
 
         [HttpPost]
         [Route("InsertVideoRental")]
         public async Task InsertVideoRentalAsync(VideoRentalCriteria criteria)
         {
-            await VideoRentalShopService.CreateVideoRentalAsync(criteria);
+            await VideoRentalStoreService.CreateVideoRentalAsync(criteria);
         }
 
         [HttpPut]
         [Route("UpdateUser/{id}")]
         public async Task UpdateUserAsync(string id, UserCriteria criteria)
         {
-            await VideoRentalShopService.UpdateUserAsync(id, criteria);
+            await VideoRentalStoreService.UpdateUserAsync(id, criteria);
         }
 
         [HttpPut]
         [Route("UpdateVideo/{id}")]
         public async Task UpdateVideoAsync(string id, VideoCriteria criteria)
         {
-            await VideoRentalShopService.UpdateVideoAsync(id, criteria);
+            await VideoRentalStoreService.UpdateVideoAsync(id, criteria);
         }
 
         [HttpPut]
         [Route("UpdateVideoRental/{id}")]
         public async Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria)
         {
-            await VideoRentalShopService.UpdateVideoRentalAsync(id, criteria);
+            await VideoRentalStoreService.UpdateVideoRentalAsync(id, criteria);
         }
 
         [HttpDelete]
         [Route("DeleteUser/{id}")]
         public async Task DeleteUserAsync(string id)
         {
-            await VideoRentalShopService.DeleteUserAsync(id);
+            await VideoRentalStoreService.DeleteUserAsync(id);
         }
 
         [HttpDelete]
         [Route("DeleteVideo/{id}")]
         public async Task<ActionResult> DeleteVideoAsync(string id)
         {
-            bool deleted = await VideoRentalShopService.DeleteVideoAsync(id);
+            bool deleted = await VideoRentalStoreService.DeleteVideoAsync(id);
             return deleted ? Ok(deleted) : Problem($"Video with {nameof(id)}: {id} is rented. Cannot delete rented video", statusCode: (int)HttpStatusCode.BadRequest);
         }
 
@@ -196,7 +196,7 @@ namespace VideoRentalShopApp.Controllers
         [Route("DeleteVideoRental/{id}")]
         public async Task DeleteVideoRentalAsync(string id)
         {
-            await VideoRentalShopService.DeleteVideoRentalAsync(id);
+            await VideoRentalStoreService.DeleteVideoRentalAsync(id);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace VideoRentalShopApp.DataTransferObjects.Results
+﻿namespace VideoRentalStoreApp.DataTransferObjects.Results
 {
     public class LoginResult
     {

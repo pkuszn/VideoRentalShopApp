@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Net;
-using VideoRentalShopApp.Extensions;
+using VideoRentalStoreApp.Extensions;
 
-namespace VideoRentalShopApp
+namespace VideoRentalStoreApp
 {
     public class Startup
     {
@@ -22,7 +22,7 @@ namespace VideoRentalShopApp
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VideoRentalShopApp", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VideoRentalStoreApp", Version = "v1" });
             });
             services.AddConfig(Configuration);
             services.AddServices(Configuration);
@@ -40,7 +40,7 @@ namespace VideoRentalShopApp
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VideoRentalShopApp v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VideoRentalStoreApp v1"));
             }
             app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VideoRentalShopApp.DataTransferObjects.Criteria
+namespace VideoRentalStoreApp.DataTransferObjects.Criteria
 {
     public class VideoRentCriteria
     {

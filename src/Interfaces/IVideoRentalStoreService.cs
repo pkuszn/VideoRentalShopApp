@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using VideoRentalShopApp.DataTransferObjects;
-using VideoRentalShopApp.DataTransferObjects.Criteria;
-using VideoRentalShopApp.DataTransferObjects.Results;
+using VideoRentalStoreApp.DataTransferObjects;
+using VideoRentalStoreApp.DataTransferObjects.Criteria;
+using VideoRentalStoreApp.DataTransferObjects.Results;
 
-namespace VideoRentalShopApp.Interfaces
+namespace VideoRentalStoreApp.Interfaces
 {
-    public interface IVideoRentalShopService
+    public interface IVideoRentalStoreService
     {
         Task<List<UserResult>> GetUsersWhoHaveRentedMovies();
         Task<List<VideoResult>> GetMyVideosByIdAsync(string id);

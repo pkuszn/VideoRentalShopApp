@@ -1,4 +1,4 @@
-﻿namespace VideoRentalShopApp.Constants
+﻿namespace VideoRentalStoreApp.Constants
 {
     public static class Enums
     {
