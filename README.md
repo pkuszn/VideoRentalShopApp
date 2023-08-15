@@ -1,4 +1,4 @@
-# VideoRentalShopApp #
+# VideoRentalStoreApp #
 
 ## 1. Opis ##
 
