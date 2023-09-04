@@ -9,7 +9,7 @@
 
 ## 2 Description
 
-The main functionality focuses on renting films from online video rental stores. App provides an API written in C# ASP.NET Core WebAPI. It is an SPA app that uses Javascript on the front side and MongoDb as a database
+The main functionality focuses on renting films from online video rental store. App provides an API written in C# ASP.NET Core WebAPI. It is an SPA app that uses Javascript on the front side and MongoDb as a database
 
 ## 3 Features
 
