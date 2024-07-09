@@ -2,7 +2,7 @@
 
 ## 1 Requirements 
 
-- net5.0 sdk,
+- net8.0 sdk,
 - mongoDb,
 - WSL/Linux,
 - docker
@@ -11,7 +11,21 @@
 
 The main functionality focuses on renting films from online video rental store. App provides an API written in C# ASP.NET Core WebAPI. It is an SPA app that uses Javascript on the front side and MongoDb as a database
 
-## 3 Features
+## Usage
+
+To run the app follow below instructions:
+
+Move to main directory and run .sh file to create both images and containers
+```bash
+bash run_docker.sh
+```
+
+Next, you should be able to access the webpage with below address:
+```
+https://localhost:6001
+```
+
+## 4 Features
 
 - Add new video,
 - Delete video(only if it is not rented),
@@ -36,3 +50,14 @@ The main functionality focuses on renting films from online video rental store. 
     - Print collection of my rentals,
     - Rent movie
   
+## 5 Libraries
+
+This application constist of various external libraries such as:
+
+- Backend
+  - FluentAssertions
+  - Microsoft.AspNetCore.Mvc.Testing
+  - MongoDB.Driver
+  - Swashbuckle.AspNetCore
+- Frontend
+  - JQuery
