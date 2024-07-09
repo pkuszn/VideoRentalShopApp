@@ -1124,5 +1124,5 @@ export {
     createReturnRentedVideoList,
     createUsersOptions as createDeleteUsersOptions,
     createVideosOptions as createDeleteVideosOptions,
-    createTableVideosShort
+    createTableVideosShort,
 }

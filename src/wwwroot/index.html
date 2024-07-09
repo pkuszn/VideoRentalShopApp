@@ -31,7 +31,7 @@
 
     <div id="wrapper">
         <div id="sidebar">
-            <h2 style="margin-left:10px; text-align: center;">Menu</h2>
+            <h2 style="margin-left:10px; text-align: center;">Actions</h2>
             <!-- user only -->
             <button class="user" type="button" id="get-available-videos">Get available videos</button>
             <button class="user" type="button" id="get-videos-by-user">Get my videos</button>
@@ -51,9 +51,15 @@
         </div>
         <div id="content">
             <h4 id="welcome">Welcome to video rental store</h4>
-            <div id="table-wrapper">
-
-            </div>
+            <form id="search-form" class="search-form">
+                <div class="search-container">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search by title, genre, director...">
+                    <button type="submit" id="search-button" class="search-button">
+                        Search
+                    </button>
+                </div>
+            </form>
+            <div id="table-wrapper"></div>
         </div>
     </div>
     <script>
@@ -78,6 +84,7 @@
             })
         }
     </script>
+    <script src="js/init.js" type="module"></script>
     <script src="js/site.js" type="module"></script>
     <script src="js/dynamic.js" type="module"></script>
 </body>

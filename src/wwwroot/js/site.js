@@ -1,16 +1,57 @@
-﻿import { fetchVideos, fetchVideoRentals, fetchListOfAllRentals, fetchLoginUsers, fetchUsers, fetchAvailableVideos, fetchMyVideos, fetchUserWhoHaveRentedVideos, fetchVideosShort } from './fetch.js'
-import { createNewUser, createNewVideo, deleteVideo, deleteUser, updateVideo, updateUser, rentVideoById, returnRentedVideoById } from './send.js'
+﻿import { 
+    createNewUser, 
+    createNewVideo, 
+    deleteVideo, 
+    deleteUser, 
+    updateVideo, 
+    updateUser, 
+    rentVideoById, 
+    returnRentedVideoById 
+} from './send.js'
+
+import { 
+    fetchVideos, 
+    fetchVideoRentals, 
+    fetchListOfAllRentals, 
+    fetchLoginUsers, 
+    fetchUsers, 
+    fetchAvailableVideos, 
+    fetchMyVideos, 
+    fetchUserWhoHaveRentedVideos, 
+    fetchVideosShort 
+} from './fetch.js'
+
 import {
-    createTableVideos, objectProperties, clearContent, createTableVideoRentals, createTableGetListOfAllRentals, createNewUserInputForm, createNewVideoInputForm, createTableUsers,
-    createTableVideosForRent, createTableVideosWithoutActions, createDeleteVideosList, createDeleteUsersList, createRentFilmForUserList, createReturnRentedVideoList, createTableVideosShort
+    createTableVideos, 
+    objectProperties, 
+    clearContent, 
+    createTableVideoRentals,
+    createTableGetListOfAllRentals, 
+    createNewUserInputForm, 
+    createNewVideoInputForm, 
+    createTableUsers,
+    createTableVideosForRent, 
+    createTableVideosWithoutActions, 
+    createDeleteVideosList, 
+    createDeleteUsersList,
+    createRentFilmForUserList, 
+    createReturnRentedVideoList, 
+    createTableVideosShort,
 } from './utils.js'
-import { UserDTO, VideoDTO, LoginUserDTO, VideoDTOId, UserDTOId, RentVideoByIdDTO } from './dtos.js'
+
+import { 
+    UserDTO, 
+    VideoDTO, 
+    LoginUserDTO, 
+    VideoDTOId, 
+    UserDTOId, 
+    RentVideoByIdDTO 
+} from './dtos.js'
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
 var getListOfAllRentalsButton = document.getElementById('get-list-of-all-video-rentals-button');
 var getVideoRentalsButton = document.getElementById('get-list-of-rentals');
-var welcomeHeader = document.getElementById('welcome');
 var addNewUserButton = document.getElementById('add-new-user-button');
 var addNewVideoButton = document.getElementById('add-new-video-button');
 var loginButton = document.getElementById('login-button');
@@ -77,8 +118,8 @@ const getListOfAllRentals = async () => {
     const headers = objectProperties(Object.values(response)[0]);
     console.log(headers);
     container = createTableGetListOfAllRentals(response, container, headers);
+    
 }
-
 const getUsers = async () => {
     const response = await fetchUsers();
     if (response == undefined || response.length == 0) {
@@ -179,63 +220,63 @@ const returnRentedVideoOfSpecificClient = async() => {
 
 getVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getVideos();
 });
 
 getVideosShortButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getVideosShort();
 });
 
 getVideoRentalsButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getVideoRentals();
 });
 
 getListOfAllRentalsButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getListOfAllRentals();
 });
 
 getUsersButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getUsers();
 });
 
 addNewUserButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     container = createNewUserInputForm(container);
 });
 
 addNewVideoButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     container = createNewVideoInputForm(container);
 });
 
 getAvailableVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getAvailableVideos();
 });
 
 getMyVideosButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     let id = window.sessionStorage.getItem("identifier");
     if (id == undefined) {
@@ -247,35 +288,35 @@ getMyVideosButton.addEventListener('click', (e) => {
 
 rentVideoByUserButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getVideosForRent();
 });
 
 removeVideoButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getVideosRaw();
 });
 
 removeUserButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     getUsersRaw();
 });
 
 rentVideoForUserButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     rentVideoForSpecificUser();
 });
 
 returnVideoFromRentalButton.addEventListener('click', (e) => {
     e.preventDefault();
-    welcomeHeader.remove();
+    removeHeader();
     clearContent(container);
     returnRentedVideoOfSpecificClient();
 });
@@ -285,6 +326,13 @@ document.addEventListener('click', resetNewUserListener);
 
 document.addEventListener('click', addNewVideoListener);
 document.addEventListener('click', resetNewVideoListener);
+
+function removeHeader() {
+    var welcomeHeader = document.getElementById('welcome');
+    if (welcomeHeader !== null) {
+        removeHeader();
+    }
+}
 
 async function addNewVideoListener(event) {
     var element = event.target;

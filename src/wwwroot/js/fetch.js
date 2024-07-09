@@ -65,7 +65,7 @@ async function fetchLoginUsers() {
             console.log(data);
             return data;
         })
-        .catch(error => console.error('Unable to get login users', error));
+        .catch(error => console.error('Unable to get logged user', error));
 }
 
 async function fetchUsers() {
@@ -82,7 +82,7 @@ async function fetchUsers() {
             console.log(data);
             return data;
         })
-        .catch(error => console.error('Unable to get login users', error));
+        .catch(error => console.error('Unable to get logged user', error));
 }
 
 async function fetchAvailableVideos() {
@@ -99,7 +99,7 @@ async function fetchAvailableVideos() {
             console.log(data);
             return data;
         })
-        .catch(error => console.error('Unable to get login users', error));
+        .catch(error => console.error('Unable to get logged user', error));
 }
 
 async function fetchMyVideos(id) {
@@ -116,7 +116,7 @@ async function fetchMyVideos(id) {
             console.log(data);
             return data;
         })
-        .catch(error => console.error('Unable to get login users', error));
+        .catch(error => console.error('Unable to get logged user', error));
 }
 
 async function fetchUserWhoHaveRentedVideos() {
@@ -133,7 +133,7 @@ async function fetchUserWhoHaveRentedVideos() {
             console.log(data);
             return data;
         })
-        .catch(error => console.error('Unable to get login users', error));
+        .catch(error => console.error('Unable to get logged user', error));
 }
 
 async function fetchVideosShort(){
@@ -150,7 +150,7 @@ async function fetchVideosShort(){
             console.log(data);
             return data;
         })
-        .catch(error => console.error('Unable to get login users', error));
+        .catch(error => console.error('Unable to get logged user', error));
 }
 
 
