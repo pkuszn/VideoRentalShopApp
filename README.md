@@ -53,7 +53,7 @@ https://localhost:6001
   
 ## 5 Libraries
 
-This application constist of various external libraries such as:
+This application constists of various external libraries such as:
 
 - Backend
   - FluentAssertions
