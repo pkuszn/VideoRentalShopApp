@@ -18,7 +18,8 @@ import {
     fetchAvailableVideos, 
     fetchMyVideos, 
     fetchUserWhoHaveRentedVideos, 
-    fetchVideosShort 
+    fetchVideosShort,
+    searchVideoByTitle,
 } from './fetch.js'
 
 import {
@@ -47,6 +48,7 @@ import {
     UserDTOId, 
     RentVideoByIdDTO 
 } from './dtos.js'
+import { remove } from 'lodash';
 
 var container = document.getElementById('table-wrapper');
 var getVideosButton = document.getElementById('get-videos-button');
@@ -65,6 +67,7 @@ var removeUserButton = document.getElementById('remove-user-button');
 var rentVideoForUserButton = document.getElementById('rent-video-button');
 var returnVideoFromRentalButton = document.getElementById('return-movie-from-rental');
 var getVideosShortButton = document.getElementById('get-videos-short-button');
+var searchButton = document.getElementById('search-button');
 
 const getVideos = async () => {
     const response = await fetchVideos();
@@ -218,12 +221,29 @@ const returnRentedVideoOfSpecificClient = async() => {
     container = createReturnRentedVideoList(responseUsers, responseUserVideos, container);
 }
 
-getVideosButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    removeHeader();
-    clearContent(container);
-    getVideos();
-});
+const searchVideo = async(title) => {
+    const response = await searchVideoByTitle(title);
+    if (response == undefined) {
+        alert(title + " not found");
+        top.location.href = "/index.html";//redirection
+    }
+    console.log(response);
+    const headers = objectProperties(Object.values(response)[0]);
+    container = createTableVideosWithoutActions(response, container, headers);
+}
+
+document.addEventListener('click', searchVideoListener);
+async function searchVideoListener(event) {
+    var element = event.target;
+    if (element.id == 'search-button'){
+        e.preventDefault();
+        removeHeader();
+        clearContent(container);
+        var input = document.getElementById("search-input").value;
+        alert(input);
+        searchVideo(input);
+    }
+}
 
 getVideosShortButton.addEventListener('click', (e) => {
     e.preventDefault();

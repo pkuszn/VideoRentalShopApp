@@ -1,9 +1,3 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Threading.Tasks;
-using Xunit;
-
-
 namespace VideoRentaShopApp.Tests
 {
     public class Tests

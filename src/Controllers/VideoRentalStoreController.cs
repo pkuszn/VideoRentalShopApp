@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -197,6 +198,18 @@ namespace VideoRentalStoreApp.Controllers
         public async Task DeleteVideoRentalAsync(string id)
         {
             await VideoRentalStoreService.DeleteVideoRentalAsync(id);
+        }
+
+        [HttpGet]
+        [Route("SearchVideo/{title}")]
+        public async Task<ActionResult> SearchVideoAsync(string title)
+        {
+            List <VideoResult> videos = await VideoRentalStoreService.SearchVideoAsync(title);
+            if (videos == null || videos.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(videos);
         }
     }
 }

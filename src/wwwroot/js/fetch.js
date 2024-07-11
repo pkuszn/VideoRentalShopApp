@@ -153,7 +153,22 @@ async function fetchVideosShort(){
         .catch(error => console.error('Unable to get logged user', error));
 }
 
-
+async function searchVideoByTitle(title) {
+    return await fetch(api.searchVideo + title, {
+        method: "GET",
+        dataType: "JSON",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+    })
+        .then((result => { return result.json(); }))
+        .then(data => {
+            console.log(data);
+            return data;
+        })
+        .catch(error => console.error("Unable to find given videos", error))
+}
 
 export {
     fetchVideos,
@@ -164,5 +179,6 @@ export {
     fetchAvailableVideos,
     fetchMyVideos,
     fetchUserWhoHaveRentedVideos,
-    fetchVideosShort
+    fetchVideosShort,
+    searchVideoByTitle
 }

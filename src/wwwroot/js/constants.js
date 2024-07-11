@@ -23,7 +23,8 @@
     deleteVideoRental: 'VideoRentalStore/DeleteVideoRental/',
     getLoginUsers: 'VideoRentalStore/GetLoginUsers',
     getMyVideos: 'VideoRentalStore/GetMyVideos/',
-    getUsersWhoHaveRentedVideos: 'VideoRentalStore/GetUsersWhoHaveRentedVideos/'
+    getUsersWhoHaveRentedVideos: 'VideoRentalStore/GetUsersWhoHaveRentedVideos/',
+    searchVideo: "VideoRentalStore/SearchVideo/",
 }
 
 export const propertyNameVideoRentalList = {

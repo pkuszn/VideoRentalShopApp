@@ -389,40 +389,47 @@ input {
     background-color: #0056b3;
     border-color: #0056b3;
 }
-/* Stylowanie dla formularza wyszukiwania */
 .search-form {
     display: flex;
-    justify-content: center; /* Wyśrodkowanie elementów w poziomie */
-    align-items: center; /* Wyśrodkowanie elementów w pionie */
+    justify-content: center; 
+    align-items: center; 
     margin-bottom: 10px;
 }
 
 .search-container {
-    position: relative; /* Ustawienie kontenera jako relatywne */
-    display: flex; /* Ustawienie elementów w jednej linii */
-    align-items: center; /* Wyśrodkowanie elementów w pionie */
-    width: 100%; /* Pełna szerokość kontenera */
+    position: relative; 
+    display: flex; 
+    align-items: center;
+    width: 100%; 
 }
 
 .search-input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px; /* Zaokrąglenie krawędzi inputa */
-    width: 100%; /* Dostosowanie szerokości inputa */
-    box-sizing: border-box; /* Upewnienie się, że padding jest wliczony w szerokość */
+    border-radius: 5px; 
+    width: 100%; 
+    box-sizing: border-box;
 }
 
 .search-button {
-    padding: 10px 15px; /* Dostosowanie paddingu */
-    background-color: #0056b3;; /* Kolor tła przycisku */
-    color: white; /* Kolor tekstu */
-    border: none; /* Usunięcie obramowania */
-    border-radius: 0 5px 5px 0; /* Zaokrąglenie prawej krawędzi przycisku */
-    cursor: pointer; /* Zmiana kursora na wskaźnik */
-    font-size: 16px; /* Dostosowanie rozmiaru tekstu */
+    padding: 10px 15px; 
+    background-color: #0056b3;; 
+    color: white; 
+    border: none; 
+    border-radius: 0 5px 5px 0; 
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .search-button:hover {
-    background-color: #45a049; /* Zmiana koloru tła po najechaniu */
+    background-color: #45a049; 
+}
+
+#logged-as {
+    align-self: center;
+}
+
+.user-info {
+    align-content: center;
 }

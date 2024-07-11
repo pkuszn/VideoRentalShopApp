@@ -33,5 +33,6 @@ namespace VideoRentalStoreApp.Interfaces
         Task<string> CreateVideoRentalAsync(VideoRentalCriteria criteria);
         Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria);
         Task DeleteVideoRentalAsync(string id);
+        Task<List<VideoResult>> SearchVideoAsync(string title);
     }
 }
