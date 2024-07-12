@@ -157,21 +157,21 @@ namespace VideoRentalStoreApp.Controllers
             await VideoRentalStoreService.CreateVideoRentalAsync(criteria);
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("UpdateUser/{id}")]
         public async Task UpdateUserAsync(string id, UserCriteria criteria)
         {
             await VideoRentalStoreService.UpdateUserAsync(id, criteria);
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("UpdateVideo/{id}")]
         public async Task UpdateVideoAsync(string id, VideoCriteria criteria)
         {
             await VideoRentalStoreService.UpdateVideoAsync(id, criteria);
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("UpdateVideoRental/{id}")]
         public async Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria)
         {

@@ -506,10 +506,15 @@ function createTableVideosWithoutActions(videos, container, headers, createSearc
 }
 
 
-function createTableVideosForRent(videos, container, headers) {
+function createTableVideosForRent(videos, container, headers, createSearchBoxFunc = null) {
     if (videos === null) {
         return;
     }
+
+    if (createSearchBoxFunc != null && typeof createSearchBoxFunc == 'function') {
+        createSearchBoxFunc(container);
+    }
+
     console.log(videos);
     const table = document.createElement('table');
     const tableAttr = document.createAttribute('class');

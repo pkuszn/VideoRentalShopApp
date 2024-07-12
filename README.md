@@ -1,94 +1,82 @@
-# VideoRentalStoreApp
+# DVD/Blu-ray Movie Rental
 
-## 1 Requirements 
+## 1. Requirements 
 
-- net8.0 sdk,
-- mongoDb,
-- WSL/Linux,
-- docker
+- .NET 8.0 SDK
+- MongoDB
+- WSL/Linux
+- Docker
 
-## 2 Description
+## 2. Description
 
-The Video Rental System is a comprehensive application designed to manage the operations of a video rental store. The application offers a wide range of features tailored to meet the needs of both administrators and regular users, ensuring efficient management of video rentals and user information.
+The **DVD/Blu-ray Movie Rental System** is a comprehensive application designed to manage the operations of a video rental store. It provides a wide range of features tailored to meet the needs of administrators and regular users, ensuring efficient management of video rentals and user information.
 
+## 3. Usage
 
-## Usage
+To run the app, follow these instructions:
 
-To run the app follow below instructions:
+1. Move to the main directory and execute the `.sh` file to create images and containers:
 
-Move to main directory and run .sh file to create both images and containers
-```bash
-bash run_docker.sh
-```
+    ```bash
+    bash run_docker.sh
+    ```
 
-Next, you should be able to access the webpage with below address:
-```
-https://localhost:6001
-```
+2. Access the web application at:
 
-## 4 Features
+    ```
+    https://localhost:6001
+    ```
 
-- Add new video,
-- Delete video(only if it is not rented),
-- Edit video,
-- Add new user,
-- Delete user,
-- Edit user,
-- Show entire collection of movies,
-- Show users,
-- Rent movie(<b>The maximum amount of videos to rent is 3</b>),
-- Return of rented video(<b>You must to return the movie within 2 days</b>),
-- Print all rented movies from specific user,
-- Print all available movies(<b>which were not rented</b>)
-- Show all available movies without details,
-- Print collection of all rentals(<b>with history of rentals</b>),
-- Show card of rentals from specific user(<b>with history of rentals</b>),
-- Admin account
-  - unlimited access to all features
-- User account
+## 4. Features
+
+### Video Management
+
+- Add new video
+- Delete video (only if it is not rented)
+- Edit video
+- Show entire collection of movies
+- Print all available movies (which are not rented)
+
+### User Management
+
+- Add new user
+- Delete user
+- Edit user
+- Show all users
+
+### Rental Operations
+
+- Rent movie (**maximum of 3 videos**)
+- Return rented video (**must be returned within 2 days**)
+- Print all rented movies from a specific user
+- Print collection of all rentals (with history)
+- Show card of rentals from specific user (with history)
+
+### Account Types
+
+- Admin account:
+  - Unlimited access to all features
+- User account:
   - Limited access to:
-    - Print all available movies,
-    - Print collection of my rentals,
+    - Print all available movies
+    - Print collection of my rentals
     - Rent movie
-  
-## 5 Libraries
 
-This application constists of various external libraries such as:
+## 5. Libraries
 
-- Backend
-  - FluentAssertions
-  - Microsoft.AspNetCore.Mvc.Testing
-  - MongoDB.Driver
-  - Swashbuckle.AspNetCore
-- Frontend
-  - JQuery
+This application uses various external libraries:
 
-## 6 API
+### Backend
 
-To generate API docs markdown file you have to install `widdershins` using npm. Next, use below command:
+- FluentAssertions
+- Microsoft.AspNetCore.Mvc.Testing
+- MongoDB.Driver
+- Swashbuckle.AspNetCore
 
-``` bash
-widdershins -c true swagger.json -o swagger.md
-```
+### Frontend
 
----
-title: VideoRentalStoreApp v1
-language_tabs:
-  - shell: Shell
-  - http: HTTP
-  - javascript: JavaScript
-  - ruby: Ruby
-  - python: Python
-  - php: PHP
-  - java: Java
-  - go: Go
-toc_footers: []
-includes: []
-search: true
-highlight_theme: darkula
-headingLevel: 2
+- JQuery
 
----
 
 <!-- Generator: Widdershins v4.0.1 -->
 

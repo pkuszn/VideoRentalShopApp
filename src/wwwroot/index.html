@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Rental Store</title>
+    <title>DVD/Blu-ray Movie Rental</title>
     <link rel="stylesheet" href="css/site.css" />
     <script src="https://code.jquery.com/jquery-3.6.1.js"
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
@@ -13,13 +13,13 @@
 
 <body>
     <div class="navigation">
-        <h1 style="margin-left:10px;">Video Rental Store</h1>
+        <h1 style="margin-left:10px;">DVD/Blu-ray Movie Rental</h1>
         <div class="main">
             <a class="main-a" href="/index.html">Main</a>
             <a class="main-a" href="/index.html">About</a>
         </div>
         <div class="user-info">
-            <p id="logged-as">Logged in as: </p>
+            <p id="logged-as">Currently logged in as: </p>
         </div>
         <div class="login">
             <input id="login" class="login-component" type="text" placeholder="Login" />
@@ -58,7 +58,7 @@
     </div>
     <script>
         let userParagraph = document.getElementById('logged-as');
-        userParagraph.innerHTML = window.sessionStorage.getItem("user") != null ? "Logged in as: " + window.sessionStorage.getItem("user") : "Logged in as: ";
+        userParagraph.innerHTML = window.sessionStorage.getItem("user") != null ? "Currently logged in as: " + window.sessionStorage.getItem("user") : "Currently logged in as: ";
         let classAdmin = Array.from(document.getElementsByClassName('admin'));
         let classUser = Array.from(document.getElementsByClassName('user'));
         if (window.sessionStorage.getItem('user') === 'Admin') {
