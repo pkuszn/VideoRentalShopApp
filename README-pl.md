@@ -9,7 +9,22 @@
 
 ## 2. Opis
 
-System Wypożyczalni Wideo to kompleksowa aplikacja zaprojektowana do zarządzania operacjami w wypożyczalni wideo. Oferuje szeroki zakres funkcji dostosowanych do potrzeb administratorów i zwykłych użytkowników, zapewniając efektywne zarządzanie wypożyczeniami wideo i informacjami o użytkownikach.
+**DVD/Blu-ray Movie Rental System** to kompleksowa aplikacja zaprojektowana do zarządzania operacjami w wypożyczalni wideo. Oferuje szeroki zakres funkcji dostosowanych do potrzeb administratorów i zwykłych użytkowników, zapewniając efektywne zarządzanie wypożyczeniami wideo i informacjami o użytkownikach. System jest przeznaczony dla właścicieli wypożyczalni DVD/Blu-ray.
+
+System został napisany w następujących językach programowania:
+
+#### Backend:
+C# (framework ASP.NET Core)
+#### Frontend:
+- JavaScript (+ jQuery)
+
+Dodatkowo, do stworzenia interfejsu użytkownika wykorzystano:
+- HTML
+- CSS
+
+#### Uwagi
+C# z ASP.NET Core został użyty do budowy backendu systemu, obsługującego logikę biznesową oraz interakcję z bazą danych MongoDB.
+JavaScript z jQuery został użyty do implementacji interaktywnego interfejsu użytkownika frontendu systemu.
 
 ## 3. Użycie
 
@@ -76,3 +91,15 @@ Aplikacja korzysta z różnych bibliotek zewnętrznych:
 ### Frontend
 
 - JQuery
+
+## 6. Use Case Diagram
+
+![Use Case Diagram](./assets/use-case.svg)
+
+## 7. Relacje - próba odwzorowania zależności między dokumentami
+
+![Relations](./assets/relations.svg)
+
+## 8. Zależności
+
+![Dependencies](./assets/zależności.svg)

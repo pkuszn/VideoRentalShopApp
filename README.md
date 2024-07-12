@@ -9,7 +9,24 @@
 
 ## 2. Description
 
-The **DVD/Blu-ray Movie Rental System** is a comprehensive application designed to manage the operations of a video rental store. It provides a wide range of features tailored to meet the needs of administrators and regular users, ensuring efficient management of video rentals and user information.
+The **DVD/Blu-ray Movie Rental System** is a comprehensive application designed to manage operations within a video rental store. It offers a wide range of functionalities tailored to the needs of both administrators and regular users, ensuring efficient management of video rentals and user information. The system is intended for owners of DVD/Blu-ray rental stores.
+
+### Programming Languages
+
+#### Backend:
+- C# (ASP.NET Core framework)
+
+#### Frontend:
+- JavaScript (with jQuery)
+
+Additionally, the user interface was created using:
+- HTML
+- CSS
+
+### Notes
+
+- C# with ASP.NET Core was used to build the system's backend, handling business logic and interactions with the MongoDB database.
+- JavaScript with jQuery was used to implement the interactive user interface for the system's frontend.
 
 ## 3. Usage
 
@@ -77,6 +94,19 @@ This application uses various external libraries:
 
 - JQuery
 
+## 6. Use Case Diagram
+
+![Use Case Diagram](./assets/use-case.svg)
+
+## 7. Relations
+
+![Relations](./assets/relations.svg)
+
+## 8. Dependencies
+
+![Dependencies](./assets/zależności.svg)
+
+## 9. API docs
 
 <!-- Generator: Widdershins v4.0.1 -->
 
