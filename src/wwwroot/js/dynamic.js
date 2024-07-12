@@ -3,7 +3,6 @@ import { clearContent, updateVideoInputForm, updateUserInputForm} from './utils.
 import { VideoDTOId, RentVideoByIdDTO, UserDTOId} from './dtos.js'
 
 $(document).on('click', '.button-delete', function (event) {
-    // alert($(this).parent().parent().children('#id').html());
     let id = $(this).parent().parent().children('#id').html();
     let videos = $(this).parent().parent().children('#videos').html();
     console.log(videos);
@@ -23,7 +22,6 @@ $(document).on('click', '.button-delete', function (event) {
             break;
         }
     }
-    alert(query);
     let a = $(this).attr('href', query);
     $.ajax({
         url: query,
@@ -40,7 +38,6 @@ $(document).on('click', '.button-delete', function (event) {
 });
 
 $(document).on('click', '.button-update', function (event) {
-    alert($(this).parent().parent().html());
     let container = document.getElementById('table-wrapper');
     let className = $(this).parent().attr("id");
     var datetime = new Date();
@@ -81,7 +78,6 @@ $(document).on('click', '.button-update', function (event) {
 });
 
 $(document).on('click', '.button-rent', function (event) {
-    // alert($(this).parent().parent().html());
     let className = $(this).parent().attr("id");
     let title = $(this).parent().parent().children('#title').html();
     let id = window.sessionStorage.getItem('identifier');
@@ -119,6 +115,4 @@ $(document).on('click', '.button-rent', function (event) {
         }
     });
 });
-
-
 

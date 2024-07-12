@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Rental Shop</title>
+    <title>Video Rental Store</title>
     <link rel="stylesheet" href="css/site.css" />
     <script src="https://code.jquery.com/jquery-3.6.1.js"
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
@@ -33,32 +33,26 @@
         <div id="sidebar">
             <h2 style="margin-left:10px; text-align: center;">Actions</h2>
             <!-- user only -->
-            <button class="user" type="button" id="get-available-videos">Get available videos</button>
-            <button class="user" type="button" id="get-videos-by-user">Get my videos</button>
-            <button class="user" type="button" id="rent-video-by-user">Rent video</button>
+            <button class="user" type="button" id="get-available-videos">Get Available Movies</button>
+            <button class="user" type="button" id="get-videos-by-user">Get My Movies</button>
+            <button class="user" type="button" id="rent-video-by-user">Rent Movie</button>
             <!-- admin -->
-            <button class="admin" type="button" id="rent-video-button">Rent video</button>
-            <button class="admin" type="button" id="return-movie-from-rental">Return video from rental</button>
-            <button class="admin" type="button" id="get-list-of-rentals">Get video rentals</button>
-            <button class="admin" type="button" id="get-list-of-all-video-rentals-button">Get list of all video rentals</button>
-            <button class="admin" type="button" id="get-videos-short-button">Get Videos Short</button>
-            <button class="admin" type="button" id="get-videos-button">Get Videos</button>
-            <button class="admin" type="button" id="add-new-video-button">Add new video</button>
-            <button class="admin" type="button" id="remove-video-button">Remove video</button>
-            <button class="admin" type="button" id="get-users-button">Get users</button>
-            <button class="admin" type="button" id="add-new-user-button">Add new user</button>
-            <button class="admin" type="button" id="remove-user-button">Remove user</button>
+            <button class="admin" type="button" id="rent-video-button">Rent Movie</button>
+            <button class="admin" type="button" id="return-movie-from-rental">Return Rented Movie</button>
+            <button class="admin" type="button" id="get-list-of-rentals">Get Movie Rentals</button>
+            <button class="admin" type="button" id="get-list-of-all-video-rentals-button">Get All Movie Rentals</button>
+            <button class="admin" type="button" id="get-videos-short-button">Get Movies - Short</button>
+            <button class="admin" type="button" id="get-videos-button">Get Movies</button>
+            <button class="admin" type="button" id="add-new-video-button">Add New Movie</button>
+            <button class="admin" type="button" id="remove-video-button">Remove Movie</button>
+            <button class="admin" type="button" id="get-users-button">Get Customers</button>
+            <button class="admin" type="button" id="add-new-user-button">Add New Customer</button>
+            <button class="admin" type="button" id="remove-user-button">Remove Customer</button>
         </div>
         <div id="content">
-            <h4 id="welcome">Welcome to video rental store</h4>
-            <form id="search-form" class="search-form">
-                <div class="search-container">
-                    <input type="text" id="search-input" class="search-input" placeholder="Search by title, genre, director...">
-                    <button type="button" id="search-button" class="search-button">
-                        Search
-                    </button>
-                </div>
-            </form>
+            <div id="welcome">
+                <div id="loader"></div>
+            </div>
             <div id="table-wrapper"></div>
         </div>
     </div>
@@ -68,18 +62,18 @@
         let classAdmin = Array.from(document.getElementsByClassName('admin'));
         let classUser = Array.from(document.getElementsByClassName('user'));
         if (window.sessionStorage.getItem('user') === 'Admin') {
-            classAdmin.forEach(f =>{
+            classAdmin.forEach(f => {
                 f.style.display = 'block';
             })
-            classUser.forEach(f =>{
+            classUser.forEach(f => {
                 f.style.display = 'none';
             })
         }
         else {
-            classAdmin.forEach(f =>{
+            classAdmin.forEach(f => {
                 f.style.display = 'none';
             })
-            classUser.forEach(f =>{
+            classUser.forEach(f => {
                 f.style.display = 'block';
             })
         }

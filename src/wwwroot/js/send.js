@@ -42,7 +42,7 @@ async function createNewVideo(video) {
 }
 
 async function deleteVideo(id) {
-    return await fetch(api.deleteVideo + id, {
+    await fetch(api.deleteVideo + id, {
         method: 'DELETE',
         dataType: 'JSON',
         headers: {
@@ -53,7 +53,7 @@ async function deleteVideo(id) {
 }
 
 async function deleteUser(id) {
-    return await fetch(api.deleteUser + id, {
+    await fetch(api.deleteUser + id, {
         method: 'DELETE',
         dataType: 'JSON',
         headers: {

@@ -362,7 +362,7 @@ namespace VideoRentalStoreApp.Services
 
         public async Task UpdateVideoRentalAsync(string id, VideoRentalCriteria criteria)
         {
-            await VideoRentalCollection.FindOneAndReplaceAsync(x => x.UserId.Equals(id), new VideoRental
+            await VideoRentalCollection.FindOneAndReplaceAsync(x => x.Id.Equals(id), new VideoRental
             {
                 UserId = criteria.UserId,
                 FirstName = criteria.FirstName,
@@ -379,7 +379,7 @@ namespace VideoRentalStoreApp.Services
 
         public async Task DeleteVideoRentalAsync(string id)
         {
-            await VideoRentalCollection.DeleteOneAsync(x => x.UserId.Equals(id));
+            await VideoRentalCollection.DeleteOneAsync(x => x.Id.Equals(id));
         }
 
         private async Task<List<VideoResult>> GetListOfAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
@@ -667,7 +667,7 @@ namespace VideoRentalStoreApp.Services
 
             var filter = Builders<Video>.Filter.Regex("Title", new MongoDB.Bson.BsonRegularExpression(title, "i"));
             var videos = await VideoCollection.Find(filter).ToListAsync();
-            return videos.Select(s => new VideoResult
+            return videos.Count > 0 ? videos.Select(s => new VideoResult
             {
                 Id = s.Id,
                 Title = s.Title,
@@ -679,7 +679,7 @@ namespace VideoRentalStoreApp.Services
                 Actors = s.Actors,
                 CreatedDate = s.CreatedDate,
                 IsAvailable = s.IsAvailable
-            }).ToList();
+            }).ToList() : [];
         }
     }
 }

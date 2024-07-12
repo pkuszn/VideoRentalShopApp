@@ -98,6 +98,8 @@ function createNewVideoInputForm(container){
 }
 
 function updateVideoInputForm(container, obj){
+    console.log("obj")
+    console.log(obj)
     const div = document.createElement('div');
     const divAttr = document.createAttribute('id');
     divAttr.value = 'update-video-container';
@@ -454,10 +456,15 @@ function createTableVideosShort(videos, container, headers) {
     return container;
 }
 
-function createTableVideosWithoutActions(videos, container, headers) {
+function createTableVideosWithoutActions(videos, container, headers, createSearchBoxFunc = null) {
     if (videos === null) {
         return;
     }
+
+    if (createSearchBoxFunc != null && typeof createSearchBoxFunc == 'function') {
+        createSearchBoxFunc(container);
+    }
+
     console.log(videos);
     const table = document.createElement('table');
     const tableAttr = document.createAttribute('class');
@@ -993,7 +1000,7 @@ function createDeleteUsersList(response, container){
     deleteVideosButton.setAttributeNode(deleteVideosButtonAttrId);
     deleteVideosButtonAttr.value = 'button-9';
     deleteVideosButton.setAttributeNode(deleteVideosButtonAttr);
-    deleteVideosButton.textContent = 'Rent';
+    deleteVideosButton.textContent = 'Delete';
 
     const divButtons = document.createElement('div');
     const divButtonAttr = document.createAttribute('id');
@@ -1018,7 +1025,7 @@ function createRentFilmForUserList(responseUser, responseVideo, container){
     const userHeader = document.createElement('h3');const userHeaderAttr = document.createAttribute('id');
     userHeaderAttr.value = 'rent-video-users';
     userHeader.setAttributeNode(userHeaderAttr);
-    userHeader.textContent = 'Rent video for speciffic client';
+    userHeader.textContent = 'Rent movie for specific client';
 
     var userSelect = document.createElement('select');
     const userSelectAttr = document.createAttribute('id');
@@ -1105,6 +1112,74 @@ function createReturnRentedVideoList(responseUser, responseVideo, container){
     return container;
 }
 
+function createSearchContainer(parentId) {
+    const container = document.createElement('div');
+    container.className = 'search-container';
+    
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'search-input';
+    input.className = 'search-input';
+    input.placeholder = 'Search by title, genre, director...';
+    
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'search-button';
+    button.className = 'search-button';
+    button.textContent = 'Search';
+    
+    container.appendChild(input);
+    container.appendChild(button);
+    
+    const parent = document.getElementById(parentId.id);
+    if (parent) {
+        parent.appendChild(container);
+    } else {
+        console.error(`Parent element with id "${parentId}" not found.`);
+    }
+}
+
+function validateVideoForm() {
+    let title = document.getElementById('title').value;
+    let genre = document.getElementById('genre').value;
+    let director = document.getElementById('director').value;
+    let score = document.getElementById('score').value;
+    let runtime = document.getElementById('runtime').value;
+    let description = document.getElementById('description').value;
+    let actors = document.getElementById('actors').value;
+
+    if (!title || !genre || !director || !score || !runtime || !description || !actors) {
+        alert("All fields must be filled out.");
+        return false;
+    }
+
+    if (isNaN(score) || score < 0 || score > 10) {
+        alert("Score must be a number between 0 and 10.");
+        return false;
+    }
+
+    if (isNaN(runtime) || runtime <= 0) {
+        alert("Runtime must be a positive number.");
+        return false;
+    }
+
+    return true;
+}
+
+function validateUserForm() {
+    let firstName = document.getElementById('first-name').value;
+    let lastName = document.getElementById('last-name').value;
+    let address = document.getElementById('address').value;
+    let contact = document.getElementById('contact').value;
+
+    if (!firstName || !lastName || !address || !contact) {
+        alert("First Name, Last Name, Address, and Contact are required!");
+        return false;
+    }
+
+    return true;
+}
+
 export {
     createTableVideos,
     objectProperties,
@@ -1125,4 +1200,7 @@ export {
     createUsersOptions as createDeleteUsersOptions,
     createVideosOptions as createDeleteVideosOptions,
     createTableVideosShort,
+    createSearchContainer,
+    validateVideoForm,
+    validateUserForm,
 }
