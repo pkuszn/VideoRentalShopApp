@@ -63,7 +63,7 @@ To run the app, follow these instructions:
 
 ### Rental Operations
 
-- Rent movie (**maximum of 3 videos**)
+- Rent a movie (**maximum of 3 videos**)
 - Return rented video (**must be returned within 2 days**)
 - Print all rented movies from a specific user
 - Print collection of all rentals (with history)
@@ -77,7 +77,7 @@ To run the app, follow these instructions:
   - Limited access to:
     - Print all available movies
     - Print collection of my rentals
-    - Rent movie
+    - Book a movie
 
 ## 5. Libraries
 

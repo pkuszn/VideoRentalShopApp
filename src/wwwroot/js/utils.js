@@ -506,13 +506,9 @@ function createTableVideosWithoutActions(videos, container, headers, createSearc
 }
 
 
-function createTableVideosForRent(videos, container, headers, createSearchBoxFunc = null) {
+function createTableVideosForRent(videos, container, headers, isAdmin = false) {
     if (videos === null) {
         return;
-    }
-
-    if (createSearchBoxFunc != null && typeof createSearchBoxFunc == 'function') {
-        createSearchBoxFunc(container);
     }
 
     console.log(videos);
@@ -548,7 +544,7 @@ function createTableVideosForRent(videos, container, headers, createSearchBoxFun
         row.appendChild(createRow(videos[i].actors, propertyNameVideo.actors));
         row.appendChild(createRow(videos[i].createdDate, propertyNameVideo.createdDate));
         row.appendChild(createRow(videos[i].isAvailable, propertyNameVideo.isAvailable));
-        row.appendChild(actionRowRent(context.rentVideoByUser));
+        row.appendChild(actionRowRent(context.rentVideoByUser), isAdmin);
         tableBody.appendChild(row);
     }
     table.appendChild(tableHead);
@@ -713,7 +709,7 @@ const createRow = (element, prop) => {
 }
 
 
-const actionRowRent = (context) => {
+const actionRowRent = (context, isAdmin) => {
     const div = document.createElement('div');
     const divAttr = document.createAttribute('class');
     const divIdAttr = document.createAttribute('id');
@@ -729,9 +725,13 @@ const actionRowRent = (context) => {
     buttonRent.setAttributeNode(buttonDeleteAttrClass);
     buttonRentAttr.value = 'rent-row-button';
     buttonRent.setAttributeNode(buttonRentAttr);
-    buttonRent.textContent = 'Rent';
+    buttonRent.textContent = isAdmin ? 'Rent' : 'Book';
+    buttonRent.disabled = isAdmin ? false : true;
     buttonRent.classList.add('button-rent');
-
+    buttonRent.style.display = 'block';
+    buttonRent.style.margin = '0 auto';
+    buttonRent.style.textAlign = 'center';
+    
     div.appendChild(buttonRent);
     return div;
 }
@@ -1030,7 +1030,7 @@ function createRentFilmForUserList(responseUser, responseVideo, container){
     const userHeader = document.createElement('h3');const userHeaderAttr = document.createAttribute('id');
     userHeaderAttr.value = 'rent-video-users';
     userHeader.setAttributeNode(userHeaderAttr);
-    userHeader.textContent = 'Rent movie for specific client';
+    userHeader.textContent = 'Rent a movie for a specific client';
 
     var userSelect = document.createElement('select');
     const userSelectAttr = document.createAttribute('id');
@@ -1078,7 +1078,7 @@ function createReturnRentedVideoList(responseUser, responseVideo, container){
     const userHeader = document.createElement('h3');const userHeaderAttr = document.createAttribute('id');
     userHeaderAttr.value = 'return-rented-video-user';
     userHeader.setAttributeNode(userHeaderAttr);
-    userHeader.textContent = 'Return rented video of specific client';
+    userHeader.textContent = 'Return the rented video of a specific client';
 
     var userSelect = document.createElement('select');
     const userSelectAttr = document.createAttribute('id');
@@ -1185,6 +1185,19 @@ function validateUserForm() {
     return true;
 }
 
+function grantAccess() {
+    let user = window.sessionStorage.getItem("user");
+    if (user == undefined) {
+        alert("User id is not defined.");
+        return;
+    }
+
+    if (user == "Admin") {
+        return true;
+    }
+    return false;
+}
+
 export {
     createTableVideos,
     objectProperties,
@@ -1208,4 +1221,5 @@ export {
     createSearchContainer,
     validateVideoForm,
     validateUserForm,
+    grantAccess,
 }

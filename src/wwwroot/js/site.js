@@ -40,6 +40,7 @@ import {
     createSearchContainer,
     validateVideoForm,
     validateUserForm,
+    grantAccess,
 } from './utils.js'
 
 import {
@@ -187,7 +188,8 @@ const getVideosForRent = async () => {
     }
     console.log(response);
     const headers = objectProperties(Object.values(response)[0]);
-    container = createTableVideosForRent(response, container, headers);
+    let isAdmin = grantAccess();
+    container = createTableVideosForRent(response, container, headers, isAdmin);
 }
 
 const rentVideoForSpecificUser = async () => {
