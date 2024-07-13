@@ -94,19 +94,35 @@ This application uses various external libraries:
 
 - JQuery
 
-## 6. Use Case Diagram
+## 6. TODO
+
+- Watch Trailers Online: Integrate trailers into movie listings for instant previews.
+
+- Enhanced Search Engine: Implement advanced filters, auto-suggestions, and sorting options.
+
+- User Recommendations: Offer personalized movie suggestions based on viewing history.
+
+- Mobile App Compatibility: Develop a mobile app for convenient rentals on smartphones.
+
+- User Reviews and Ratings: Allow users to rate and review movies for informed choices.
+
+- Subscription Plans: Introduce flexible plans for discounted rates and free rentals.
+
+- Preview Feature: Provide short clips or highlights to preview movies before renting.
+
+## 7. Use Case Diagram
 
 ![Use Case Diagram](./assets/use-case.svg)
 
-## 7. Relations
+## 8. Relations
 
 ![Relations](./assets/relations.svg)
 
-## 8. Dependencies
+## 9. Dependencies
 
 ![Dependencies](./assets/zależności.svg)
 
-## 9. Wireframe diagram
+## 10. Wireframe diagram
 
 ![Wireframe Diagram 1](./assets/Wireframe%20diagram-1.svg)
 ![Wireframe Diagram 2](./assets/Wireframe%20diagram-2.svg)

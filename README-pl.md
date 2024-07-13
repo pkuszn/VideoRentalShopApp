@@ -92,19 +92,35 @@ Aplikacja korzysta z różnych bibliotek zewnętrznych:
 
 - JQuery
 
-## 6. Use Case Diagram
+## 6. TODO
+
+- Oglądanie zwiastunów online: Zintegruj zwiastuny w listach filmów, aby użytkownicy mogli je natychmiastowo oglądać.
+
+- Zaawansowany silnik wyszukiwania: Wprowadź zaawansowane filtry, sugestie automatyczne i opcje sortowania.
+
+- Rekomendacje dla użytkowników: Oferuj spersonalizowane sugestie filmów na podstawie historii oglądania.
+
+- Kompatybilność z aplikacją mobilną: Opracuj aplikację mobilną umożliwiającą wygodne wypożyczenia na smartfony.
+
+- Opinie i oceny użytkowników: Pozwól użytkownikom oceniać i recenzować filmy, aby podejmować świadome decyzje.
+
+- Plany abonamentowe: Wprowadź elastyczne plany z obniżonymi stawkami i darmowymi wypożyczeniami.
+
+- Funkcja podglądu: Udostępnij krótkie klipy lub fragmenty do podglądu filmów przed wypożyczeniem.
+
+## 7. Use Case Diagram
 
 ![Use Case Diagram](./assets/use-case.svg)
 
-## 7. Relacje - próba odwzorowania zależności między dokumentami
+## 8. Relacje - próba odwzorowania zależności między dokumentami
 
 ![Relations](./assets/relations.svg)
 
-## 8. Zależności
+## 9. Zależności
 
 ![Dependencies](./assets/zależności.svg)
 
-## 9. Wireframe diagram
+## 10. Wireframe diagram
 
 ![Wireframe Diagram 1](./assets/Wireframe%20diagram-1.svg)
 ![Wireframe Diagram 2](./assets/Wireframe%20diagram-2.svg)
@@ -124,7 +140,7 @@ Aplikacja korzysta z różnych bibliotek zewnętrznych:
 ![Wireframe Diagram 16](./assets/Wireframe%20diagram-16.svg)
 ![Wireframe Diagram 17](./assets/Wireframe%20diagram-17.svg)
 
-## 10. API docs
+## 11. API docs
 
 <!-- Generator: Widdershins v4.0.1 -->
 
