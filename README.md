@@ -140,6 +140,7 @@ This application uses various external libraries:
 ![Wireframe Diagram 14](./assets/Wireframe%20diagram-14.svg)
 ![Wireframe Diagram 15](./assets/Wireframe%20diagram-15.svg)
 ![Wireframe Diagram 16](./assets/Wireframe%20diagram-16.svg)
+![Wireframe Diagram 17](./assets/Wireframe%20diagram-17.svg)
 
 ## 10. API docs
 
