@@ -19,7 +19,13 @@ if [ ! "$(sudo docker ps -a -q -f name=$vrsa)" ]; then
     if [ "$(sudo docker ps -aq -f status=exited -f name=$vrsa)" ]; then
         sudo docker rm -f $vrsa
     fi
-    sudo docker run -d -p 5001:80 --name $vrsa $vrsa
+    docker run -d \
+    --name video-rental-store-app \
+    --network app-network \
+    -p 6000:6000 \
+    -e ASPNETCORE_ENVIRONMENT=Development \
+    -e ASPNETCORE_URLS=https://+:6001;http://+:6000 \
+    $vrsa:latest
 fi
 
 echo "> Pulling a mongodb image..."
@@ -31,7 +37,7 @@ if [ ! "$(sudo docker ps -a -q -f name=mongodb)" ]; then
         sudo docker rm -f $mongo
     fi
     sudo docker build -t mongo-init -f Dockerfile.mongo-init .
-    sudo docker run -d -p 27017:27017 --name $mongo mongo-init
+    sudo docker run -d -p 27017:27017 --name $mongo mongo-init --network app-network
 fi
 
 echo "> Starting a $vrsa container..."
