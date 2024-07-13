@@ -31,10 +31,10 @@ async function createNewVideo(video) {
             title: video.title,
             genre: video.genre,
             director: video.director,
+            runtime: video.runtime,
             score: video.score,
             description: video.description,
             actors: video.actors,
-            createdDate: video.createdDate,
             isAvailable: video.isAvailable
         })
     })

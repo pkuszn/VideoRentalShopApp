@@ -91,7 +91,6 @@ $(document).on('click', '.button-rent', function (event) {
             break;
         }
     }
-    alert(query);
     const rent = new RentVideoByIdDTO(id, title);
     $.ajax({
         url: query,

@@ -72,7 +72,7 @@ var getVideosButton = document.getElementById('get-videos-button');
 const getVideosShort = async () => {
     const response = await fetchVideosShort();
     if (response == undefined) {
-        alert("No videos available")
+        alert("There are no videos available.")
         top.location.href = "/index.html";//redirection
     }
     const headers = objectProperties(Object.values(response)[0]);
@@ -92,7 +92,7 @@ const getVideosRaw = async () => {
 const getVideoRentals = async () => {
     const response = await fetchVideoRentals();
     if (response == undefined || response.length == 0) {
-        alert("Video Rentals collection is empty or undefined.")
+        alert("The video rentals collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     const headers = objectProperties(Object.values(response)[0]);
@@ -103,7 +103,7 @@ const getVideoRentals = async () => {
 const getListOfAllRentals = async () => {
     const response = await fetchListOfAllRentals();
     if (response == undefined || response.length == 0) {
-        alert("Video Rentals collection is empty or undefined.")
+        alert("The video rentals collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -115,7 +115,7 @@ const getListOfAllRentals = async () => {
 const getUsers = async () => {
     const response = await fetchUsers();
     if (response == undefined || response.length == 0) {
-        alert("Users collection is empty or undefined.")
+        alert("The users collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -127,7 +127,7 @@ const getUsers = async () => {
 const getUsersRaw = async () => {
     const response = await fetchUsers();
     if (response == undefined || response.length == 0) {
-        alert("User collection is empty or undefined.")
+        alert("The user collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -139,7 +139,7 @@ const getUsersRaw = async () => {
 const getListOfLoginUsers = async () => {
     const response = await fetchLoginUsers();
     if (response == undefined || response.length == 0) {
-        alert("List of login users is empty or undefined.")
+        alert("The list of login users is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -149,7 +149,7 @@ const getListOfLoginUsers = async () => {
 const getAvailableVideos = async () => {
     const response = await fetchAvailableVideos();
     if (response == undefined || response.length == 0) {
-        alert("Available videos collection is empty or undefined")
+        alert("The available video collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -160,7 +160,7 @@ const getAvailableVideos = async () => {
 const getMyVideos = async (id) => {
     const response = await fetchMyVideos(id);
     if (response == undefined || response.length == 0) {
-        alert("You don't own any videos or undefined");
+        alert("You don't own any videos or undefined content.");
         top.location.href = "/index.html";//redirectior
     }
     console.log(response);
@@ -171,7 +171,7 @@ const getMyVideos = async (id) => {
 const getVideos = async () => {
     const response = await fetchVideos();
     if (response == undefined || response.length == 0) {
-        alert("You don't own any videos or undefined");
+        alert("You don't own any videos or undefined content.");
         top.location.href = "/index.html";//redirectior
     }
     console.log(response);
@@ -182,7 +182,7 @@ const getVideos = async () => {
 const getVideosForRent = async () => {
     const response = await fetchAvailableVideos();
     if (response == undefined || response.length == 0) {
-        alert("Available videos collection is empty or undefined")
+        alert("The available video collection is empty or undefined.")
         top.location.href = "/index.html";//redirection
     }
     console.log(response);
@@ -194,7 +194,7 @@ const rentVideoForSpecificUser = async () => {
     const responseUser = await fetchUsers();
     const responseAvailableVideos = await fetchAvailableVideos();
     if (responseUser == undefined || responseAvailableVideos == undefined || responseUser.length == 0 || responseAvailableVideos.length == 0) {
-        alert("Cannot rent video. users or videos collection is empty or undefined.");
+        alert("Cannot rent video: the users or videos collection is empty or undefined.");
         top.location.href = "/index.html";//redirection
     }
     console.log(responseUser);
@@ -205,7 +205,7 @@ const rentVideoForSpecificUser = async () => {
 const returnRentedVideoOfSpecificClient = async () => {
     const responseUsers = await fetchUserWhoHaveRentedVideos();
     if (responseUsers == undefined) {
-        alert("ResponseUsers who have rented videos is null or empty.");
+        alert("Users who have rented videos is null or empty.");
         top.location.href = "/index.html";//redirection
     }
     let firstUser = responseUsers[0];
@@ -403,8 +403,8 @@ async function addNewVideoListener(event) {
             document.getElementById('title').value,
             selectedGenre,
             document.getElementById('director').value,
-            document.getElementById('score').value,
             document.getElementById('runtime').value,
+            document.getElementById('score').value,
             document.getElementById('description').value,
             arrayActors,
             datetime,
@@ -627,7 +627,6 @@ document.addEventListener('click', returnVideoListener);
 async function returnVideoListener(event) {
     var element = event.target;
     if (element.id == 'return-rented-video-user-button-in-container') {
-        alert('test');
         let userId = document.getElementById('users-special').value;
         let videoTitle = document.getElementById('videos-special');
         let videoTitleText = videoTitle.options[videoTitle.selectedIndex].text;

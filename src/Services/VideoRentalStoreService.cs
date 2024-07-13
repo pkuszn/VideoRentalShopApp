@@ -88,7 +88,7 @@ namespace VideoRentalStoreApp.Services
                 CreatedDate = s.CreatedDate,
                 IsAvailable = s.IsAvailable,
                 Actors = s.Actors
-            }).ToList() : new();
+            }).ToList() : [];
         }
 
         public async Task<List<UserRentedVideosResults>> GetListOfUserWithRentedVideosAsync()
@@ -130,6 +130,11 @@ namespace VideoRentalStoreApp.Services
         public async Task<List<VideoResult>> GetAvailableVideosAsync(bool sortByTitle, bool sortByGenre)
         {
             return await GetListOfAvailableVideosAsync(sortByTitle, sortByGenre);
+        }
+
+        public async Task<List<VideoResult>> SearchVideoAsync(string title)
+        {
+            return await SearchVideoByTitleAsync(title);
         }
 
         public async Task<List<UserResult>> GetUsersAsync()
@@ -289,8 +294,8 @@ namespace VideoRentalStoreApp.Services
             List<Video> unavailableVideos = await VideoCollection.Find(f => f.IsAvailable == false).ToListAsync();
             HashSet<string> unavailableVideoTitles = new(unavailableVideos.Select(v => v.Title));
 
-            var filterBuilder = Builders<VideoRental>.Filter;
-            var videoRealEndOfRentFilter = filterBuilder.ElemMatch(vr => vr.Videos, v => v.RealEndOfRentalDate == null);
+            FilterDefinitionBuilder<VideoRental> filterBuilder = Builders<VideoRental>.Filter;
+            FilterDefinition<VideoRental> videoRealEndOfRentFilter = filterBuilder.ElemMatch(vr => vr.Videos, v => v.RealEndOfRentalDate == null);
 
             List<VideoRental> videoRentals = await VideoRentalCollection.Find(videoRealEndOfRentFilter).ToListAsync();
 
@@ -477,10 +482,7 @@ namespace VideoRentalStoreApp.Services
                 videoRental = await CreateRentalCardAsync(user);
             }
 
-            if (videoRental.Videos == null)
-            {
-                videoRental.Videos = [];
-            }
+            videoRental.Videos ??= [];
 
             if (videoRental.Videos.Count > (int)Config.RentVideoLimit)
             {
@@ -528,7 +530,7 @@ namespace VideoRentalStoreApp.Services
                 UserId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Videos = new()
+                Videos = []
             };
             await VideoRentalCollection.InsertOneAsync(videoRental);
             return videoRental;
@@ -629,7 +631,7 @@ namespace VideoRentalStoreApp.Services
                 return null;
             }
 
-            List<UserRentedVideosResults> userRentedVideosResults = new();
+            List<UserRentedVideosResults> userRentedVideosResults = [];
             foreach (VideoRental videoRental in videoRentals)
             {
                 User user = users.FirstOrDefault(f => f.Id == videoRental.UserId);
@@ -658,15 +660,15 @@ namespace VideoRentalStoreApp.Services
             return userRentedVideosResults;
         }
 
-        public async Task<List<VideoResult>> SearchVideoAsync(string title)
+        private async Task<List<VideoResult>> SearchVideoByTitleAsync(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
             {
                 return null;
             }
 
-            var filter = Builders<Video>.Filter.Regex("Title", new MongoDB.Bson.BsonRegularExpression(title, "i"));
-            var videos = await VideoCollection.Find(filter).ToListAsync();
+            FilterDefinition<Video> filter = Builders<Video>.Filter.Regex("Title", new MongoDB.Bson.BsonRegularExpression(title, "i"));
+            List<Video> videos = await VideoCollection.Find(filter).ToListAsync();
             return videos.Count > 0 ? videos.Select(s => new VideoResult
             {
                 Id = s.Id,
