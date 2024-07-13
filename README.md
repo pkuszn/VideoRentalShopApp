@@ -106,27 +106,38 @@ This application uses various external libraries:
 
 ![Dependencies](./assets/zależności.svg)
 
-## 9. API docs
+## 9. Wireframe diagram
+
+![Wireframe Diagram 1](./assets/Wireframe%20diagram-1.svg)
+![Wireframe Diagram 2](./assets/Wireframe%20diagram-2.svg)
+![Wireframe Diagram 3](./assets/Wireframe%20diagram-3.svg)
+![Wireframe Diagram 4](./assets/Wireframe%20diagram-4.svg)
+![Wireframe Diagram 5](./assets/Wireframe%20diagram-5.svg)
+![Wireframe Diagram 6](./assets/Wireframe%20diagram-6.svg)
+![Wireframe Diagram 7](./assets/Wireframe%20diagram-7.svg)
+![Wireframe Diagram 8](./assets/Wireframe%20diagram-8.svg)
+![Wireframe Diagram 9](./assets/Wireframe%20diagram-9.svg)
+![Wireframe Diagram 10](./assets/Wireframe%20diagram-10.svg)
+![Wireframe Diagram 11](./assets/Wireframe%20diagram-11.svg)
+![Wireframe Diagram 12](./assets/Wireframe%20diagram-12.svg)
+![Wireframe Diagram 13](./assets/Wireframe%20diagram-13.svg)
+![Wireframe Diagram 14](./assets/Wireframe%20diagram-14.svg)
+![Wireframe Diagram 15](./assets/Wireframe%20diagram-15.svg)
+![Wireframe Diagram 16](./assets/Wireframe%20diagram-16.svg)
+
+## 10. API docs
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="videorentalstoreapp">VideoRentalStoreApp v1</h1>
+# VideoRentalStoreApp v1
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-<h1 id="videorentalstoreapp-videorentalstore">VideoRentalStore</h1>
+## VideoRentalStore
 
-## get__VideoRentalStore_GetUsersWhoHaveRentedVideos
+### GET /VideoRentalStore/GetUsersWhoHaveRentedVideos
 
-`GET /VideoRentalStore/GetUsersWhoHaveRentedVideos`
-
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","firstName":"string","lastName":"string","address":"string","contact":0,"registrationDate":"2019-08-24T14:15:22Z"}]
-```
+#### Example response
 
 ```json
 [
@@ -140,7 +151,6 @@ This application uses various external libraries:
   }
 ]
 ```
-
 <h3 id="get__videorentalstore_getuserswhohaverentedvideos-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
@@ -165,23 +175,16 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetMyVideos_{id}
 
-`GET /VideoRentalStore/GetMyVideos/{id}`
+### GET /VideoRentalStore/GetMyVideos/{id}
 
-<h3 id="get__videorentalstore_getmyvideos_{id}-parameters">Parameters</h3>
+#### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
+| Name | In   | Type   | Required | Description |
+|------|------|--------|----------|-------------|
+| id   | path | string | true     | none        |
 
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","title":"string","genre":"string","director":"string","runtime":0,"score":0.1,"description":"string","actors":["string"],"createdDate":"2019-08-24T14:15:22Z","isAvailable":true}]
-```
+#### Example response
 
 ```json
 [
@@ -230,17 +233,10 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetLoginUsers
 
-`GET /VideoRentalStore/GetLoginUsers`
+## GET /VideoRentalStore/GetLoginUsers
 
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","user":"string","password":"string"}]
-```
+#### Example response
 
 ```json
 [
@@ -273,15 +269,14 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetListOfRents
 
-`GET /VideoRentalStore/GetListOfRents`
+## GET /VideoRentalStore/GetListOfRents
 
-> Example responses
+#### Example request
 
-> 200 Response
+**200 Response**
 
-```
+```json
 [{"id":"string","firstName":"string","lastName":"string","address":"string","contact":0,"registrationDate":"2019-08-24T14:15:22Z","title":"string","startRentalDate":"2019-08-24T14:15:22Z","endRentalDate":"2019-08-24T14:15:22Z","realEndOfRentalDate":"2019-08-24T14:15:22Z"}]
 ```
 
@@ -330,11 +325,9 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## put__VideoRentalStore_ReturnRentedVideoById
+## PUT /VideoRentalStore/ReturnRentedVideoById
 
-`PUT /VideoRentalStore/ReturnRentedVideoById`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -349,13 +342,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |body|body|[RentFilmByIdCriteria](#schemarentfilmbyidcriteria)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```
-true
-```
+**200 Response**
 
 ```json
 true
@@ -371,11 +358,10 @@ true
 This operation does not require authentication
 </aside>
 
-## put__VideoRentalStore_ReturnRentedVideoByNames
 
-`PUT /VideoRentalStore/ReturnRentedVideoByNames`
+## PUT /VideoRentalStore/ReturnRentedVideoByNames
 
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -391,13 +377,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |body|body|[RentFilmByNamesCriteria](#schemarentfilmbynamescriteria)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```
-true
-```
+**200 Response**
 
 ```json
 true
@@ -413,9 +393,7 @@ true
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetAvailableVideos
-
-`GET /VideoRentalStore/GetAvailableVideos`
+## GET /VideoRentalStore/GetAvailableVideos
 
 <h3 id="get__videorentalstore_getavailablevideos-parameters">Parameters</h3>
 
@@ -424,13 +402,7 @@ This operation does not require authentication
 |sortByTitle|query|boolean|false|none|
 |sortByGenre|query|boolean|false|none|
 
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","title":"string","genre":"string","director":"string","runtime":0,"score":0.1,"description":"string","actors":["string"],"createdDate":"2019-08-24T14:15:22Z","isAvailable":true}]
-```
+#### Example response
 
 ```json
 [
@@ -479,9 +451,7 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetAvailableVideoShort
-
-`GET /VideoRentalStore/GetAvailableVideoShort`
+## GET /VideoRentalStore/GetAvailableVideoShort
 
 <h3 id="get__videorentalstore_getavailablevideoshort-parameters">Parameters</h3>
 
@@ -490,13 +460,7 @@ This operation does not require authentication
 |sortByTitle|query|boolean|false|none|
 |sortByGenre|query|boolean|false|none|
 
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","title":"string","genre":"string","director":"string","runtime":0,"isAvailable":true}]
-```
+#### Example response
 
 ```json
 [
@@ -535,11 +499,9 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## post__VideoRentalStore_RentFilmByNames
+## POST /VideoRentalStore/RentFilmByNames
 
-`POST /VideoRentalStore/RentFilmByNames`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -555,13 +517,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |body|body|[RentFilmByNamesCriteria](#schemarentfilmbynamescriteria)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```
-true
-```
+**200 Response**
 
 ```json
 true
@@ -577,11 +533,9 @@ true
 This operation does not require authentication
 </aside>
 
-## post__VideoRentalStore_RentFilmById
+## POST /VideoRentalStore/RentFilmById
 
-`POST /VideoRentalStore/RentFilmById`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -596,13 +550,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |body|body|[RentFilmByIdCriteria](#schemarentfilmbyidcriteria)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```
-true
-```
+**200 Response**
 
 ```json
 true
@@ -618,17 +566,9 @@ true
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetUsers
+## GET /VideoRentalStore/GetUsers
 
-`GET /VideoRentalStore/GetUsers`
-
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","firstName":"string","lastName":"string","address":"string","contact":0,"registrationDate":"2019-08-24T14:15:22Z"}]
-```
+#### Example response
 
 ```json
 [
@@ -667,17 +607,10 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetVideos
 
-`GET /VideoRentalStore/GetVideos`
+## GET /VideoRentalStore/GetVideos
 
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","title":"string","genre":"string","director":"string","runtime":0,"score":0.1,"description":"string","actors":["string"],"createdDate":"2019-08-24T14:15:22Z","isAvailable":true}]
-```
+#### Example response
 
 ```json
 [
@@ -726,17 +659,10 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetVideoRentals
 
-`GET /VideoRentalStore/GetVideoRentals`
+## GET /VideoRentalStore/GetVideoRentals
 
-> Example responses
-
-> 200 Response
-
-```
-[{"id":"string","userId":"string","firstName":"string","lastName":"string","videos":[{"title":"string","startRentalDate":"2019-08-24T14:15:22Z","endRentalDate":"2019-08-24T14:15:22Z","realEndOfRentalDate":"2019-08-24T14:15:22Z"}]}]
-```
+#### Example response
 
 ```json
 [
@@ -784,9 +710,8 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetUser_{id}
 
-`GET /VideoRentalStore/GetUser/{id}`
+## GET /VideoRentalStore/GetUser/{id}
 
 <h3 id="get__videorentalstore_getuser_{id}-parameters">Parameters</h3>
 
@@ -794,13 +719,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |id|path|string|true|none|
 
-> Example responses
-
-> 200 Response
-
-```
-{"id":"string","firstName":"string","lastName":"string","address":"string","contact":0,"registrationDate":"2019-08-24T14:15:22Z"}
-```
+#### Example response
 
 ```json
 {
@@ -823,9 +742,8 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetVideo_{id}
 
-`GET /VideoRentalStore/GetVideo/{id}`
+## GET /VideoRentalStore/GetVideo/{id}
 
 <h3 id="get__videorentalstore_getvideo_{id}-parameters">Parameters</h3>
 
@@ -833,13 +751,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |id|path|string|true|none|
 
-> Example responses
-
-> 200 Response
-
-```
-{"id":"string","title":"string","genre":"string","director":"string","runtime":0,"score":0.1,"description":"string","actors":["string"],"createdDate":"2019-08-24T14:15:22Z","isAvailable":true}
-```
+#### Example request
 
 ```json
 {
@@ -868,9 +780,8 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## get__VideoRentalStore_GetVideoRental_{id}
 
-`GET /VideoRentalStore/GetVideoRental/{id}`
+## GET /VideoRentalStore/GetVideoRental/{id}
 
 <h3 id="get__videorentalstore_getvideorental_{id}-parameters">Parameters</h3>
 
@@ -878,13 +789,7 @@ This operation does not require authentication
 |---|---|---|---|---|
 |id|path|string|true|none|
 
-> Example responses
-
-> 200 Response
-
-```
-{"id":"string","userId":"string","firstName":"string","lastName":"string","videos":[{"title":"string","startRentalDate":"2019-08-24T14:15:22Z","endRentalDate":"2019-08-24T14:15:22Z","realEndOfRentalDate":"2019-08-24T14:15:22Z"}]}
-```
+#### Example response
 
 ```json
 {
@@ -913,11 +818,9 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## post__VideoRentalStore_InsertUser
+## POST /VideoRentalStore/InsertUser
 
-`POST /VideoRentalStore/InsertUser`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -944,11 +847,10 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## post__VideoRentalStore_InsertVideo
 
-`POST /VideoRentalStore/InsertVideo`
+## POST /VideoRentalStore/InsertVideo
 
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -981,11 +883,9 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## post__VideoRentalStore_InsertVideoRental
+## POST /VideoRentalStore/InsertVideoRental
 
-`POST /VideoRentalStore/InsertVideoRental`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -1019,11 +919,10 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## put__VideoRentalStore_UpdateUser_{id}
 
-`PUT /VideoRentalStore/UpdateUser/{id}`
+## PUT /VideoRentalStore/UpdateUser/{id}
 
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -1051,11 +950,9 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## put__VideoRentalStore_UpdateVideo_{id}
+## PUT /VideoRentalStore/UpdateVideo/{id}
 
-`PUT /VideoRentalStore/UpdateVideo/{id}`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -1089,11 +986,9 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## put__VideoRentalStore_UpdateVideoRental_{id}
+## PUT /VideoRentalStore/UpdateVideoRental/{id}
 
-`PUT /VideoRentalStore/UpdateVideoRental/{id}`
-
-> Body parameter
+#### Example request
 
 ```json
 {
@@ -1128,9 +1023,7 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## delete__VideoRentalStore_DeleteUser_{id}
-
-`DELETE /VideoRentalStore/DeleteUser/{id}`
+## DELETE /VideoRentalStore/DeleteUser/{id}
 
 <h3 id="delete__videorentalstore_deleteuser_{id}-parameters">Parameters</h3>
 
@@ -1148,9 +1041,7 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## delete__VideoRentalStore_DeleteVideo_{id}
-
-`DELETE /VideoRentalStore/DeleteVideo/{id}`
+## DELETE /VideoRentalStore/DeleteVideo/{id}
 
 <h3 id="delete__videorentalstore_deletevideo_{id}-parameters">Parameters</h3>
 
@@ -1168,9 +1059,7 @@ This operation does not require authentication
 This operation does not require authentication
 </aside>
 
-## delete__VideoRentalStore_DeleteVideoRental_{id}
-
-`DELETE /VideoRentalStore/DeleteVideoRental/{id}`
+## DELETE /VideoRentalStore/DeleteVideoRental/{id}
 
 <h3 id="delete__videorentalstore_deletevideorental_{id}-parameters">Parameters</h3>
 
