@@ -1,0 +1,29 @@
+@startuml
+
+entity "users" {
+    _id : ObjectId
+    FirstName : String
+    LastName : String
+    Address : String
+}
+
+entity "rentals" {
+    _id : ObjectId
+    UserId : ObjectId
+    RentalDate : Date
+    VideoTitle : String
+}
+
+entity "videos" {
+    _id : ObjectId
+    Title : String
+    Genre : String
+    Director : String
+    Runtime : Integer
+    Description : String
+}
+
+users ||--o{ rentals : "has"
+rentals }o--|| videos : "contains"
+
+@enduml

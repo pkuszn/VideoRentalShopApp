@@ -1,0 +1,42 @@
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+rectangle "DVD/Blu-ray Rental Movies System" {
+    usecase "Add new movie"
+    usecase "Delete movie\n(only if not rented)"
+    usecase "Edit movie"
+    usecase "Show entire collection\nof movies"
+    usecase "Print all available\nmovies\n(which are not rented)"
+    usecase "Add new user"
+    usecase "Delete user"
+    usecase "Edit user"
+    usecase "Show all users"
+    usecase "Book movie\n(maximum of 3 movies at one time)"
+    usecase "Return rented movie\n(must be returned within 2 days)"
+    usecase "Print all rented movies\nfrom specific user"
+    usecase "Print collection of all rentals\n(with history)"
+    usecase "Show card of rentals from\nspecific user\n(with history)"
+    usecase "Print collection of my rentals\n(with history)"
+}
+
+"Admin account" --> "Add new movie"
+"Admin account" --> "Delete movie\n(only if not rented)"
+"Admin account" --> "Edit movie"
+"Admin account" --> "Show entire collection\nof movies"
+"Admin account" --> "Print all available\nmovies\n(which are not rented)"
+"Admin account" --> "Add new user"
+"Admin account" --> "Delete user"
+"Admin account" --> "Edit user"
+"Admin account" --> "Show all users"
+"Admin account" --> "Return rented movie\n(must be returned within 2 days)"
+"Admin account" --> "Print all rented movies\nfrom specific user"
+"Admin account" --> "Print collection of all rentals\n(with history)"
+"Admin account" --> "Show card of rentals from\nspecific user\n(with history)"
+
+"User account" --> "Print all available\nmovies\n(which are not rented)"
+"User account" --> "Print collection of my rentals\n(with history)"
+"User account" --> "Book movie\n(maximum of 3 movies at one time)"
+
+@enduml

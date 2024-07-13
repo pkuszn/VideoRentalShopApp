@@ -1,0 +1,21 @@
+@startuml
+
+package "Backend" {
+    package "FluentAssertions"
+    package "Microsoft.AspNetCore.Mvc.Testing"
+    package "MongoDB.Driver"
+    package "Swashbuckle.AspNetCore"
+}
+
+package "Frontend" {
+    package "JQuery"
+}
+
+Backend --> FluentAssertions
+Backend --> Microsoft.AspNetCore.Mvc.Testing
+Backend --> MongoDB.Driver
+Backend --> Swashbuckle.AspNetCore
+
+Frontend --> JQuery
+
+@enduml
