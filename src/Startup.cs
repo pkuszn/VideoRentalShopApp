@@ -6,64 +6,58 @@ using Microsoft.OpenApi.Models;
 using System.Net;
 using VideoRentalStoreApp.Extensions;
 
-namespace VideoRentalStoreApp
+namespace VideoRentalStoreApp;
+
+public class Startup
 {
-    public class Startup
+    public IConfiguration Configuration { get; }
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers();
+        services.AddSwaggerGen(c =>
         {
-            Configuration = configuration;
-        }
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "VideoRentalStoreApp", Version = "v1" });
+        });
+        services.AddConfig(Configuration);
+        services.AddServices(Configuration);
+        services.AddDbContext(Configuration);
+    }
 
-        public void ConfigureServices(IServiceCollection services)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VideoRentalStoreApp v1"));
+
+        app.UseDefaultFiles();
+        app.UseStaticFiles(new StaticFileOptions()
         {
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            OnPrepareResponse = context =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VideoRentalStoreApp", Version = "v1" });
-            });
-            services.AddConfig(Configuration);
-            services.AddServices(Configuration);
+                context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
+                context.Context.Response.Headers.Add("Expires", "-1");
+            }
+        });
 
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
-                options.HttpsPort = 5001;
-            });
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        app.UseCors(policy =>
         {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VideoRentalStoreApp v1"));
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                OnPrepareResponse = context =>
-                {
-                    context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
-                    context.Context.Response.Headers.Add("Expires", "-1");
-                }
-            });
+        app.UseHttpsRedirection();
 
-            app.UseCors(policy =>
-            {
-                policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-            });
+        app.UseRouting();
 
-            app.UseHttpsRedirection();
+        app.UseAuthorization();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
     }
 }

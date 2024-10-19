@@ -1,18 +1,14 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace VideoRentalStoreApp.Models
+namespace VideoRentalStoreApp.Models;
+[Collection("rental")]
+public class VideoRental
 {
-    public class VideoRental
-    {
-        [BsonId]
-        [BsonIgnoreIfDefault]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
-        public string? UserId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public List<VideoRent> Videos { get; set; }
-    }
+    public ObjectId Id { get; set; }
+    public ObjectId UserId { get; set; } 
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public required List<VideoRent> Videos { get; set; }
 }

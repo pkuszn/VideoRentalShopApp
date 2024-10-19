@@ -1,15 +1,13 @@
 ﻿using System;
 
-namespace VideoRentalStoreApp.DataTransferObjects
+namespace VideoRentalStoreApp.DataTransferObjects.Results;
+
+public class UserResult
 {
-    public class UserResult
-    {
-        public string? Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
-        public long Contact { get; set; }
-        //ISODate
-        public DateTime RegistrationDate { get; set; }
-    }
+    public string Id { get; init; } = null!;
+    public string FirstName { get; init; } = null!;
+    public string LastName { get; init; } = null!;
+    public string? Address { get; init; } 
+    public long Contact { get; init; }
+    public DateTime RegistrationDate { get; init; }
 }

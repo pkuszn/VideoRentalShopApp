@@ -1,9 +1,8 @@
-﻿namespace VideoRentalStoreApp.DataTransferObjects.Criteria
+﻿namespace VideoRentalStoreApp.DataTransferObjects.Criteria;
+
+public class RentFilmByNamesCriteria
 {
-    public class RentFilmByNamesCriteria
-    {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string Title { get; set; }
-    }
+    public string FirstName { get; init; } = null!;
+    public string LastName { get; init; } = null!;
+    public string Title { get; init; } = null!;
 }

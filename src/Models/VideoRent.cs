@@ -1,15 +1,11 @@
 ﻿using System;
 
-namespace VideoRentalStoreApp.Models
+namespace VideoRentalStoreApp.Models;
+
+public class VideoRent
 {
-    public class VideoRent
-    {
-        public string Title { get; set; }
-        //ISODate
-        public DateTime StartRentalDate { get; set; }
-        //ISODate
-        public DateTime EndRentalDate { get; set; }
-        //ISODate
-        public DateTime? RealEndOfRentalDate { get; set; }
-    }
+    public string Title { get; set; } = null!;
+    public DateTime StartRentalDate { get; set; }
+    public DateTime EndRentalDate { get; set; }
+    public DateTime? RealEndOfRentalDate { get; set; }
 }

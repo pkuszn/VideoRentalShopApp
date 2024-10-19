@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VideoRentalStoreApp.DataTransferObjects
+namespace VideoRentalStoreApp.DataTransferObjects.Results;
+
+public class VideoResult
 {
-    public class VideoResult
-    {
-        public string? Id { get; set; }
-        public string Title { get; set; }
-        public string Genre { get; set; }
-        public string Director { get; set; }
-        public int Runtime { get; set; }
-        public double Score { get; set; }
-        public string Description { get; set; }
-        public List<string> Actors { get; set; }
-        //ISODate
-        public DateTime CreatedDate { get; set; }
-        public bool IsAvailable { get; set; }
-    }
+    public string Id { get; init; } = null!;
+    public string Title { get; init; } = null!;
+    public string Genre { get; init; } = null!;
+    public string Director { get; init; } = null!;
+    public int Runtime { get; init; } 
+    public double Score { get; init; }
+    public string? Description { get; init; }
+    public List<string> Actors { get; init; } = null!;
+    public DateTime CreatedDate { get; init; }
+    public bool IsAvailable { get; init; }
 }

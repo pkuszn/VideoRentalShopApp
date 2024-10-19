@@ -1,12 +1,11 @@
-﻿namespace VideoRentalStoreApp.DataTransferObjects
+﻿namespace VideoRentalStoreApp.DataTransferObjects.Results;
+
+public class VideoShortResult
 {
-    public class VideoShortResult
-    {
-        public string? Id { get; set; }
-        public string Title { get; set; }
-        public string Genre { get; set; }
-        public string Director { get; set; }
-        public int Runtime { get; set; }
-        public bool IsAvailable { get; set; }
-    }
+    public string Id { get; init; } = null!;
+    public string Title { get; init; } = null!;
+    public string Genre { get; init; } = null!;
+    public string Director { get; init; } = null!;
+    public int Runtime { get; init; }
+    public bool IsAvailable { get; init; }
 }

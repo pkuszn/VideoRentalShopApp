@@ -1,11 +1,10 @@
-﻿namespace VideoRentalStoreApp.Constants
+﻿namespace VideoRentalStoreApp.Constants;
+
+public static class Enums
 {
-    public static class Enums
+    public enum Config
     {
-        public enum Config
-        {
-            RentVideoLimit = 3,
-            RentMaxDays = 2
-        }
+        RentVideoLimit = 3,
+        RentMaxDays = 2
     }
 }
