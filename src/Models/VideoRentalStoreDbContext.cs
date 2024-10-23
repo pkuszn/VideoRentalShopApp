@@ -28,9 +28,8 @@ internal class VideoRentalStoreDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-#if DEBUG
         base.OnConfiguring(optionsBuilder);
-
+#if DEBUG
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.LogTo(Console.WriteLine, minimumLevel: Microsoft.Extensions.Logging.LogLevel.Information);
 #endif

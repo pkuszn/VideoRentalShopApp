@@ -20,6 +20,20 @@ public class VideoController : ControllerBase
     }
 
     [HttpGet]
+    [Route("GetVideos")]
+    public async Task<List<VideoResult>> GetVideosAsync()
+    {
+        return await VideoService.GetVideosAsync();
+    }
+
+    [HttpGet]
+    [Route("GetVideo/{id}")]
+    public async Task<VideoResult> GetVideoAsync(string id)
+    {
+        return await VideoService.GetVideoAsync(id);
+    }
+
+    [HttpGet]
     [Route("GetMyVideos/{id}")]
     public async Task<List<VideoResult>> GetMyVideosAsync(string id)
     {
@@ -38,20 +52,6 @@ public class VideoController : ControllerBase
     public async Task<List<VideoShortResult>> GetAvailableVideosShortAsync(bool sortByTitle, bool sortByGenre)
     {
         return await VideoService.GetAvailableVideosShortAsync(sortByTitle, sortByGenre);
-    }
-
-    [HttpGet]
-    [Route("GetVideos")]
-    public async Task<List<VideoResult>> GetVideosAsync()
-    {
-        return await VideoService.GetVideosAsync();
-    }
-
-    [HttpGet]
-    [Route("GetVideo/{id}")]
-    public async Task<VideoResult> GetVideoAsync(string id)
-    {
-        return await VideoService.GetVideoAsync(id);
     }
 
     [HttpPost]

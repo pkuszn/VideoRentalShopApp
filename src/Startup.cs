@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using System.Net;
 using VideoRentalStoreApp.Extensions;
 
 namespace VideoRentalStoreApp;
@@ -39,8 +39,8 @@ public class Startup
         {
             OnPrepareResponse = context =>
             {
-                context.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
-                context.Context.Response.Headers.Add("Expires", "-1");
+                context.Context.Response.Headers.Append("Cache-Control", "no-cache, no-store");
+                context.Context.Response.Headers.Append("Expires", "-1");
             }
         });
 

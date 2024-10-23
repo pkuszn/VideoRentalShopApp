@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VideoRentalStoreApp.DataTransferObjects;
 using VideoRentalStoreApp.DataTransferObjects.Criteria;
@@ -13,24 +14,38 @@ namespace VideoRentalStoreApp.Controllers;
 [ApiController]
 public class RentalController : ControllerBase
 {
-    private readonly IRentalService RentalService; 
+    private readonly IRentalService RentalService;
     public RentalController(IRentalService rentalService)
     {
         RentalService = rentalService ?? throw new ArgumentNullException(nameof(rentalService));
     }
 
-    [HttpPut]
-    [Route("ReturnRentedVideoById")]
-    public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
+    [HttpGet]
+    [Route("GetVideoRentals")]
+    public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
     {
-        return await RentalService.ReturnRentedVideoByIdAsync(criteria);
+        return await RentalService.GetVideoRentalsAsync();
     }
 
-    [HttpPut]
-    [Route("ReturnRentedVideoByNames")]
-    public async Task<bool> ReturnRentedVideByNamesAsync(RentFilmByNamesCriteria criteria)
+    [HttpGet]
+    [Route("GetVideoRental/{id}")]
+    public async Task<VideoRentalResult> GetVideoRentalAsync(string id)
     {
-        return await RentalService.ReturnRentedVideoByNamesAsync(criteria);
+        return await RentalService.GetVideoRentalAsync(id);
+    }
+
+    [HttpGet]
+    [Route("GetListOfRents")]
+    public async Task<List<UserRentedVideosResults>> GetListOfRentsAsync()
+    {
+        return await RentalService.GetListOfUserWithRentedVideosAsync();
+    }
+
+    [HttpPost]
+    [Route("InsertVideoRental")]
+    public async Task InsertVideoRentalAsync(VideoRentalCriteria criteria)
+    {
+        await RentalService.CreateVideoRentalAsync(criteria);
     }
 
     [HttpPost]
@@ -47,33 +62,19 @@ public class RentalController : ControllerBase
         return await RentalService.RentVideoByIdAsync(criteria);
     }
 
-    [HttpGet]
-    [Route("GetListOfRents")]
-    public async Task<List<UserRentedVideosResults>> GetListOfRentsAsync()
+    [HttpPut]
+    [Route("ReturnRentedVideoById")]
+    public async Task<bool> ReturnRentedVideoByIdAsync(RentFilmByIdCriteria criteria)
     {
-        return await RentalService.GetListOfUserWithRentedVideosAsync();
-    }
-  
-    [HttpGet]
-    [Route("GetVideoRentals")]
-    public async Task<List<VideoRentalResult>> GetVideoRentalsAsync()
-    {
-        return await RentalService.GetVideoRentalsAsync();
-    }
-    
-    [HttpGet]
-    [Route("GetVideoRental/{id}")]
-    public async Task<VideoRentalResult> GetVideoRentalAsync(string id)
-    {
-        return await RentalService.GetVideoRentalAsync(id);
+        return await RentalService.ReturnRentedVideoByIdAsync(criteria);
     }
 
-    [HttpPost]
-    [Route("InsertVideoRental")]
-    public async Task InsertVideoRentalAsync(VideoRentalCriteria criteria)
+    [HttpPut]
+    [Route("ReturnRentedVideoByNames")]
+    public async Task<bool> ReturnRentedVideByNamesAsync(RentFilmByNamesCriteria criteria)
     {
-        await RentalService.CreateVideoRentalAsync(criteria);
-    }        
+        return await RentalService.ReturnRentedVideoByNamesAsync(criteria);
+    }
 
     [HttpPatch]
     [Route("UpdateVideoRental/{id}")]
