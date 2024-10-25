@@ -30,6 +30,8 @@ Additionally, the user interface was created using:
 
 ## 3. Usage
 
+### 3.1 Dockerfile
+
 To run the app, follow these instructions:
 
 1. Move to the main directory and execute the `.sh` file to create images and containers:
@@ -43,6 +45,51 @@ To run the app, follow these instructions:
     ```
     https://localhost:6001
     ```
+
+### 3.2 docker compose
+
+1. Move to the main directory and execute docker compose command
+
+    ```bash
+    docker compose up -d
+    ```
+
+2. Access the web application at:
+
+    ```
+    https://localhost:6001
+    ```
+
+### 3.3 Using dev certs
+
+#### Linux
+
+First, you need to generate a pfx file. After that, move the file to the main directory (under /src).
+```bash
+cd src
+
+# generate pfx file
+mkcert -key-file new-key.pem -cert-file new-cert.pem "myservice.local"
+
+# the next step
+openssl pkcs12 -export -out new-myservice.local.pfx -inkey new-key.pem -in new-cert.pem -password pass:changeit
+```
+
+Go to the `etc/hosts` and add the localhost address and the namę of generated certificate at the end of first section.
+```bash
+# add the line and save with root privileges.
+vim /etc/hosts
+```
+
+The next step is to create a `.env` file and export environments. Below is the example of correctly exported variables.
+```bash
+export ASPNETCORE_ENVIRONMENT=Development
+export ASPNETCORE_URLS=https://+:6001;http://+:6000
+export CERTIFICATE_FILE=/app/new-myservice.local.pfx # assign the destination directory in container
+export CERTIFICATE_PASSWORD=mypassword
+```
+
+At this point, it should works.
 
 ## 4. Features
 

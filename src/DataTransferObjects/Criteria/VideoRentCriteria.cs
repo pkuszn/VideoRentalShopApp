@@ -1,15 +1,11 @@
 ﻿using System;
 
-namespace VideoRentalStoreApp.DataTransferObjects.Criteria
+namespace VideoRentalStoreApp.DataTransferObjects.Criteria;
+
+public class VideoRentCriteria
 {
-    public class VideoRentCriteria
-    {
-        public string Title { get; set; }
-        //ISODate
-        public DateTime StartRentalDate { get; set; }
-        //ISODate
-        public DateTime EndRentalDate { get; set; }
-        //ISODate
-        public DateTime? RealEndOfRentalDate { get; set; }
-    }
+    public string Title { get; init; } = null!;
+    public DateTime StartRentalDate { get; init; }
+    public DateTime EndRentalDate { get; init; }
+    public DateTime? RealEndOfRentalDate { get; init; }
 }

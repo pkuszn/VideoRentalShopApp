@@ -1,9 +1,8 @@
-﻿namespace VideoRentalStoreApp.DataTransferObjects.Results
+﻿namespace VideoRentalStoreApp.DataTransferObjects.Results;
+
+public class LoginResult
 {
-    public class LoginResult
-    {
-        public string? Id { get; set; }
-        public string User { get; set; }
-        public string Password { get; set; }
-    }
+    public string Id { get; init; } = null!;
+    public string User { get; init; } = null!;
+    public string Password { get; init; } = null!;
 }

@@ -1,25 +1,21 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
-namespace VideoRentalStoreApp.Models
+namespace VideoRentalStoreApp.Models;
+
+[Collection("video")]
+public class Video
 {
-    public class Video
-    {
-        [BsonId]
-        [BsonIgnoreIfDefault]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
-        public string Title { get; set; }
-        public string Genre { get; set; }
-        public string Director { get; set; }
-        public int Runtime { get; set; }
-        public double Score { get; set; }
-        public string Description { get; set; }
-        public List<string> Actors { get; set; }
-        //ISODate
-        public DateTime CreatedDate { get; set; }
-        public bool IsAvailable { get; set; }
-    }
+    public ObjectId Id { get; set; }
+    public string Title { get; set; } = null!;
+    public string Genre { get; set; } = null!;
+    public string Director { get; set; } = null!;
+    public int Runtime { get; set; }
+    public double Score { get; set; }
+    public string Description { get; set; } = null!;
+    public List<string>? Actors { get; set; } 
+    public DateTime CreatedDate { get; set; }
+    public bool IsAvailable { get; set; }
 }

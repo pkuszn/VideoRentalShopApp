@@ -1,21 +1,17 @@
 ﻿using System;
 
-namespace VideoRentalStoreApp.DataTransferObjects
+namespace VideoRentalStoreApp.DataTransferObjects.Results;
+
+public class UserRentedVideosResults
 {
-    public class UserRentedVideosResults
-    {
-        public string? Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
-        public long Contact { get; set; }
-        //ISODate
-        public DateTime RegistrationDate { get; set; }
-        public string Title { get; set; }
-        public DateTime StartRentalDate { get; set; }
-        //ISODate
-        public DateTime EndRentalDate { get; set; }
-        //ISODate
-        public DateTime? RealEndOfRentalDate { get; set; }
-    }
+    public string Id { get; init; } = null!;
+    public string FirstName { get; init; } = null!;
+    public string LastName { get; init; } = null!;
+    public string? Address { get; init; }
+    public long Contact { get; init; }
+    public DateTime RegistrationDate { get; init; }
+    public string Title { get; init; } = null!;
+    public DateTime StartRentalDate { get; init; }
+    public DateTime EndRentalDate { get; init; }
+    public DateTime? RealEndOfRentalDate { get; init; }
 }

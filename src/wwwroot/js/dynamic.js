@@ -1,4 +1,4 @@
-import { api, context } from './constants.js'
+import { context, videoEndpoints, userEndpoints, rentalEndpoints } from './constants.js'
 import { clearContent, updateVideoInputForm, updateUserInputForm} from './utils.js'
 import { VideoDTOId, RentVideoByIdDTO, UserDTOId} from './dtos.js'
 
@@ -10,15 +10,15 @@ $(document).on('click', '.button-delete', function (event) {
     var query = "";
     switch (className) {
         case context.getVideos: {
-            query = api.deleteVideo + id;
+            query = videoEndpoints.deleteVideo + id;
             break;
         }
         case context.getVideoRentals: {
-            query = api.deleteVideoRental + id;
+            query = rentalEndpoints.deleteVideoRental + id;
             break;
         }
         case context.getUsers: {
-            query = api.deleteUser + id;
+            query = userEndpoints.deleteUser + id;
             break;
         }
     }
@@ -84,7 +84,7 @@ $(document).on('click', '.button-rent', function (event) {
     var query = "";
     switch (className) {
         case context.rentVideoByUser: {
-            query = api.rentFilmById;            
+            query = rentalEndpoints.rentFilmById;            
             break;
         }
         default: {

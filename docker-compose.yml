@@ -5,8 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: video-rental-store-app
     ports:
       - "6000:6000"
+      - "6001:6001"
     depends_on:
       - mongodb
     networks:
@@ -14,15 +16,23 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:6001;http://+:6000
-
+      - CERTIFICATE_FILE=/app/new-myservice.local.pfx
+      - CERTIFICATE_PASSWORD=changeit
+    entrypoint: ["bash", "/app/docker-entrypoint.sh"]
+    env_file:
+      - .env
+    
   mongodb:
     image: mongo:latest
+    container_name: video-rental-store-db
     ports:
       - "27017:27017"
     networks:
       - app-network
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   app-network:
