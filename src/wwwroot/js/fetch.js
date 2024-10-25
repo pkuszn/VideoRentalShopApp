@@ -1,7 +1,7 @@
-import { api } from './constants.js'
+import { videoEndpoints, userEndpoints, rentalEndpoints } from './constants.js'
 
 async function fetchVideos() {
-    return await fetch(api.getVideos, {
+    return await fetch(videoEndpoints.getVideos, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -18,7 +18,7 @@ async function fetchVideos() {
 }
 
 async function fetchVideoRentals() {
-    return await fetch(api.getVideoRentals, {
+    return await fetch(videoEndpoints.getVideoRentals, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -35,7 +35,7 @@ async function fetchVideoRentals() {
 }
 
 async function fetchListOfAllRentals() {
-    return await fetch(api.getListOfRents, {
+    return await fetch(rentalEndpoints.getListOfRents, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -52,7 +52,7 @@ async function fetchListOfAllRentals() {
 }
 
 async function fetchLoginUsers() {
-    return await fetch(api.getLoginUsers, {
+    return await fetch(userEndpoints.getLoginUsers, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -69,7 +69,7 @@ async function fetchLoginUsers() {
 }
 
 async function fetchUsers() {
-    return await fetch(api.getUsers, {
+    return await fetch(userEndpoints.getUsers, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -86,7 +86,7 @@ async function fetchUsers() {
 }
 
 async function fetchAvailableVideos() {
-    return await fetch(api.getAvailableVideos, {
+    return await fetch(videoEndpoints.getAvailableVideos, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -103,7 +103,7 @@ async function fetchAvailableVideos() {
 }
 
 async function fetchMyVideos(id) {
-    return await fetch(api.getMyVideos + id, {
+    return await fetch(videoEndpoints.getMyVideos + id, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -120,7 +120,7 @@ async function fetchMyVideos(id) {
 }
 
 async function fetchUserWhoHaveRentedVideos() {
-    return await fetch(api.getUsersWhoHaveRentedVideos, {
+    return await fetch(userEndpoints.getUsersWhoHaveRentedVideos, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -137,7 +137,7 @@ async function fetchUserWhoHaveRentedVideos() {
 }
 
 async function fetchVideosShort(){
-    return await fetch(api.getAvailableVideosShort, {
+    return await fetch(videoEndpoints.getAvailableVideosShort, {
         method: 'GET',
         dataType: 'JSON',
         headers: {
@@ -154,7 +154,7 @@ async function fetchVideosShort(){
 }
 
 async function searchVideoByTitle(title) {
-    return await fetch(api.searchVideo + title, {
+    return await fetch(videoEndpoints.searchVideo + title, {
         method: "GET",
         dataType: "JSON",
         headers: {

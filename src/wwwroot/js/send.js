@@ -1,7 +1,7 @@
-import { api } from './constants.js'
+import { userEndpoints, videoEndpoints, rentalEndpoints } from './constants.js'
 
 async function createNewUser(user) {
-    return await fetch(api.insertUser, {
+    return await fetch(userEndpoints.insertUser, {
         method: 'POST',
         dataType: 'JSON',
         headers: {
@@ -20,7 +20,7 @@ async function createNewUser(user) {
 }
 
 async function createNewVideo(video) {
-    return await fetch(api.insertVideo, {
+    return await fetch(videoEndpoints.insertVideo, {
         method: 'POST',
         dataType: 'JSON',
         headers: {
@@ -42,7 +42,7 @@ async function createNewVideo(video) {
 }
 
 async function deleteVideo(id) {
-    await fetch(api.deleteVideo + id, {
+    await fetch(videoEndpoints.deleteVideo + id, {
         method: 'DELETE',
         dataType: 'JSON',
         headers: {
@@ -53,7 +53,7 @@ async function deleteVideo(id) {
 }
 
 async function deleteUser(id) {
-    await fetch(api.deleteUser + id, {
+    await fetch(userEndpoints.deleteUser + id, {
         method: 'DELETE',
         dataType: 'JSON',
         headers: {
@@ -65,7 +65,7 @@ async function deleteUser(id) {
 
 async function updateVideo(video){
     console.log(video);
-    return await fetch(api.updateVideo + video.id, {
+    return await fetch(videoEndpoints.updateVideo + video.id, {
         method: 'PUT',
         dataType: 'JSON',
         headers: {
@@ -87,7 +87,7 @@ async function updateVideo(video){
 }
 
 async function updateUser(user) {
-    return await fetch(api.updateUser + user.id, {
+    return await fetch(userEndpoints.updateUser + user.id, {
         method: 'PUT',
         dataType: 'JSON',
         headers: {
@@ -106,7 +106,7 @@ async function updateUser(user) {
 }
 
 async function rentVideoById(rent){
-    return await fetch(api.rentFilmById, {
+    return await fetch(rentalEndpoints.rentFilmById, {
         method: 'POST',
         dataType: 'JSON',
         headers: {
@@ -122,7 +122,7 @@ async function rentVideoById(rent){
 }
 
 async function returnRentedVideoById(rent){
-    return await fetch(api.returnRentedVideoById, {
+    return await fetch(rentalEndpoints.returnRentedVideoById, {
         method: 'PUT',
         dataType: 'JSON',
         headers: {

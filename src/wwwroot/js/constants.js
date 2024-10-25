@@ -1,30 +1,36 @@
-﻿export const api = {
-    getVideos: 'VideoRentalStore/GetVideos',
-    getUsers: 'VideoRentalStore/GetUsers',
-    getVideoRentals: 'VideoRentalStore/GetVideoRentals',
-    getVideo: 'VideoRentalStore/GetVideo/',
-    getUser: 'VideoRentalStore/GetUser',
-    getVideoRental: 'VideoRentalStore/GetVideoRental',
-    getListOfRents: 'VideoRentalStore/GetListOfRents',
-    returnRentedVideoByNames: 'VideoRentalStore/ReturnRentedVideoByNames',
-    returnRentedVideoById: 'VideoRentalStore/ReturnRentedVideoById',
-    getAvailableVideos: 'VideoRentalStore/GetAvailableVideos',
-    getAvailableVideosShort: 'VideoRentalStore/GetAvailableVideoShort',
-    rentFilmByNames: 'VideoRentalStore/RentFilmByNames',
-    rentFilmById: 'VideoRentalStore/RentFilmById',
-    insertUser: 'VideoRentalStore/InsertUser',
-    insertVideo: 'VideoRentalStore/InsertVideo',
-    insertVideoRental: 'VideoRentalStore/InsertVideoRental',
-    updateUser: 'VideoRentalStore/UpdateUser/',
-    updateVideo: 'VideoRentalStore/UpdateVideo/',
-    updateVideoRental: 'VideoRentalStore/UpdateVideoRental/',
-    deleteUser: 'VideoRentalStore/DeleteUser/',
-    deleteVideo: 'VideoRentalStore/DeleteVideo/',
-    deleteVideoRental: 'VideoRentalStore/DeleteVideoRental/',
-    getLoginUsers: 'VideoRentalStore/GetLoginUsers',
-    getMyVideos: 'VideoRentalStore/GetMyVideos/',
-    getUsersWhoHaveRentedVideos: 'VideoRentalStore/GetUsersWhoHaveRentedVideos/',
-    searchVideo: "VideoRentalStore/SearchVideo/",
+﻿export const videoEndpoints = {
+    getVideos: 'Video/GetVideos',
+    getVideo: 'Video/GetVideo/',
+    getAvailableVideos: 'Video/GetAvailableVideos',
+    getAvailableVideosShort: 'Video/GetAvailableVideoShort',
+    insertVideo: 'Video/InsertVideo',
+    updateVideo: 'Video/UpdateVideo/',
+    deleteVideo: 'Video/DeleteVideo/',
+    searchVideo: "Video/SearchVideo/",
+    getMyVideos: 'Video/GetMyVideos/',
+}
+
+export const userEndpoints = {
+    getUsers: 'User/GetUsers',
+    getUser: 'User/GetUser',
+    insertUser: 'User/InsertUser',
+    updateUser: 'User/UpdateUser/',
+    deleteUser: 'User/DeleteUser/',
+    getUsersWhoHaveRentedVideos: 'User/GetUsersWhoHaveRentedVideos/',
+    getLoginUsers: 'User/GetLoginUsers',
+}
+
+export const rentalEndpoints = {
+    getVideoRentals: 'Rental/GetVideoRentals',
+    getVideoRental: 'Rental/GetVideoRental',
+    getListOfRents: 'Rental/GetListOfRents',
+    returnRentedVideoByNames: 'Rental/ReturnRentedVideoByNames',
+    returnRentedVideoById: 'Rental/ReturnRentedVideoById',
+    rentFilmByNames: 'Rental/RentFilmByNames',
+    rentFilmById: 'Rental/RentFilmById',
+    insertVideoRental: 'Rental/InsertVideoRental',
+    updateVideoRental: 'Rental/UpdateVideoRental/',
+    deleteVideoRental: 'Rental/DeleteVideoRental/',
 }
 
 export const propertyNameVideoRentalList = {
